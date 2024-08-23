@@ -15,7 +15,9 @@
     "cf-typegen": "wrangler types",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test": "vitest",
+    "spec": "vitest"
   },
   "dependencies": {
     "@remix-run/cloudflare": "^2.10.3",
@@ -59,6 +61,7 @@
     "typescript": "^5.1.6",
     "vite": "^5.1.0",
     "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^2.0.5",
     "wrangler": "3.57.1"
   },
   "engines": {
