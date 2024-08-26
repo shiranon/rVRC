@@ -19,6 +19,11 @@ module.exports = {
     commonjs: true,
     es6: true,
   },
+
+  rules: {
+    semi: ["error", "never"], // 末尾のセミコロンを消すルールを追加
+  },
+
   ignorePatterns: ["!**/.server", "!**/.client"],
 
   // Base config
@@ -81,4 +86,4 @@ module.exports = {
       },
     },
   ],
-};
+}

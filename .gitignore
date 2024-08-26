@@ -8,3 +8,7 @@ node_modules
 .wrangler
 
 *storybook.log
+
+app/types/schema.ts
+
+.env.local
