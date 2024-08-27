@@ -5,6 +5,7 @@ import {
 	Scripts,
 	ScrollRestoration,
 } from '@remix-run/react'
+import { Header } from '~/components/layout/header'
 import './tailwind.css'
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -16,8 +17,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Meta />
 				<Links />
 			</head>
-			<body className="flex max-w-[480px] mx-auto overflow-x-hidden antialiased">
-				{children}
+			<body className="mx-auto overflow-x-hidden antialiased">
+				<Header />
+				<div className="flex max-w-[640px] items-center justify-center m-auto">
+					{children}
+				</div>
 				<ScrollRestoration />
 				<Scripts />
 			</body>

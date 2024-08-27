@@ -8,11 +8,7 @@
 		"**/.client/**/*.tsx"
 	],
 	"compilerOptions": {
-		"lib": [
-			"DOM",
-			"DOM.Iterable",
-			"ES2022"
-		],
+		"lib": ["DOM", "DOM.Iterable", "ES2022"],
 		"types": [
 			"@remix-run/cloudflare",
 			"vite/client",
@@ -31,24 +27,12 @@
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": ".",
 		"paths": {
-			"~/*": [
-				"./app/*"
-			],
-			"~/types/*": [
-				"./app/types/*"
-			],
-			"~/lib/*": [
-				"./app/lib/*"
-			],
-			"~/.server/*": [
-				"./app/.server/*"
-			],
-			"~/components/*": [
-				"./app/components/*"
-			],
-			"~/config/*": [
-				"./app/config/*"
-			]
+			"~/*": ["./app/*"],
+			"~/types/*": ["./app/types/*"],
+			"~/lib/*": ["./app/lib/*"],
+			"~/.server/*": ["./app/.server/*"],
+			"~/components/*": ["./app/components/*"],
+			"~/config/*": ["./app/config/*"]
 		},
 		// Vite takes care of building everything, not tsc.
 		"noEmit": true
