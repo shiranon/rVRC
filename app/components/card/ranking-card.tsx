@@ -33,7 +33,7 @@ export const RankingCard = ({ item }: { item: RankingType }) => {
 						alt={item.avatar_name}
 					/>
 				</div>
-				<CardTitle className="pt-4">
+				<CardTitle className="pt-4 leading-relaxed">
 					{truncateString(item.avatar_name, 35)}
 				</CardTitle>
 			</CardContent>

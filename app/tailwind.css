@@ -65,6 +65,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'NotoSans JP', sans-serif;
   }
 }
 
@@ -72,4 +73,18 @@
   .clip-triangle {
     clip-path: polygon(0 0, 100% 0, 0 100%);
   }
+}
+
+@font-face{
+  font-family:  'NotoSans JP';
+  src:('./font/NotoSansJP-Regular.woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face{
+  font-family:  'NotoSans JP';
+  src:('./font/NotoSansJP-Bold.woff2');
+  font-weight: 700;
+  font-style: normal;
 }

@@ -13,7 +13,6 @@ export const loader: LoaderFunction = ({ request }) => {
 
 export default function Avatar() {
 	const { data } = useLoaderData<{ data: RankingType[] }>()
-	console.log('Ranking data:', data)
 
 	return (
 		<div>
