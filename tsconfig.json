@@ -28,11 +28,6 @@
 		"baseUrl": ".",
 		"paths": {
 			"~/*": ["./app/*"],
-			"~/types/*": ["./app/types/*"],
-			"~/lib/*": ["./app/lib/*"],
-			"~/.server/*": ["./app/.server/*"],
-			"~/components/*": ["./app/components/*"],
-			"~/config/*": ["./app/config/*"]
 		},
 		// Vite takes care of building everything, not tsc.
 		"noEmit": true
