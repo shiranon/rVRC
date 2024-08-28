@@ -1,4 +1,4 @@
-import { json } from '@remix-run/node'
+import { json } from '@remix-run/cloudflare'
 import { todayDate } from '~/lib/date'
 import { supabase } from '~/lib/supabaseClient'
 

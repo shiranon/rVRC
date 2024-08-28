@@ -1,4 +1,4 @@
-import type { LoaderFunction } from '@remix-run/node'
+import type { LoaderFunction } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import { getAvatarRankingLoader } from '~/.server/loaders/getAvatarRanking'
 import { RankingCard } from '~/components/card/ranking-card'
