@@ -1,15 +1,15 @@
-import { json } from '@remix-run/cloudflare'
-import { todayDate } from '~/lib/date'
-import { supabase } from '~/lib/supabaseClient'
+import { getSupabaseClient } from '~/lib/supabaseClient'
 
-export async function getAvatarRankingLoader(
+export const getAvatarRanking = async (
 	type: string,
 	page: number,
-	date: string = todayDate,
-) {
+	context: { cloudflare: { env: Env } },
+	date: string,
+) => {
+	const supabase = getSupabaseClient({ context })
 	const offset = (page - 1) * 20
 	try {
-		console.log(todayDate)
+		console.log(date)
 		const { data, error } = await supabase.rpc('get_avatar_ranking', {
 			date_param: date,
 			ranking_type_param: type,
@@ -18,9 +18,9 @@ export async function getAvatarRankingLoader(
 		})
 		console.log('Fetched data:', data)
 		console.log('Error:', error)
-		return json({ data })
+		return { data }
 	} catch (error) {
 		console.error('Error fetching avatar_ranking:', error)
-		return json({ data: null })
+		return { data: null }
 	}
 }

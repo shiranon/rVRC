@@ -1,19 +1,22 @@
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from '~/types/schema'
 
-declare const env: {
-	SUPABASE_URL?: string
-	SUPABASE_ANON_KEY?: string
-}
-
-const getEnv = (key: string): string => {
-	if (typeof env !== 'undefined' && env[key as keyof typeof env]) {
-		return env[key as keyof typeof env] as string
+export const getSupabaseClient = ({
+	context,
+}: { context?: { cloudflare: { env: Env } } } = {}) => {
+	let env: Env
+	try {
+		env = process.env as unknown as Env
+	} catch {
+		if (!context) {
+			throw new Error('Context is required in Cloudflare Pages environment')
+		}
+		env = context.cloudflare.env as Env
 	}
-	return process.env[key] || ''
+
+	if (!(env.SUPABASE_URL && env.SUPABASE_ANON_KEY)) {
+		throw new Error('SUPABASE_URL or SUPABASE_ANON_KEY is not defined')
+	}
+
+	return createClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
 }
-
-const supabaseUrl = getEnv('SUPABASE_URL')
-const supabaseAnonKey = getEnv('SUPABASE_ANON_KEY')
-
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey)
