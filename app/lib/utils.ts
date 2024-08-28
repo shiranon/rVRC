@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { ItemUrl, ShopUrl } from '~/config/urls'
+import { ItemUrl, ShopUrl } from '~/consts/urls'
 
 const getImageUrl = (imageUrl: string | null) => {
 	if (imageUrl != null) {
