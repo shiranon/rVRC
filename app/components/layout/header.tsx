@@ -1,8 +1,6 @@
 import { Link } from '@remix-run/react'
 import { FlaskConical } from 'lucide-react'
-import { HamburgerMenu } from '~/components/menu/hamburger-menu'
-import { RegisterMenu } from '~/components/menu/register-menu'
-import { UserMenu } from '../menu/user-menu'
+import { HamburgerMenu, RegisterMenu, UserMenu } from '~/components/menu/index'
 
 export const Header = () => {
 	return (

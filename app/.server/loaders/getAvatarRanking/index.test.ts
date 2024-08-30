@@ -1,5 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import * as dateModule from '~/lib/date'
+import { describe, expect, it } from 'vitest'
 import { getAvatarRanking } from './index'
 
 // cloudflare環境変数を含むcontextオブジェクトを作成
