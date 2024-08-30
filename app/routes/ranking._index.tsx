@@ -1,8 +1,8 @@
 import type { LoaderFunctionArgs } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
-import { getAvatarRanking } from '~/.server/loaders/getAvatarRanking'
-import { RankingCard } from '~/components/card/ranking-card'
+import { getAvatarRanking } from '~/.server/loaders/index'
+import { RankingCard } from '~/components/card/index'
 import { getTodayDate } from '~/lib/date'
 import type { RankingType } from '~/types/items'
 
