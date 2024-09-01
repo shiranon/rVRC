@@ -1,31 +1,20 @@
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
+import { excludeOldData } from '~/lib/date'
 import { getImageUrl, getShopImageUrl, truncateString } from '~/lib/utils'
 import type { RankingType } from '~/types/items'
+import { favoriteTag } from '../element/favorite-tag'
+import { rankingTag } from '../element/ranking-tag'
 
 export const RankingCard = ({ item }: { item: RankingType }) => {
-	const rankingTag = (rank: number) => {
-		const colors: { [key: number]: string } = {
-			1: 'bg-amber-400',
-			2: 'bg-zinc-400',
-			3: 'bg-yellow-600',
-		}
-		const colorClass = colors[rank] || 'bg-slate-300'
-		return (
-			<div
-				className={`absolute top-0 left-0 w-1/4 h-1/4 ${colorClass} clip-triangle opacity-95`}
-			>
-				<span className="relative top-[20%] left-[20%] text-2xl font-bold text-white">
-					{rank}
-				</span>
-			</div>
-		)
-	}
 	return (
 		<Card>
 			<CardContent className="p-4">
 				<div className="relative block overflow-hidden aspect-square">
-					{rankingTag(item.rank)}
+					<div className="z-10 font-bold">
+						{rankingTag(item.rank)}
+						{favoriteTag(item.favorite_count, item.difference)}
+					</div>
 					<img
 						className="rounded-md"
 						src={getImageUrl(item.avatar_image)}
@@ -33,11 +22,16 @@ export const RankingCard = ({ item }: { item: RankingType }) => {
 						alt={item.avatar_name}
 					/>
 				</div>
-				<CardTitle className="pt-4 leading-relaxed">
+			</CardContent>
+			<CardContent className="px-4 pt-0 pb-1">
+				<CardTitle className="leading-relaxed">
 					{truncateString(item.avatar_name, 35)}
 				</CardTitle>
+				<div className="text-right font-bold text-lg">
+					￥{item.avatar_price}
+				</div>
 			</CardContent>
-			<CardFooter>
+			<CardFooter className="pb-4 justify-between">
 				<div className="flex items-center gap-2">
 					<Avatar>
 						<AvatarImage
@@ -47,8 +41,9 @@ export const RankingCard = ({ item }: { item: RankingType }) => {
 						/>
 						<AvatarFallback />
 					</Avatar>
-					<p className="text-sm">{item.shop_name}</p>
+					<div className="pl-1 text-sm">{item.shop_name}</div>
 				</div>
+				<div>{excludeOldData(item.avatar_added)}</div>
 			</CardFooter>
 		</Card>
 	)

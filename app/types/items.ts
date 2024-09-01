@@ -13,6 +13,7 @@ export type RankingType = {
 	avatar_name: string
 	avatar_price: number
 	avatar_image: string
+	avatar_added: string
 	shop_name: string
 	shop_id: string
 	shop_image: string
