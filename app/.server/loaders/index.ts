@@ -1,3 +1,3 @@
 import { getAvatarRanking } from './getAvatarRanking'
-
-export { getAvatarRanking }
+import { getClothRanking } from './getClothRanking'
+export { getAvatarRanking, getClothRanking }
