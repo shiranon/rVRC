@@ -1,41 +1,99 @@
-import type { MetaFunction } from '@remix-run/cloudflare'
+import {
+	type LoaderFunctionArgs,
+	type MetaFunction,
+	json,
+} from '@remix-run/cloudflare'
+import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
+import { useEffect, useRef } from 'react'
+import { getAvatarRanking, getClothRanking } from '~/.server/loaders'
+import { TopItemsCard } from '~/components/card'
+import { ItemControls } from '~/components/element/item-controls'
+import { getTodayDate } from '~/lib/date'
+import type {
+	RankingAvatarType,
+	RankingClothType,
+	TopAvatarData,
+	TopClothData,
+} from '~/types/items'
 
 export const meta: MetaFunction = () => {
 	return [
-		{ title: 'New Remix App' },
+		{ title: 'rVRc' },
 		{
 			name: 'description',
-			content: 'Welcome to Remix on Cloudflare!',
+			content:
+				'rVRcはVRChat用アイテムのスキ数を集計してランキング化しているサイトです。',
 		},
 	]
 }
 
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+	const url = new URL(request.url)
+	const item = url.searchParams.get('item') || 'avatar'
+	if (item === 'cloth') {
+		const ranking = await getClothRanking('day', 1, context, getTodayDate())
+		const trend = await getClothRanking('trend', 1, context, getTodayDate())
+		return json({ ranking, trend, item })
+	}
+	const ranking = await getAvatarRanking('day', 1, context, getTodayDate())
+	const trend = await getAvatarRanking('trend', 1, context, getTodayDate())
+	return json({ ranking, trend, item })
+}
+
 export default function Index() {
+	const initialData = useLoaderData<TopAvatarData | TopClothData>()
+	const fetcher = useFetcher<TopAvatarData | TopClothData>()
+
+	const [searchParams] = useSearchParams()
+	const prevSearchParamsRef = useRef(searchParams.toString())
+
+	useEffect(() => {
+		const currentSearchParams = searchParams.toString()
+		if (currentSearchParams !== prevSearchParamsRef.current) {
+			fetcher.load(`/?${currentSearchParams}`)
+			prevSearchParamsRef.current = currentSearchParams
+		}
+	}, [searchParams, fetcher])
+
+	const ranking = fetcher.data?.ranking.data || initialData.ranking.data
+	const trend = fetcher.data?.trend.data || initialData.trend.data
+	const item = fetcher.data?.item || initialData.item
+
+	console.log(ranking)
+
 	return (
-		<div className="font-sans p-4">
-			<h1 className="text-3xl">Welcome to Remix on Cloudflare</h1>
-			<ul className="list-disc mt-4 pl-6 space-y-2">
-				<li>
-					<a
-						className="text-blue-700 underline visited:text-purple-900"
-						target="_blank"
-						href="https://remix.run/docs"
-						rel="noreferrer"
-					>
-						Remix Docs
-					</a>
-				</li>
-				<li>
-					<a
-						className="text-blue-700 underline visited:text-purple-900"
-						target="_blank"
-						href="https://developers.cloudflare.com/pages/framework-guides/deploy-a-remix-site/"
-						rel="noreferrer"
-					>
-						Cloudflare Pages Docs - Remix guide
-					</a>
-				</li>
-			</ul>
+		<div className="px-4 flex-1">
+			<ItemControls />
+			<h1 className="text-3xl py-4 pl-4">デイリーランキング</h1>
+			{ranking && ranking.length > 0 && item === 'avatar' && (
+				<TopItemsCard
+					avatar={ranking as RankingAvatarType[]}
+					item={item}
+					cloth={null}
+				/>
+			)}
+			{ranking && ranking.length > 0 && item === 'cloth' && (
+				<TopItemsCard
+					cloth={ranking as RankingClothType[]}
+					item={item}
+					avatar={null}
+				/>
+			)}
+			<h1 className="text-3xl py-4 pl-4">トレンドランキング</h1>
+			{trend && trend.length > 0 && item === 'avatar' && (
+				<TopItemsCard
+					avatar={trend as RankingAvatarType[]}
+					item={item}
+					cloth={null}
+				/>
+			)}
+			{trend && trend.length > 0 && item === 'cloth' && (
+				<TopItemsCard
+					cloth={trend as RankingClothType[]}
+					item={item}
+					avatar={null}
+				/>
+			)}
 		</div>
 	)
 }
