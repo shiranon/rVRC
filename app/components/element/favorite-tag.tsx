@@ -4,7 +4,9 @@ export const favoriteTag = (
 ) => {
 	return (
 		<div className="absolute top-0 right-0 w-auto h-auto flex flex-col items-end bg-black text-white bg-opacity-70 px-1 min-w-[5ch]">
-			<div className="pl-[2px] inline-flex items-center">
+			<div
+				className={`${difference ? 'pl-[2px]' : 'p-1'} inline-flex items-center`}
+			>
 				<svg
 					aria-hidden="true"
 					focusable="false"

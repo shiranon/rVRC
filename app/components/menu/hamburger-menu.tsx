@@ -12,14 +12,11 @@ import {
 
 import { Link } from '@remix-run/react'
 import {
-	Calendar,
-	CalendarDays,
 	CircleHelp,
 	Crown,
 	Flame,
 	FolderSearch,
 	House,
-	Menu,
 	MessageCircleMore,
 	Search,
 } from 'lucide-react'
@@ -30,8 +27,20 @@ export const HamburgerMenu = () => {
 	return (
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>
 			<SheetTrigger asChild>
-				<Button variant="ghost" size="icon" aria-label="Menu">
-					<Menu className="h-6 w-6" />
+				<Button
+					className="relative bg-light-beige"
+					size="icon"
+					aria-label="Menu"
+				>
+					<span
+						className={`absolute w-2 top-3 left-3 h-[3px] bg-slate-800 transition-transform ${isOpen ? 'rotate-45 translate-y-1.5' : ''}`}
+					/>
+					<span
+						className={`absolute w-4 top-5 left-3 h-[3px] bg-slate-800 transition-opacity ${isOpen ? 'opacity-0' : 'opacity-100'}`}
+					/>
+					<span
+						className={`absolute w-5 top-7 left-3 h-[3px] bg-slate-800 transition-transform ${isOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+					/>
 				</Button>
 			</SheetTrigger>
 			<SheetContent side="left" className="w-[200px] sm:w-[250px] pt-20 px-0">
@@ -40,55 +49,43 @@ export const HamburgerMenu = () => {
 				</SheetHeader>
 				<SheetTitle className="sr-only">ハンバーガーメニュー</SheetTitle>
 				<nav className="flex flex-col text-lg space-y-1 overflow-y-auto">
-					<div className="hover:bg-slate-200">
-						<Link
-							to={'#'}
-							className="p-2 flex items-center"
-							onClick={() => setIsOpen(false)}
-						>
-							<House className="pr-2" />
-							<div>ホーム</div>
-						</Link>
-					</div>
-					<div className="hover:bg-slate-200">
-						<Link
-							to={'#'}
-							className="p-2 flex items-center"
-							onClick={() => setIsOpen(false)}
-						>
-							<Search className="pr-2" />
-							<div>検索</div>
-						</Link>
+					<div className="flex flex-col space-y-1">
+						<div className="hover:bg-beige">
+							<Link
+								to={'#'}
+								className="pl-3 py-2 flex items-center"
+								onClick={() => setIsOpen(false)}
+							>
+								<House className="pr-2" />
+								<div>ホーム</div>
+							</Link>
+						</div>
+						<div className="hover:bg-beige">
+							<Link
+								to={'#'}
+								className="pl-3 py-2 flex items-center"
+								onClick={() => setIsOpen(false)}
+							>
+								<Search className="pr-2" />
+								<div>検索</div>
+							</Link>
+						</div>
 					</div>
 					<Separator />
 					<div className="flex flex-col mt-2 space-y-1">
-						<div className="flex pt-2 px-2 text-base">
-							<Crown className="pr-2" />
-							<div>ランキング</div>
-						</div>
-						<div className="hover:bg-slate-200">
+						<div className="hover:bg-beige">
 							<Link
-								to={'#'}
+								to={'/ranking'}
 								className="pl-3 py-2 flex"
 								onClick={() => setIsOpen(false)}
 							>
-								<CalendarDays className="pr-2" />
-								<div>デイリー</div>
+								<Crown className="pr-2" />
+								<div>ランキング</div>
 							</Link>
 						</div>
-						<div className="hover:bg-slate-200">
+						<div className="hover:bg-beige">
 							<Link
-								to={'#'}
-								className="pl-3 py-2 flex"
-								onClick={() => setIsOpen(false)}
-							>
-								<Calendar className="pr-2" />
-								<div>マンスリー</div>
-							</Link>
-						</div>
-						<div className="hover:bg-slate-200">
-							<Link
-								to={'#'}
+								to={'/trend'}
 								className="pl-3 py-2 flex"
 								onClick={() => setIsOpen(false)}
 							>
@@ -97,31 +94,31 @@ export const HamburgerMenu = () => {
 							</Link>
 						</div>
 					</div>
-					<Separator className="pr-2" />
-					<div className="hover:bg-slate-200">
+					<div className="hover:bg-beige">
 						<Link
 							to={'#'}
-							className="p-2 flex items-center"
+							className="pl-3 py-2 flex items-center"
 							onClick={() => setIsOpen(false)}
 						>
 							<FolderSearch className="pr-2" />
 							<div>フォルダー</div>
 						</Link>
 					</div>
-					<div className="hover:bg-slate-200">
+					<Separator />
+					<div className="hover:bg-beige">
 						<Link
 							to={'#'}
-							className="p-2 flex items-center"
+							className="pl-3 py-2 flex items-center"
 							onClick={() => setIsOpen(false)}
 						>
 							<CircleHelp className="pr-2" />
 							<div>FAQ</div>
 						</Link>
 					</div>
-					<div className="hover:bg-slate-200">
+					<div className="hover:bg-beige">
 						<Link
 							to={'#'}
-							className="p-2 flex items-center"
+							className="pl-3 py-2 flex items-center"
 							onClick={() => setIsOpen(false)}
 						>
 							<MessageCircleMore className="pr-2" />

@@ -19,6 +19,11 @@ const config = {
 		},
 		extend: {
 			colors: {
+				beige: '#D4C3B1',
+				light: {
+					beige: '#f7f0e8',
+					gray: '#2D2D48',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
