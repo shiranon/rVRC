@@ -3,7 +3,7 @@ import { json } from '@remix-run/cloudflare'
 import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
 import { useEffect, useRef } from 'react'
 import { getAvatarRanking, getClothRanking } from '~/.server/loaders'
-import { RankingAvatarCard, RankingClothCard } from '~/components/card'
+import { AvatarCard, ClothCard } from '~/components/card'
 import { ItemControls } from '~/components/element/item-controls'
 import { formatMonth, getTodayDate } from '~/lib/date'
 import type {
@@ -70,13 +70,16 @@ export default function Ranking() {
 					{item === 'avatar' &&
 						data.map((avatar) => (
 							<div key={avatar.booth_id} className="mb-4">
-								<RankingAvatarCard item={avatar as RankingAvatarType} />
+								<AvatarCard
+									item={avatar as RankingAvatarType}
+									category="rank"
+								/>
 							</div>
 						))}
 					{item === 'cloth' &&
 						data.map((cloth) => (
 							<div key={cloth.booth_id} className="mb-4">
-								<RankingClothCard item={cloth as RankingClothType} />
+								<ClothCard item={cloth as RankingClothType} category="rank" />
 							</div>
 						))}
 				</div>

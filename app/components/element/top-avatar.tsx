@@ -2,17 +2,24 @@ import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
 import { getImageUrl, getShopImageUrl, truncateString } from '~/lib/utils'
 import type { RankingAvatarType } from '~/types/items'
-import { favoriteTag } from './favorite-tag'
-import { rankingTag } from './ranking-tag'
+import { FavoriteTag } from './favorite-tag'
+import { RankingTag } from './ranking-tag'
 
-export const TopAvatarRanking = ({ item }: { item: RankingAvatarType }) => {
+export const TopAvatar = ({
+	item,
+	category,
+}: { item: RankingAvatarType; category: string }) => {
 	return (
 		<Card>
 			<CardContent className="p-4">
 				<div className="relative block overflow-hidden aspect-square">
 					<div className="z-10 font-bold">
-						{rankingTag(item.rank)}
-						{favoriteTag(item.favorite_count, item.difference)}
+						<RankingTag rank={item.rank} className="text-base" />
+						<FavoriteTag
+							className="pl-[2px]"
+							favorite_count={item.favorite_count}
+							{...(category === 'rank' ? { difference: item.difference } : {})}
+						/>
 					</div>
 					<img
 						className="rounded-md"

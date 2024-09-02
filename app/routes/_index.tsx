@@ -6,7 +6,8 @@ import {
 import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
 import { useEffect, useRef } from 'react'
 import { getAvatarRanking, getClothRanking } from '~/.server/loaders'
-import { TopItemsCard } from '~/components/card'
+import { TopRankingCard } from '~/components/card'
+import { TopTrendCard } from '~/components/card/top-trend-card'
 import { ItemControls } from '~/components/element/item-controls'
 import { getTodayDate } from '~/lib/date'
 import type {
@@ -66,14 +67,14 @@ export default function Index() {
 			<ItemControls />
 			<h1 className="text-3xl py-4 pl-4">デイリーランキング</h1>
 			{ranking && ranking.length > 0 && item === 'avatar' && (
-				<TopItemsCard
+				<TopRankingCard
 					avatar={ranking as RankingAvatarType[]}
 					item={item}
 					cloth={null}
 				/>
 			)}
 			{ranking && ranking.length > 0 && item === 'cloth' && (
-				<TopItemsCard
+				<TopRankingCard
 					cloth={ranking as RankingClothType[]}
 					item={item}
 					avatar={null}
@@ -81,14 +82,14 @@ export default function Index() {
 			)}
 			<h1 className="text-3xl py-4 pl-4">トレンドランキング</h1>
 			{trend && trend.length > 0 && item === 'avatar' && (
-				<TopItemsCard
+				<TopTrendCard
 					avatar={trend as RankingAvatarType[]}
 					item={item}
 					cloth={null}
 				/>
 			)}
 			{trend && trend.length > 0 && item === 'cloth' && (
-				<TopItemsCard
+				<TopTrendCard
 					cloth={trend as RankingClothType[]}
 					item={item}
 					avatar={null}

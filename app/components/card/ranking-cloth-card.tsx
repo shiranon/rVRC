@@ -3,17 +3,24 @@ import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
 import { excludeOldData } from '~/lib/date'
 import { getImageUrl, getShopImageUrl, truncateString } from '~/lib/utils'
 import type { RankingClothType } from '~/types/items'
-import { favoriteTag } from '../element/favorite-tag'
-import { rankingTag } from '../element/ranking-tag'
+import { FavoriteTag } from '../element/favorite-tag'
+import { RankingTag } from '../element/ranking-tag'
 
-export const RankingClothCard = ({ item }: { item: RankingClothType }) => {
+export const ClothCard = ({
+	item,
+	category,
+}: { item: RankingClothType; category: string }) => {
 	return (
 		<Card>
 			<CardContent className="p-4">
 				<div className="relative block overflow-hidden aspect-square">
 					<div className="z-10 font-bold">
-						{rankingTag(item.rank)}
-						{favoriteTag(item.favorite_count, item.difference)}
+						<RankingTag rank={item.rank} />
+						<FavoriteTag
+							className={category === 'rank' ? 'pl-3' : 'p-1'}
+							favorite_count={item.favorite_count}
+							{...(category === 'rank' ? { difference: item.difference } : {})}
+						/>
 					</div>
 					<img
 						className="rounded-md"

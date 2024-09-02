@@ -1,12 +1,19 @@
-export const favoriteTag = (
-	favorite_count: number,
-	difference: number | null = null,
-) => {
+import type React from 'react'
+import { cn } from '~/lib/utils'
+
+type Props = React.ComponentProps<'span'> & {
+	favorite_count: number
+	difference?: number
+}
+
+export const FavoriteTag = ({
+	favorite_count,
+	difference,
+	className,
+}: Props) => {
 	return (
 		<div className="absolute top-0 right-0 w-auto h-auto flex flex-col items-end bg-black text-white bg-opacity-70 px-1 min-w-[5ch]">
-			<div
-				className={`${difference ? 'pl-[2px]' : 'p-1'} inline-flex items-center`}
-			>
+			<div className={cn('inline-flex items-center', className)}>
 				<svg
 					aria-hidden="true"
 					focusable="false"
