@@ -6,9 +6,10 @@ const getYesterday = () => {
 }
 
 const isBeforeRankingUpdate = () => getToday().getHours() < 21
-
 // 開発環境用のデフォルト日付
-const devDefaultDate = new Date('2024-08-20')
+// const devDefaultDate = new Date(LocalDate.LOCAL_DATE)
+const devDefaultDate = new Date('2024-08-30')
+
 const getDevYesterday = () => {
 	const devYesterday = new Date(devDefaultDate)
 	devYesterday.setDate(devYesterday.getDate() - 1)
@@ -16,14 +17,14 @@ const getDevYesterday = () => {
 }
 
 const getTodayDate = () => {
-	if (import.meta.env.PROD) {
-		return (isBeforeRankingUpdate() ? getYesterday() : getToday())
-			.toISOString()
-			.split('T')[0]
-	}
-	return (isBeforeRankingUpdate() ? getDevYesterday() : devDefaultDate)
-		.toISOString()
-		.split('T')[0]
+	const date = import.meta.env.PROD
+		? isBeforeRankingUpdate()
+			? getYesterday()
+			: getToday()
+		: isBeforeRankingUpdate()
+			? getDevYesterday()
+			: devDefaultDate
+	return date.toISOString().split('T')[0]
 }
 
 const zeroPad = (date: number): string => {
