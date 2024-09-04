@@ -15,6 +15,14 @@ const getDevYesterday = () => {
 	return devYesterday
 }
 
+const getFormattedDate = (date: Date) => {
+	const options: Intl.DateTimeFormatOptions = {
+		timeZone: 'Asia/Tokyo',
+	}
+	const formattedDate = date.toLocaleDateString('ja-JP', options)
+	return formattedDate.replace(/\//g, '-')
+}
+
 const getTodayDate = () => {
 	const date = import.meta.env.PROD
 		? isBeforeRankingUpdate()
@@ -23,7 +31,7 @@ const getTodayDate = () => {
 		: isBeforeRankingUpdate()
 			? getDevYesterday()
 			: devDefaultDate
-	return date.toISOString().split('T')[0]
+	return getFormattedDate(date)
 }
 
 const formatMonth = (date: string): string => {
