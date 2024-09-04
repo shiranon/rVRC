@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { getSupabaseClient } from './supabaseClient'
+import { createClient } from './create-client.server'
 
 describe('supabaseClient', () => {
-	const supabase = getSupabaseClient()
+	const supabase = createClient()
 	it('Supabaseが定義されているかを確認', () => {
 		expect(supabase).toBeDefined()
 	})

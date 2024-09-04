@@ -2,10 +2,10 @@ import type { LoaderFunctionArgs } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
 import { useEffect, useRef } from 'react'
-import { getAvatarRanking, getClothRanking } from '~/.server/loaders'
 import { AvatarCard, ClothCard } from '~/components/card'
 import { ItemControls } from '~/components/element/item-controls'
-import { formatMonth, getTodayDate } from '~/lib/date'
+import { formatMonth, getTodayDate } from '~/lib/date.server'
+import { getAvatarRanking, getClothRanking } from '~/module/get/get-ranking'
 import type {
 	RankingAvatarData,
 	RankingAvatarType,

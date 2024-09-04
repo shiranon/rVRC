@@ -1,17 +1,17 @@
-import { getSupabaseClient } from '~/lib/supabaseClient'
+import { createClient } from '~/module/supabase/create-client.server'
 
-export const getClothRanking = async (
+export const getAvatarRanking = async (
 	type: string,
 	page: number,
 	context: { cloudflare: { env: Env } },
 	date: string,
 	limit = 4,
 ) => {
-	const supabase = getSupabaseClient({ context })
+	const supabase = createClient({ context })
 	const offset = (page - 1) * 20
 	try {
 		console.log(date)
-		const { data, error } = await supabase.rpc('get_cloth_ranking', {
+		const { data, error } = await supabase.rpc('get_avatar_ranking', {
 			date_param: date,
 			ranking_type_param: type,
 			offset_param: offset,

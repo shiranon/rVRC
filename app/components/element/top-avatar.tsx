@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
-import { getImageUrl, getShopImageUrl, truncateString } from '~/lib/utils'
+import { buildAvatarImage, buildShopImage } from '~/lib/format'
+import { truncateString } from '~/lib/utils'
 import type { RankingAvatarType } from '~/types/items'
 import { FavoriteTag } from './favorite-tag'
 import { RankingTag } from './ranking-tag'
@@ -23,7 +24,7 @@ export const TopAvatar = ({
 					</div>
 					<img
 						className="rounded-md"
-						src={getImageUrl(item.avatar_image)}
+						src={buildAvatarImage(item.avatar_image)}
 						loading="lazy"
 						alt={item.avatar_name}
 					/>
@@ -41,7 +42,7 @@ export const TopAvatar = ({
 				<div className="flex items-center gap-2">
 					<Avatar>
 						<AvatarImage
-							src={getShopImageUrl(item.shop_image)}
+							src={buildShopImage(item.shop_image)}
 							loading="lazy"
 							alt={item.shop_name}
 						/>
