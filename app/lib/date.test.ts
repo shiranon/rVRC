@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
-import { getTodayDate, isBeforeRankingUpdate } from './date'
+import { describe, expect, it, vi } from 'vitest'
+import { getTodayDate, isBeforeRankingUpdate } from './date.server'
 
 const devDefaultDate = new Date('2024-08-30')
 const today = new Date(devDefaultDate)

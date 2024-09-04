@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
-import { excludeOldData } from '~/lib/date'
-import { getImageUrl, getShopImageUrl, truncateString } from '~/lib/utils'
+import { buildAvatarImage, buildShopImage, excludeOldDate } from '~/lib/format'
+import { truncateString } from '~/lib/utils'
 import type { RankingClothType } from '~/types/items'
 import { FavoriteTag } from '../element/favorite-tag'
 import { RankingTag } from '../element/ranking-tag'
@@ -24,7 +24,7 @@ export const ClothCard = ({
 					</div>
 					<img
 						className="rounded-md"
-						src={getImageUrl(item.cloth_image)}
+						src={buildAvatarImage(item.cloth_image)}
 						loading="lazy"
 						alt={item.cloth_name}
 					/>
@@ -40,7 +40,7 @@ export const ClothCard = ({
 				<div className="flex items-center gap-2">
 					<Avatar>
 						<AvatarImage
-							src={getShopImageUrl(item.shop_image)}
+							src={buildShopImage(item.shop_image)}
 							loading="lazy"
 							alt={item.shop_name}
 						/>
@@ -48,7 +48,7 @@ export const ClothCard = ({
 					</Avatar>
 					<div className="pl-1 text-sm">{item.shop_name}</div>
 				</div>
-				<div>{excludeOldData(item.cloth_added)}</div>
+				<div>{excludeOldDate(item.cloth_added)}</div>
 			</CardFooter>
 		</Card>
 	)

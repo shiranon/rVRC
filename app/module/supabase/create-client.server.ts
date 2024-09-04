@@ -1,7 +1,7 @@
-import { createClient } from '@supabase/supabase-js'
+import { createBrowserClient } from '@supabase/ssr'
 import type { Database } from '~/types/schema'
 
-export const getSupabaseClient = ({
+export const createClient = ({
 	context,
 }: { context?: { cloudflare: { env: Env } } } = {}) => {
 	let env: Env
@@ -17,6 +17,5 @@ export const getSupabaseClient = ({
 	if (!(env.SUPABASE_URL && env.SUPABASE_ANON_KEY)) {
 		throw new Error('SUPABASE_URL or SUPABASE_ANON_KEY is not defined')
 	}
-
-	return createClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
+	return createBrowserClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
 }

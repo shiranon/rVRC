@@ -5,11 +5,10 @@ import {
 } from '@remix-run/cloudflare'
 import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
 import { useEffect, useRef } from 'react'
-import { getAvatarRanking, getClothRanking } from '~/.server/loaders'
-import { TopRankingCard } from '~/components/card'
-import { TopTrendCard } from '~/components/card/top-trend-card'
+import { TopRankingCard,TopTrendCard  } from '~/components/card'
 import { ItemControls } from '~/components/element/item-controls'
-import { getTodayDate } from '~/lib/date'
+import { getTodayDate } from '~/lib/date.server'
+import { getAvatarRanking, getClothRanking } from '~/module/get/get-ranking'
 import type {
 	RankingAvatarType,
 	RankingClothType,
