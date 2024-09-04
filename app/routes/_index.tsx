@@ -1,14 +1,8 @@
-import {
-	type LoaderFunctionArgs,
-	type MetaFunction,
-	json,
-} from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
 import { useEffect, useRef } from 'react'
-import { TopRankingCard,TopTrendCard  } from '~/components/card'
+import { TopRankingCard, TopTrendCard } from '~/components/card'
 import { ItemControls } from '~/components/element/item-controls'
-import { getTodayDate } from '~/lib/date.server'
-import { getAvatarRanking, getClothRanking } from '~/module/get/get-ranking'
 import type {
 	RankingAvatarType,
 	RankingClothType,
@@ -27,18 +21,7 @@ export const meta: MetaFunction = () => {
 	]
 }
 
-export const loader = async ({ request, context }: LoaderFunctionArgs) => {
-	const url = new URL(request.url)
-	const item = url.searchParams.get('item') || 'avatar'
-	if (item === 'cloth') {
-		const ranking = await getClothRanking('day', 1, context, getTodayDate())
-		const trend = await getClothRanking('trend', 1, context, getTodayDate())
-		return json({ ranking, trend, item })
-	}
-	const ranking = await getAvatarRanking('day', 1, context, getTodayDate())
-	const trend = await getAvatarRanking('trend', 1, context, getTodayDate())
-	return json({ ranking, trend, item })
-}
+export { indexLoader as loader } from '~/.server/loaders'
 
 export default function Index() {
 	const initialData = useLoaderData<TopAvatarData | TopClothData>()
