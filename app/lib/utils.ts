@@ -1,4 +1,6 @@
-import crypto from 'node:crypto'
+// biome-ignore lint/style/useNodejsImportProtocol: <explanation>
+import crypto from 'crypto'
+
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -22,10 +24,15 @@ const loadEnvironment = (context: AppLoadContext) => {
 		return context.cloudflare.env as Env
 	}
 }
-const generateUniqueFileName = () => {
+
+const generateUniqueFileName = async () => {
 	const timestamp = new Date().getTime().toString()
-	const hash = crypto.createHash('md5').update(timestamp).digest('hex')
-	return hash.substring(0, 8)
+	const encoder = new TextEncoder()
+	const data = encoder.encode(timestamp)
+	const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+	const hashArray = Array.from(new Uint8Array(hashBuffer))
+	const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
+	return hashHex.substring(0, 8)
 }
 
 export { cn, truncateString, loadEnvironment, generateUniqueFileName }

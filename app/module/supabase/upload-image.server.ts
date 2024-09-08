@@ -45,7 +45,8 @@ export const uploadFirstUserAvatar = async (
 		throw new Error('Content-Typeが取得できませんでした')
 	}
 	const extension = getImageExtension(contentType)
-	const fileName = `${generateUniqueFileName()}.${extension}`
+	const uniqueFileName = await generateUniqueFileName()
+	const fileName = `${uniqueFileName}.${extension}`
 
 	const { error } = await supabase.storage
 		.from('avatar')
