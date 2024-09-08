@@ -4,6 +4,6 @@
 interface Env {
 	SUPABASE_URL: string;
 	SUPABASE_ANON_KEY: string;
-	LOCAL_DATE: string;
+	VITE_LOCAL_DATE: string;
 	SITE_URL: string;
 }

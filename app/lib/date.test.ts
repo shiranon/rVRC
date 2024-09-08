@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest'
 import { getTodayDate, isBeforeRankingUpdate } from './date.server'
 
-const env = process.env as unknown as Env
-const devDefaultDate = new Date(env.LOCAL_DATE)
+const devDefaultDate = new Date(import.meta.env.VITE_LOCAL_DATE)
+
 const today = new Date(devDefaultDate)
 
 describe('日付関係のテスト', () => {
