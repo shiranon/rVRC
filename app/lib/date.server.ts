@@ -7,7 +7,8 @@ const getYesterday = () => {
 
 const isBeforeRankingUpdate = () => getToday().getHours() < 21
 // 開発環境用のデフォルト日付
-const devDefaultDate = new Date('2024-08-30')
+const env = process.env as unknown as Env
+const devDefaultDate = new Date(env.LOCAL_DATE)
 
 const getDevYesterday = () => {
 	const devYesterday = new Date(devDefaultDate)
@@ -18,6 +19,9 @@ const getDevYesterday = () => {
 const getFormattedDate = (date: Date) => {
 	const options: Intl.DateTimeFormatOptions = {
 		timeZone: 'Asia/Tokyo',
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
 	}
 	const formattedDate = date.toLocaleDateString('ja-JP', options)
 	return formattedDate.replace(/\//g, '-')
