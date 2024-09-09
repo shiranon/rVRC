@@ -6,10 +6,25 @@ export const rootLoader = async ({ request, context }: LoaderFunctionArgs) => {
 	const env = loadEnvironment(context)
 	const { supabase } = createClient(request, env)
 	const {
-		data: { session },
-	} = await supabase.auth.getSession()
+		data: { user },
+	} = await supabase.auth.getUser()
+
+	if (!user) {
+		return json({ isLoggedIn: false, user: null })
+	}
+
+	const { data: users } = await supabase
+		.from('users')
+		.select('avatar,name')
+		.eq('id', user.id)
+
+	if (!users) {
+		return json({ isLoggedIn: false, user: null })
+	}
+
 	return json({
-		isLoggedIn: !!session,
+		isLoggedIn: !!user,
+		user: users[0],
 	})
 }
 

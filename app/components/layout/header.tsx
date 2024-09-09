@@ -1,14 +1,21 @@
-import { Link } from '@remix-run/react'
+import { Link, useLoaderData } from '@remix-run/react'
 import { FlaskConical } from 'lucide-react'
+import type { rootLoader } from '~/.server/loaders'
 import { HamburgerMenu, RegisterMenu, UserMenu } from '~/components/menu/index'
 import { Separator } from '../ui/separator'
 
-interface headerProp {
-	isLogin: boolean
+interface User {
+	avatar: string
+	name: string
 }
 
-export const Header = ({ isLogin }: headerProp) => {
-	console.log(isLogin)
+interface UserData {
+	isLoggedIn: boolean
+	user: User | null
+}
+
+export const Header = () => {
+	const userData = useLoaderData<typeof rootLoader>() as UserData
 	return (
 		<header className="sticky top-0 left-0 w-full h-16 z-[1000] bg-light-beige">
 			<div className="pt-3 px-3 flex justify-between items-center ">
@@ -19,9 +26,9 @@ export const Header = ({ isLogin }: headerProp) => {
 						<div className="pl-4 text-xl">rVRc</div>
 					</Link>
 				</div>
-				{isLogin ? (
+				{userData.isLoggedIn ? (
 					<div className="flex items-center">
-						<UserMenu />
+						<UserMenu user={userData.user} />
 					</div>
 				) : (
 					<div className="flex items-center">

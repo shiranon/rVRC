@@ -1,22 +1,29 @@
 import { Form, Link } from '@remix-run/react'
-import { Folder, FolderHeart, LogOut, User } from 'lucide-react'
+import { Folder, FolderHeart, LogOut, UserIcon } from 'lucide-react'
 import { Avatar, AvatarImage } from '~/components/ui/avatar'
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from '~/components/ui/popover'
-import { Button } from '../ui/button'
 
-export const UserMenu = () => {
+interface User {
+	avatar: string
+	name: string
+}
+
+interface UserData {
+	user: User | null
+}
+
+export const UserMenu = ({ user }: UserData) => {
 	return (
 		<div>
 			<Popover>
 				<PopoverTrigger>
 					<div className="flex items-center p-4 h-14 -my-2">
 						<Avatar>
-							{/* WIP:ユーザー認証機能作成後、ユーザー画像に変える */}
-							<AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+							{user && <AvatarImage src={user.avatar} alt={user.name} />}
 						</Avatar>
 					</div>
 				</PopoverTrigger>
@@ -24,7 +31,7 @@ export const UserMenu = () => {
 					<div className="hover:bg-slate-200">
 						<Link to={'#'} className="p-2 flex justify-between ">
 							<div>プロフィール</div>
-							<User className="pr-2" />
+							<UserIcon className="pr-2" />
 						</Link>
 					</div>
 					<div className="hover:bg-slate-200">

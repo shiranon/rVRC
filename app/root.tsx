@@ -6,15 +6,14 @@ import {
 	ScrollRestoration,
 	useLoaderData,
 } from '@remix-run/react'
+import type { rootLoader } from '~/.server/loaders'
 import { Footer, Header } from '~/components/layout/index'
 import './tailwind.css'
-import type { rootLoader } from '~/.server/loaders'
 
 export { rootAction as action } from '~/.server/actions'
 export { rootLoader as loader } from '~/.server/loaders'
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
-	const { isLoggedIn } = useLoaderData<typeof rootLoader>()
 	return (
 		<html lang="ja">
 			<head>
@@ -24,7 +23,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 				<Links />
 			</head>
 			<body className="min-w-96 mx-auto font-noto antialiased">
-				<Header isLogin={isLoggedIn} />
+				<Header />
 				<div className="flex max-w-[640px] items-center justify-center m-auto">
 					{children}
 				</div>

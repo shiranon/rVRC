@@ -1,4 +1,3 @@
-
 import { type ActionFunctionArgs, redirect } from '@remix-run/cloudflare'
 import { loadEnvironment } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-server.server'
