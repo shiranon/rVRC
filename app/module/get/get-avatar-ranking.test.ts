@@ -1,20 +1,15 @@
 import { describe, expect, it } from 'vitest'
+import { createClient } from '../supabase/create-client-component.server'
 import { getAvatarRanking } from './get-avatar-ranking'
 
-// cloudflare環境変数を含むcontextオブジェクトを作成
-type Context = {
-	cloudflare: {
-		env: Env
-	}
+const env: Env = {
+	SUPABASE_URL: process.env.SUPABASE_URL ?? '',
+	SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ?? '',
+	VITE_LOCAL_DATE: '',
+	SITE_URL: '',
 }
-const context: Context = {
-	cloudflare: {
-		env: {
-			SUPABASE_URL: process.env.SUPABASE_URL ?? '',
-			SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ?? '',
-		},
-	},
-}
+
+const supabase = createClient(env)
 
 describe('getAvatarRanking関数のテスト', () => {
 	it('ランキングが取得できるかテスト', async () => {
@@ -22,7 +17,7 @@ describe('getAvatarRanking関数のテスト', () => {
 		const page = 1
 		const date = '2024-08-20'
 
-		const result = await getAvatarRanking(type, page, context, date)
+		const result = await getAvatarRanking(type, page, supabase, date)
 
 		expect(result.data).toBeDefined()
 		if (result.data) {
@@ -40,7 +35,7 @@ describe('getAvatarRanking関数のテスト', () => {
 		const page = 1
 		const date = '2023-08-26'
 
-		const result = await getAvatarRanking(type, page, context, date)
+		const result = await getAvatarRanking(type, page, supabase, date)
 
 		expect(result.data).toBeDefined()
 		if (result.data) {
@@ -57,7 +52,7 @@ describe('getAvatarRanking関数のテスト', () => {
 		const date = '2023-08-20'
 
 		try {
-			await getAvatarRanking(type, page, context, date)
+			await getAvatarRanking(type, page, supabase, date)
 		} catch (error) {
 			expect(error).toBeInstanceOf(Error)
 			expect((error as Error).message).toContain('Invalid ranking type')

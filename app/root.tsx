@@ -4,11 +4,16 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
+	useLoaderData,
 } from '@remix-run/react'
+import type { rootLoader } from '~/.server/loaders'
 import { Footer, Header } from '~/components/layout/index'
 import './tailwind.css'
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export { rootAction as action } from '~/.server/actions'
+export { rootLoader as loader } from '~/.server/loaders'
+
+export const Layout = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<html lang="ja">
 			<head>

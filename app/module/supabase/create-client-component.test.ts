@@ -1,8 +1,15 @@
 import { describe, expect, it } from 'vitest'
-import { createClient } from './create-client.server'
+import { createClient } from './create-client-component.server'
+
+const env: Env = {
+	SUPABASE_URL: process.env.SUPABASE_URL ?? '',
+	SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ?? '',
+	VITE_LOCAL_DATE: '',
+	SITE_URL: '',
+}
 
 describe('supabaseClient', () => {
-	const supabase = createClient()
+	const supabase = createClient(env)
 	it('Supabaseが定義されているかを確認', () => {
 		expect(supabase).toBeDefined()
 	})

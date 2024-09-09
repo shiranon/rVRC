@@ -7,12 +7,23 @@ const getYesterday = () => {
 
 const isBeforeRankingUpdate = () => getToday().getHours() < 21
 // 開発環境用のデフォルト日付
-const devDefaultDate = new Date('2024-08-30')
+const devDefaultDate = new Date(import.meta.env.VITE_LOCAL_DATE || '2024-09-05')
 
 const getDevYesterday = () => {
 	const devYesterday = new Date(devDefaultDate)
 	devYesterday.setDate(devYesterday.getDate() - 1)
 	return devYesterday
+}
+
+const getFormattedDate = (date: Date) => {
+	const options: Intl.DateTimeFormatOptions = {
+		timeZone: 'Asia/Tokyo',
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
+	}
+	const formattedDate = date.toLocaleDateString('ja-JP', options)
+	return formattedDate.replace(/\//g, '-')
 }
 
 const getTodayDate = () => {
@@ -23,7 +34,7 @@ const getTodayDate = () => {
 		: isBeforeRankingUpdate()
 			? getDevYesterday()
 			: devDefaultDate
-	return date.toISOString().split('T')[0]
+	return getFormattedDate(date)
 }
 
 const formatMonth = (date: string): string => {

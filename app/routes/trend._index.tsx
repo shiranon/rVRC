@@ -1,13 +1,8 @@
-import type { LoaderFunctionArgs } from '@remix-run/cloudflare'
-import { json } from '@remix-run/cloudflare'
-
 import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
 import { useEffect, useRef } from 'react'
 import { AvatarCard, ClothCard } from '~/components/card'
-import { getAvatarRanking, getClothRanking } from '~/module/get/get-ranking'
 
 import { ItemControls } from '~/components/element/item-controls'
-import { formatMonth, getTodayDate } from '~/lib/date.server'
 
 import type {
 	RankingAvatarData,
@@ -26,22 +21,7 @@ const formatType = (type: string): string => {
 	return ''
 }
 
-export const loader = async ({ request, context }: LoaderFunctionArgs) => {
-	const url = new URL(request.url)
-	const type = url.searchParams.get('type') || 'trend'
-	const item = url.searchParams.get('item') || 'avatar'
-	const page = Number.parseInt(url.searchParams.get('page') || '1', 10)
-	let date = url.searchParams.get('date') || getTodayDate()
-	if (type === 'month') {
-		date = formatMonth(date)
-	}
-	if (item === 'cloth') {
-		const trend = await getClothRanking(type, page, context, date)
-		return json({ trend, item, type })
-	}
-	const trend = await getAvatarRanking(type, page, context, date)
-	return json({ trend, item, type })
-}
+export { trendLoader as loader } from '~/.server/loaders'
 
 export default function Ranking() {
 	const initialData = useLoaderData<RankingAvatarData | RankingClothData>()

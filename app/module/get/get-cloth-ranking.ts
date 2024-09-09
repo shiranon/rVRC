@@ -1,13 +1,12 @@
-import { createClient } from '~/module/supabase/create-client.server'
+import type { SupabaseClient } from '@supabase/supabase-js'
 
 export const getClothRanking = async (
 	type: string,
 	page: number,
-	context: { cloudflare: { env: Env } },
+	supabase: SupabaseClient,
 	date: string,
 	limit = 4,
 ) => {
-	const supabase = createClient({ context })
 	const offset = (page - 1) * 20
 	try {
 		console.log(date)

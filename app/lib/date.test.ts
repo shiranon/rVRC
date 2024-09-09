@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from 'vitest'
 import { getTodayDate, isBeforeRankingUpdate } from './date.server'
 
-const devDefaultDate = new Date('2024-08-30')
+const devDefaultDate = new Date(import.meta.env.VITE_LOCAL_DATE)
+
 const today = new Date(devDefaultDate)
 
 describe('日付関係のテスト', () => {
