@@ -1,4 +1,4 @@
-import { Link } from '@remix-run/react'
+import { Form, Link } from '@remix-run/react'
 import { Folder, FolderHeart, LogOut, User } from 'lucide-react'
 import { Avatar, AvatarImage } from '~/components/ui/avatar'
 import {
@@ -6,6 +6,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '~/components/ui/popover'
+import { Button } from '../ui/button'
 
 export const UserMenu = () => {
 	return (
@@ -39,10 +40,12 @@ export const UserMenu = () => {
 						</Link>
 					</div>
 					<div className="hover:bg-slate-200">
-						<Link to={'#'} className="p-2 flex justify-between ">
-							<div>ログアウト</div>
-							<LogOut className="pr-2" />
-						</Link>
+						<Form action="/sign-out" method="post">
+							<button type="submit" className="p-2 w-full flex justify-between">
+								<div>ログアウト</div>
+								<LogOut className="pr-2" />
+							</button>
+						</Form>
 					</div>
 				</PopoverContent>
 			</Popover>

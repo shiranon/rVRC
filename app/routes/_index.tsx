@@ -38,11 +38,10 @@ export default function Index() {
 		}
 	}, [searchParams, fetcher])
 
-	const ranking = fetcher.data?.ranking.data || initialData.ranking.data
-	const trend = fetcher.data?.trend.data || initialData.trend.data
-	const item = fetcher.data?.item || initialData.item
-
-	console.log(ranking)
+	const ranking =
+		fetcher.data?.ranking?.data || initialData?.ranking?.data || []
+	const trend = fetcher.data?.trend?.data || initialData?.trend?.data || []
+	const item = fetcher.data?.item || initialData?.item
 
 	return (
 		<div className="px-4 flex-1">
