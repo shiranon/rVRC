@@ -1,14 +1,10 @@
 import type { MetaFunction } from '@remix-run/cloudflare'
 import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
 import { useEffect, useRef } from 'react'
+import type { indexLoader } from '~/.server/loaders'
 import { TopRankingCard, TopTrendCard } from '~/components/card'
 import { ItemControls } from '~/components/element/item-controls'
-import type {
-	RankingAvatarType,
-	RankingClothType,
-	TopAvatarData,
-	TopClothData,
-} from '~/types/items'
+import type { RankingAvatarType, RankingClothType } from '~/types/items'
 
 export const meta: MetaFunction = () => {
 	return [
@@ -24,8 +20,8 @@ export const meta: MetaFunction = () => {
 export { indexLoader as loader } from '~/.server/loaders'
 
 export default function Index() {
-	const initialData = useLoaderData<TopAvatarData | TopClothData>()
-	const fetcher = useFetcher<TopAvatarData | TopClothData>()
+	const initialData = useLoaderData<indexLoader>()
+	const fetcher = useFetcher<indexLoader>()
 
 	const [searchParams] = useSearchParams()
 	const prevSearchParamsRef = useRef(searchParams.toString())
@@ -44,7 +40,7 @@ export default function Index() {
 	const item = fetcher.data?.item || initialData?.item
 
 	return (
-		<div className="px-4 flex-1">
+		<div className="px-2 flex-1">
 			<ItemControls />
 			<h1 className="text-3xl py-4 pl-4">デイリーランキング</h1>
 			{ranking && ranking.length > 0 && item === 'avatar' && (

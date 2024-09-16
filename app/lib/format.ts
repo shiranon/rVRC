@@ -1,3 +1,4 @@
+import avatar_holder from 'public/images/avatar.png'
 import { URLS } from '~/lib/constants/urls'
 
 const zeroPad = (date: number): string => {
@@ -35,6 +36,17 @@ const buildShopImage = (imageUrl: string | null) => {
 	if (imageUrl != null) {
 		return `${URLS.SHOP_IMAGE}${imageUrl}${URLS.BASE_SIZE}`
 	}
+	return avatar_holder
 }
 
-export { formatTimestamp, excludeOldDate, buildAvatarImage, buildShopImage }
+const formatValue = (number: number) => {
+	return new Intl.NumberFormat().format(number)
+}
+
+export {
+	formatTimestamp,
+	excludeOldDate,
+	buildAvatarImage,
+	buildShopImage,
+	formatValue,
+}
