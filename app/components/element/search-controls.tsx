@@ -23,9 +23,7 @@ type SortBy =
 	| 'create_asc'
 	| undefined
 
-export const SearchControls = ({
-	onSearchChange,
-}: { onSearchChange: () => void }) => {
+export const SearchControls = () => {
 	const [searchParams] = useSearchParams()
 	const [currentSort, setCurrentSort] = useState<SortBy>('default')
 	const [searchKeyword, setSearchKeyword] = useState<string>('')
@@ -53,7 +51,6 @@ export const SearchControls = ({
 		const newSearchParams = new URLSearchParams(searchParams)
 		newSearchParams.set('search', search || '')
 		navigate(`?${newSearchParams.toString()}`, { replace: true })
-		// onSearchChange()
 	}
 
 	const clearSearchParams = () => {
@@ -61,7 +58,6 @@ export const SearchControls = ({
 		navigate('', { replace: true })
 		setCurrentSort('default')
 		setSearchKeyword('')
-		// onSearchChange()
 	}
 
 	useEffect(() => {

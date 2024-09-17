@@ -24,7 +24,10 @@ export default function avatarPage() {
 
 	const scrollToRelatedCloth = useCallback(() => {
 		if (relatedClothRef.current) {
-			relatedClothRef.current.scrollIntoView({ behavior: 'instant' })
+			const offset = 50
+			const elementPosition =
+				relatedClothRef.current.getBoundingClientRect().top + window.scrollY
+			window.scrollTo({ top: elementPosition - offset, behavior: 'instant' })
 		}
 	}, [])
 
@@ -34,66 +37,66 @@ export default function avatarPage() {
 		}
 	}, [scrollToRelatedCloth, searchParams])
 
-	console.log(totalClothCount)
-
 	if (!avatar) return null
 	return (
 		<>
-			<div className="flex flex-col pt-10 px-6">
-				<img
-					className="rounded-md"
-					src={buildAvatarImage(avatar.image_url)}
-					loading="lazy"
-					alt={avatar.name}
-				/>
-				<div className="text-3xl pt-4 font-semibold tracking-tight leading-relaxed">
-					{avatar.name}
-				</div>
-				<div className="text-3xl font-semibold tracking-tight leading-relaxed">
-					{`￥${formatValue(avatar.price)}`}
-				</div>
-				<div className="flex items-center justify-end text-xl font-bold">
-					<svg
-						aria-hidden="true"
-						focusable="false"
-						viewBox="0 0 24 24"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-						className="w-5 h-5 mr-1"
-					>
-						<path
-							d="M2 9.1371C2 14 6.01943 16.5914 8.96173 18.9109C10 19.7294 11 20.5 12 20.5C13 20.5 14 19.7294 15.0383 18.9109C17.9806 16.5914 22 14 22 9.1371C22 4.27416 16.4998 0.825464 12 5.50063C7.50016 0.825464 2 4.27416 2 9.1371Z"
-							fill="#111111"
-						/>
-					</svg>
-					<div>{formatValue(avatar.latest_favorite)}</div>
-				</div>
-				<div className="flex items-center gap-2">
-					<Avatar>
-						<AvatarImage
-							src={buildShopImage(avatar.shop_image)}
-							loading="lazy"
-							alt={avatar.shop_name}
-						/>
-						<AvatarFallback />
-					</Avatar>
-					<div className="pl-1 text-sm">{avatar.shop_name}</div>
-				</div>
-				<div className="flex justify-center space-x-2 py-4">
-					<Button className="rounded-2xl text-lg w-3/4 h-12 text-white font-bold border-[1px] bg-red-400  hover:bg-red-300">
-						<Link
-							to={`https://booth.pm/ja/items/${avatar.booth_id}`}
-							target="_blank"
-							rel="noopener noreferrer"
+			<div className="pt-2 px-6">
+				<div className="flex flex-col pt-10 px-6">
+					<img
+						className="rounded-md"
+						src={buildAvatarImage(avatar.image_url)}
+						loading="lazy"
+						alt={avatar.name}
+					/>
+					<div className="text-3xl pt-4 font-semibold tracking-tight leading-relaxed">
+						{avatar.name}
+					</div>
+					<div className="text-3xl font-semibold tracking-tight leading-relaxed">
+						{`￥${formatValue(avatar.price)}`}
+					</div>
+					<div className="flex items-center justify-end text-xl font-bold">
+						<svg
+							aria-hidden="true"
+							focusable="false"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+							className="w-5 h-5 mr-1"
 						>
-							BOOTHで購入する
-						</Link>
-					</Button>
+							<path
+								d="M2 9.1371C2 14 6.01943 16.5914 8.96173 18.9109C10 19.7294 11 20.5 12 20.5C13 20.5 14 19.7294 15.0383 18.9109C17.9806 16.5914 22 14 22 9.1371C22 4.27416 16.4998 0.825464 12 5.50063C7.50016 0.825464 2 4.27416 2 9.1371Z"
+								fill="#111111"
+							/>
+						</svg>
+						<div>{formatValue(avatar.latest_favorite)}</div>
+					</div>
+					<div className="flex items-center gap-2">
+						<Avatar>
+							<AvatarImage
+								src={buildShopImage(avatar.shop_image)}
+								loading="lazy"
+								alt={avatar.shop_name}
+							/>
+							<AvatarFallback />
+						</Avatar>
+						<div className="pl-1 text-sm">{avatar.shop_name}</div>
+					</div>
+					<div className="flex justify-center space-x-2 py-4">
+						<Button className="rounded-2xl text-lg w-3/4 h-12 text-white font-bold border-[1px] bg-red-400  hover:bg-red-300">
+							<Link
+								to={`https://booth.pm/ja/items/${avatar.booth_id}`}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								BOOTHで購入する
+							</Link>
+						</Button>
+					</div>
 				</div>
 				<div ref={relatedClothRef} className="text-2xl pt-4">
 					関連衣装
 				</div>
-				<SearchControls onSearchChange={scrollToRelatedCloth} />
+				<SearchControls />
 				{relationCloth && relationCloth.length > 0 ? (
 					<>
 						<Card className="bg-light-beige mt-4">

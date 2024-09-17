@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, json } from '@remix-run/cloudflare'
+import { type LoaderFunctionArgs, json, redirect } from '@remix-run/cloudflare'
 import { loadEnvironment } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-component.server'
 
@@ -23,7 +23,7 @@ export const avatarPageLoader = async ({
 
 	const { id } = params
 	if (!id) {
-		return null
+		throw new Response('ID is not specified', { status: 400 })
 	}
 
 	const url = new URL(request.url)
@@ -37,10 +37,10 @@ export const avatarPageLoader = async ({
 	const avatarData = await supabase.rpc('get_avatar_with_favorite', {
 		page_id: Number.parseInt(id),
 	})
-	if (!avatarData.data) {
-		return null
+
+	if (!avatarData.data || avatarData.data.length === 0) {
+		throw new Response('Error avatar not found', { status: 404 })
 	}
-	console.log(sort_by)
 
 	const relationCloth = await supabase.rpc('get_relation_cloth_data', {
 		avatar_booth_id: avatarData.data[0].booth_id,
@@ -55,9 +55,11 @@ export const avatarPageLoader = async ({
 	})
 
 	if (!totalClothCount.data) {
-		return null
+		throw new Response('Error retrieving related clothing count', {
+			status: 500,
+		})
 	}
-	console.log(totalClothCount.data[0])
+
 	return json({
 		avatar: avatarData.data[0],
 		relationCloth: relationCloth.data,

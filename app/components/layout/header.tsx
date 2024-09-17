@@ -14,11 +14,14 @@ interface UserData {
 	user: User | null
 }
 
-export const Header = () => {
-	const userData = useLoaderData<typeof rootLoader>() as UserData
+interface HeaderProps {
+	userData?: UserData
+}
+
+export const Header = ({ userData }: HeaderProps) => {
 	return (
 		<header className="sticky top-0 left-0 w-full h-16 z-[1000] bg-light-beige">
-			<div className="pt-3 px-3 flex justify-between items-center ">
+			<div className="pt-3 px-3 flex justify-between items-center">
 				<div className="flex">
 					<HamburgerMenu />
 					<Link className="flex pl-2 items-center" to={'/'}>
@@ -26,7 +29,7 @@ export const Header = () => {
 						<div className="pl-4 text-xl">rVRc</div>
 					</Link>
 				</div>
-				{userData.isLoggedIn ? (
+				{userData?.isLoggedIn ? (
 					<div className="flex items-center">
 						<UserMenu user={userData.user} />
 					</div>
