@@ -1,7 +1,12 @@
 import { Link } from '@remix-run/react'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
-import { buildAvatarImage, buildShopImage, excludeOldDate } from '~/lib/format'
+import {
+	buildAvatarImage,
+	buildShopImage,
+	excludeOldDate,
+	formatValue,
+} from '~/lib/format'
 import { truncateString } from '~/lib/utils'
 import type { RankingAvatarType } from '~/types/items'
 import { FavoriteTag } from '../element/favorite-tag'
@@ -41,7 +46,7 @@ export const AvatarCard = ({
 						{truncateString(item.avatar_name, 35)}
 					</CardTitle>
 					<div className="text-right font-bold text-lg">
-						￥{item.avatar_price}
+						￥{formatValue(item.avatar_price)}
 					</div>
 				</Link>
 			</CardContent>

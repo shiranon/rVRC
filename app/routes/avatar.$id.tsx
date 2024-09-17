@@ -96,7 +96,7 @@ export default function avatarPage() {
 				<div ref={relatedClothRef} className="text-2xl pt-4">
 					関連衣装
 				</div>
-				<SearchControls />
+				<SearchControls totalClothCount={totalClothCount} />
 				{relationCloth && relationCloth.length > 0 ? (
 					<>
 						<Card className="bg-light-beige mt-4">
@@ -124,7 +124,7 @@ export default function avatarPage() {
 													{truncateString(cloth.cloth_name, 35)}
 												</CardTitle>
 												<div className="text-right font-bold text-lg">
-													￥{cloth.price}
+													￥{formatValue(cloth.price)}
 												</div>
 											</CardContent>
 											<CardFooter className="pb-4 justify-between">

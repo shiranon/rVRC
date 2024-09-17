@@ -53,7 +53,6 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 export function ErrorBoundary() {
 	const error = useRouteError()
 
-	console.log(error)
 	let errorMessage = '不明なエラーが発生しました'
 
 	if (isRouteErrorResponse(error)) {

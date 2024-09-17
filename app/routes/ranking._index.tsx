@@ -2,6 +2,7 @@ import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
 import { useEffect, useRef } from 'react'
 import { AvatarCard, ClothCard } from '~/components/card'
 import { ItemControls } from '~/components/element/item-controls'
+import { Pagination } from '~/components/element/pagination'
 import type {
 	RankingAvatarData,
 	RankingAvatarType,
@@ -63,6 +64,7 @@ export default function Ranking() {
 								<ClothCard item={cloth as RankingClothType} category="rank" />
 							</div>
 						))}
+					<Pagination totalItems={item === 'avatar' ? 50 : 100} />
 				</div>
 			) : (
 				<div>No data</div>

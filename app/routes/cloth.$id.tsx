@@ -27,7 +27,6 @@ export const loader = async ({ context, params }: LoaderFunctionArgs) => {
 	const relationAvatar = await supabase.rpc('get_relation_avatar_data', {
 		cloth_booth_id: clothData.data[0].booth_id,
 	})
-	console.log(relationAvatar.data)
 	return json({ cloth: clothData.data[0], relationAvatar: relationAvatar.data })
 }
 export default function clothPage() {

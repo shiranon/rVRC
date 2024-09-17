@@ -57,7 +57,7 @@ export default function Index() {
 					avatar={null}
 				/>
 			)}
-			<h1 className="text-3xl py-4 pl-4">トレンドランキング</h1>
+			<h1 className="text-3xl py-4 pl-4">デイリートレンド</h1>
 			{trend && trend.length > 0 && item === 'avatar' && (
 				<TopTrendCard
 					avatar={trend as RankingAvatarType[]}

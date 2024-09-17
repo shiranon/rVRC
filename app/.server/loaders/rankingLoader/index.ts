@@ -22,10 +22,10 @@ export const rankingLoader = async ({
 	}
 
 	if (item === 'cloth') {
-		const ranking = await getClothRanking(type, page, supabase, date)
+		const ranking = await getClothRanking(type, page, supabase, date, 10)
 		return json({ ranking, type, item })
 	}
 
-	const ranking = await getAvatarRanking(type, page, supabase, date)
+	const ranking = await getAvatarRanking(type, page, supabase, date, 10)
 	return json({ ranking, type, item })
 }

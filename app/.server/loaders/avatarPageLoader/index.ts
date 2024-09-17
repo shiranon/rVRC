@@ -32,7 +32,6 @@ export const avatarPageLoader = async ({
 	const sort_by: SortBy = (sort_by_param as SortBy) || undefined
 	const page = Number.parseInt(url.searchParams.get('page') || '1', 10)
 	const limit = 10
-	console.log(sort_by_param)
 
 	const avatarData = await supabase.rpc('get_avatar_with_favorite', {
 		page_id: Number.parseInt(id),

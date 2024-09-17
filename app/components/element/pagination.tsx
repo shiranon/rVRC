@@ -37,7 +37,6 @@ export const Pagination = ({
 		delta,
 	})
 
-	console.log('pages', pages)
 	useEffect(() => {
 		const currentPageNumber = Number.parseInt(
 			searchParams.get('page') || '1',
@@ -51,20 +50,26 @@ export const Pagination = ({
 			<PaginationContent>
 				{!isFirstPage && (
 					<PaginationItem>
-						<PaginationPrevious onClick={() => updatePage(currentPage - 1)} />
+						<PaginationPrevious
+							className="hover:bg-beige"
+							onClick={() => updatePage(currentPage - 1)}
+						/>
 					</PaginationItem>
 				)}
 				{pages.map((page) => {
 					if (page.type === 'dots') {
 						return (
 							<PaginationItem key={`page-${page.value}`}>
-								<PaginationEllipsis />
+								<PaginationEllipsis className="text-lg hover:bg-beige" />
 							</PaginationItem>
 						)
 					}
 					return (
 						<PaginationItem key={`page-${page.value}`}>
-							<PaginationLink onClick={() => updatePage(page.value)}>
+							<PaginationLink
+								className="m-1 text-lg hover:bg-beige"
+								onClick={() => updatePage(page.value)}
+							>
 								{page.value}
 							</PaginationLink>
 						</PaginationItem>
@@ -72,7 +77,10 @@ export const Pagination = ({
 				})}
 				{!isLastPage && (
 					<PaginationItem>
-						<PaginationNext onClick={() => updatePage(currentPage + 1)} />
+						<PaginationNext
+							className="hover:bg-beige"
+							onClick={() => updatePage(currentPage + 1)}
+						/>
 					</PaginationItem>
 				)}
 			</PaginationContent>

@@ -47,7 +47,11 @@ export const TopRankingCard = ({
 			</CardContent>
 			<CardFooter className="flex pb-4 justify-center">
 				<Button className="rounded-3xl text-lg text-light-gray border-[1px] border-beige hover:bg-white">
-					<Link to={'/ranking'}>もっと見る</Link>
+					{avatar ? (
+						<Link to={'/ranking'}>もっと見る</Link>
+					) : (
+						<Link to={'/ranking?item=cloth'}>もっと見る</Link>
+					)}
 				</Button>
 			</CardFooter>
 		</Card>

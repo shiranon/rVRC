@@ -17,9 +17,9 @@ export const trendLoader = async ({ request, context }: LoaderFunctionArgs) => {
 		date = formatMonth(date)
 	}
 	if (item === 'cloth') {
-		const trend = await getClothRanking(type, page, supabase, date)
+		const trend = await getClothRanking(type, page, supabase, date, 10)
 		return json({ trend, item, type })
 	}
-	const trend = await getAvatarRanking(type, page, supabase, date)
+	const trend = await getAvatarRanking(type, page, supabase, date, 10)
 	return json({ trend, item, type })
 }

@@ -8,6 +8,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '~/components/ui/select'
+import { formatValue } from '~/lib/format'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 
@@ -23,7 +24,9 @@ type SortBy =
 	| 'create_asc'
 	| undefined
 
-export const SearchControls = () => {
+export const SearchControls = ({
+	totalClothCount,
+}: { totalClothCount: number }) => {
 	const [searchParams] = useSearchParams()
 	const [currentSort, setCurrentSort] = useState<SortBy>('default')
 	const [searchKeyword, setSearchKeyword] = useState<string>('')
@@ -76,6 +79,11 @@ export const SearchControls = () => {
 					value={searchKeyword}
 					onBlur={() => setSearchKeyword(searchKeyword)}
 					onChange={(e) => setSearchKeyword(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') {
+							updateSearch(searchKeyword)
+						}
+					}}
 				/>
 				<Button
 					className="bg-light-gray rounded-l-none text-white hover:bg-slate-500"
@@ -83,31 +91,38 @@ export const SearchControls = () => {
 				>
 					検索
 				</Button>
-				<Select
-					value={currentSort === 'default' ? '' : currentSort}
-					onValueChange={(value) => {
-						updateSort(value as SortBy)
-					}}
-				>
-					<SelectTrigger className="bg-white rounded-r-none">
-						<SelectValue placeholder="ソート" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectGroup>
-							{sortOptions.map((option) => (
-								<SelectItem key={option.value} value={option.value}>
-									{option.label}
-								</SelectItem>
-							))}
-						</SelectGroup>
-					</SelectContent>
-				</Select>
-				<Button
-					className="bg-light-gray text-white rounded-l-none hover:bg-slate-500"
-					onClick={clearSearchParams}
-				>
-					クリア
-				</Button>
+			</div>
+			<div className="grid pt-2 grid-cols-[30%_70%] gap-y-1">
+				<div className="flex items-center text-lg">
+					対応衣装（{formatValue(totalClothCount)}点）
+				</div>
+				<div className="flex">
+					<Select
+						value={currentSort === 'default' ? '' : currentSort}
+						onValueChange={(value) => {
+							updateSort(value as SortBy)
+						}}
+					>
+						<SelectTrigger className="bg-white rounded-r-none">
+							<SelectValue placeholder="ソート" />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectGroup>
+								{sortOptions.map((option) => (
+									<SelectItem key={option.value} value={option.value}>
+										{option.label}
+									</SelectItem>
+								))}
+							</SelectGroup>
+						</SelectContent>
+					</Select>
+					<Button
+						className="w-40 bg-light-gray text-white rounded-l-none hover:bg-slate-500"
+						onClick={clearSearchParams}
+					>
+						クリア
+					</Button>
+				</div>
 			</div>
 		</>
 	)

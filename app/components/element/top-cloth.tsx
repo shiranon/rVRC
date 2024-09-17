@@ -1,7 +1,7 @@
 import { Link } from '@remix-run/react'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
-import { buildAvatarImage, buildShopImage } from '~/lib/format'
+import { buildAvatarImage, buildShopImage, formatValue } from '~/lib/format'
 import { truncateString } from '~/lib/utils'
 import type { RankingClothType } from '~/types/items'
 import { FavoriteTag } from './favorite-tag'
@@ -40,7 +40,7 @@ export const TopCloth = ({
 						{truncateString(item.cloth_name, 35)}
 					</CardTitle>
 					<div className="text-right font-bold text-lg">
-						￥{item.cloth_price}
+						￥{formatValue(item.cloth_price)}
 					</div>
 				</CardContent>
 			</Link>
