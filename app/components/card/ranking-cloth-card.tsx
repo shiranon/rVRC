@@ -43,7 +43,7 @@ export const ClothCard = ({
 					<CardTitle className="leading-relaxed">
 						{truncateString(item.cloth_name, 35)}
 					</CardTitle>
-					<div className="text-right font-bold text-lg">
+					<div className="text-right font-bold text-xl">
 						￥{formatValue(item.cloth_price)}
 					</div>
 				</CardContent>

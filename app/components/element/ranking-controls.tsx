@@ -1,4 +1,12 @@
 import { useSearchParams } from '@remix-run/react'
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '../ui/dialog'
 
 export function RankingControls() {
 	const [searchParams, setSearchParams] = useSearchParams()
@@ -18,19 +26,21 @@ export function RankingControls() {
 	}
 
 	return (
-		<div className="flex justify-center sticky bottom-10 bg-white z-10">
-			<button type="button" onClick={() => updateType('day')}>
-				日間
-			</button>
-			<button type="button" onClick={() => updateType('month')}>
-				月間
-			</button>
-			<button type="button" onClick={() => updatePage(1)}>
-				1ページ目
-			</button>
-			<button type="button" onClick={() => updatePage(2)}>
-				2ページ目
-			</button>
-		</div>
+		<Dialog>
+			<DialogTrigger>
+				<div className="flex p-4 items-center justify-center sticky bottom-11 z-50 bg-[#DBB5B5] hover:bg-[#C39898] text-white rounded-lg">
+					<div className="text-lg px-24">絞り込み</div>
+				</div>
+			</DialogTrigger>
+			<DialogContent>
+				<DialogHeader>
+					<DialogTitle>Are you absolutely sure?</DialogTitle>
+					<DialogDescription>
+						This action cannot be undone. This will permanently delete your
+						account and remove your data from our servers.
+					</DialogDescription>
+				</DialogHeader>
+			</DialogContent>
+		</Dialog>
 	)
 }

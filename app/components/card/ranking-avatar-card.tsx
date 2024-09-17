@@ -45,7 +45,7 @@ export const AvatarCard = ({
 					<CardTitle className="leading-relaxed">
 						{truncateString(item.avatar_name, 35)}
 					</CardTitle>
-					<div className="text-right font-bold text-lg">
+					<div className="text-right font-bold text-xl">
 						￥{formatValue(item.avatar_price)}
 					</div>
 				</Link>

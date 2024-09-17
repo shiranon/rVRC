@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { AvatarCard, ClothCard } from '~/components/card'
 import { ItemControls } from '~/components/element/item-controls'
 import { Pagination } from '~/components/element/pagination'
+import { RankingControls } from '~/components/element/ranking-controls'
 import type {
 	RankingAvatarData,
 	RankingAvatarType,
@@ -44,26 +45,31 @@ export default function Ranking() {
 	return (
 		<>
 			{data && data.length > 0 ? (
-				<div className="px-4 flex-1">
-					<ItemControls />
-					<h1 className="text-2xl font-semibold p-4 my-2">
-						{formatType(type)}ランキング
-					</h1>
-					{item === 'avatar' &&
-						data.map((avatar) => (
-							<div key={avatar.booth_id} className="mb-4">
-								<AvatarCard
-									item={avatar as RankingAvatarType}
-									category="rank"
-								/>
-							</div>
-						))}
-					{item === 'cloth' &&
-						data.map((cloth) => (
-							<div key={cloth.booth_id} className="mb-4">
-								<ClothCard item={cloth as RankingClothType} category="rank" />
-							</div>
-						))}
+				<div className="relative">
+					<div className="px-4 flex-1e">
+						<ItemControls />
+						<h1 className="text-2xl font-semibold p-4 my-2">
+							{formatType(type)}ランキング
+						</h1>
+						{item === 'avatar' &&
+							data.map((avatar) => (
+								<div key={avatar.booth_id} className="mb-4">
+									<AvatarCard
+										item={avatar as RankingAvatarType}
+										category="rank"
+									/>
+								</div>
+							))}
+						{item === 'cloth' &&
+							data.map((cloth) => (
+								<div key={cloth.booth_id} className="mb-4">
+									<ClothCard item={cloth as RankingClothType} category="rank" />
+								</div>
+							))}
+					</div>
+					<div className="flex items-center justify-center sticky bottom-11 z-50">
+						<RankingControls />
+					</div>
 					<Pagination totalItems={item === 'avatar' ? 50 : 100} />
 				</div>
 			) : (
