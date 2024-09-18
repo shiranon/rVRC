@@ -27,7 +27,7 @@ type SortBy =
 export const SearchControls = ({
 	totalClothCount,
 }: { totalClothCount: number }) => {
-	const [searchParams] = useSearchParams()
+	const [searchParams, setSearchParams] = useSearchParams()
 	const [currentSort, setCurrentSort] = useState<SortBy>('default')
 	const [searchKeyword, setSearchKeyword] = useState<string>('')
 	const navigate = useNavigate()
@@ -44,16 +44,20 @@ export const SearchControls = ({
 	]
 
 	const updateSort = (sort: SortBy) => {
-		if (sort === 'default') return
-		const newSearchParams = new URLSearchParams(searchParams)
-		newSearchParams.set('sort', sort || '')
-		navigate(`?${newSearchParams.toString()}`, { replace: true })
-	}
+    if (sort === 'default') return
+    setSearchParams((prev) => {
+        prev.set('sort', sort || '')
+        return prev
+    })
+    navigate(`?${searchParams.toString()}`, { replace: true })
+}
 
 	const updateSearch = (search: string) => {
-		const newSearchParams = new URLSearchParams(searchParams)
-		newSearchParams.set('search', search || '')
-		navigate(`?${newSearchParams.toString()}`, { replace: true })
+    setSearchParams((prev) => {
+			prev.set('search', search || '')
+			return prev
+	})
+		navigate(`?${searchParams.toString()}`, { replace: true })
 	}
 
 	const clearSearchParams = () => {
