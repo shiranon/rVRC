@@ -1,4 +1,8 @@
-import { useSearchParams } from '@remix-run/react'
+import { useLocation, useSearchParams } from '@remix-run/react'
+import { ja } from 'date-fns/locale'
+import { useEffect, useState } from 'react'
+import { Button } from '../ui/button'
+import { Calendar } from '../ui/calendar'
 import {
 	Dialog,
 	DialogContent,
@@ -7,9 +11,6 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '../ui/dialog'
-import { useState, useEffect } from 'react'
-import { Calendar } from '../ui/calendar'
-import { ja } from 'date-fns/locale'
 
 export function RankingControls() {
 	const [searchParams, setSearchParams] = useSearchParams()
@@ -19,6 +20,12 @@ export function RankingControls() {
 		const dateParam = searchParams.get('date')
 		return dateParam ? new Date(dateParam) : undefined
 	})
+
+	const location = useLocation()
+
+	const handleClear = () => {
+		window.location.href = location.pathname
+	}
 
 	useEffect(() => {
 		if (date) {
@@ -37,15 +44,14 @@ export function RankingControls() {
 					<div className="text-lg px-24">絞り込み</div>
 				</div>
 			</DialogTrigger>
-			<DialogContent className='rounded-md'>
+			<DialogContent className="rounded-md">
 				<DialogHeader>
-					<DialogTitle>カレンダー</DialogTitle>
+					<DialogTitle>ランキング日付</DialogTitle>
 				</DialogHeader>
 				<DialogDescription className="sr-only">
 					日付を選択してください。
 				</DialogDescription>
-				<div className="">
-					<p>{date ? date.toLocaleDateString() : '日付が選択されていません'}</p>
+				<div>
 					<Calendar
 						mode="single"
 						locale={ja}
@@ -57,9 +63,20 @@ export function RankingControls() {
 							}
 						}}
 						defaultMonth={date}
-						disabled={{ after: new Date(), before: new Date('2024/08/18') }}
+						disabled={{
+							after: new Date(Date.now() - 86400000),
+							before: new Date('2024/08/18'),
+						}}
 						className="rounded-md border bg-white"
 					/>
+				</div>
+				<div className="flex justify-center">
+					<Button
+						className="w-1/2 bg-light-gray text-white hover:bg-slate-500"
+						onClick={handleClear}
+					>
+						クリア
+					</Button>
 				</div>
 			</DialogContent>
 		</Dialog>

@@ -44,19 +44,19 @@ export const SearchControls = ({
 	]
 
 	const updateSort = (sort: SortBy) => {
-    if (sort === 'default') return
-    setSearchParams((prev) => {
-        prev.set('sort', sort || '')
-        return prev
-    })
-    navigate(`?${searchParams.toString()}`, { replace: true })
-}
+		if (sort === 'default') return
+		setSearchParams((prev) => {
+			prev.set('sort', sort || '')
+			return prev
+		})
+		navigate(`?${searchParams.toString()}`, { replace: true })
+	}
 
 	const updateSearch = (search: string) => {
-    setSearchParams((prev) => {
+		setSearchParams((prev) => {
 			prev.set('search', search || '')
 			return prev
-	})
+		})
 		navigate(`?${searchParams.toString()}`, { replace: true })
 	}
 
