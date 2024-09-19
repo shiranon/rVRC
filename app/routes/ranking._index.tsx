@@ -78,7 +78,7 @@ export default function Ranking() {
 								</div>
 							))}
 					</div>
-					<div className="flex items-center justify-center sticky bottom-11 z-50">
+					<div className="flex items-center justify-center sticky bottom-6 z-50">
 						<RankingControls />
 					</div>
 					<Pagination totalItems={item === 'avatar' ? 50 : 100} />

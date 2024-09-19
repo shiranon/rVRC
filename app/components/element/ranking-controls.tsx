@@ -18,7 +18,7 @@ export function RankingControls() {
 
 	const [date, setDate] = useState<Date | undefined>(() => {
 		const dateParam = searchParams.get('date')
-		return dateParam ? new Date(dateParam) : undefined
+		return dateParam ? new Date(dateParam.replace(/-/g, '/')) : undefined
 	})
 
 	const location = useLocation()
@@ -40,7 +40,7 @@ export function RankingControls() {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger>
-				<div className="flex p-4 items-center justify-center sticky bottom-11 z-50 bg-[#DBB5B5] hover:bg-[#C39898] text-white rounded-lg">
+				<div className="flex p-2 items-center justify-center sticky bottom-11 z-50 bg-[#DBB5B5] hover:bg-[#C39898] text-white rounded-lg">
 					<div className="text-lg px-24">絞り込み</div>
 				</div>
 			</DialogTrigger>
@@ -60,6 +60,10 @@ export function RankingControls() {
 							if (newDate) {
 								setDate(newDate)
 								setOpen(false)
+								setSearchParams((prev) => {
+									prev.set('page', '1')
+									return prev
+								})
 							}
 						}}
 						defaultMonth={date}
