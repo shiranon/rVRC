@@ -29,3 +29,5 @@ export const rankingLoader = async ({
 	const ranking = await getAvatarRanking(type, page, supabase, date, 10)
 	return json({ ranking, type, item })
 }
+
+export type rankingLoader = typeof rankingLoader

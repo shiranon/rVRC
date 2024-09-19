@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import type { indexLoader } from '~/.server/loaders'
 import { TopRankingCard, TopTrendCard } from '~/components/card'
 import { ItemControls } from '~/components/element/item-controls'
-import type { RankingAvatarType, RankingClothType } from '~/types/items'
+import type { RankingType } from '~/types/items'
 
 export const meta: MetaFunction = () => {
 	return [
@@ -43,34 +43,12 @@ export default function Index() {
 		<div className="px-2 flex-1">
 			<ItemControls />
 			<h1 className="text-3xl py-4 pl-4">デイリーランキング</h1>
-			{ranking && ranking.length > 0 && item === 'avatar' && (
-				<TopRankingCard
-					avatar={ranking as RankingAvatarType[]}
-					item={item}
-					cloth={null}
-				/>
-			)}
-			{ranking && ranking.length > 0 && item === 'cloth' && (
-				<TopRankingCard
-					cloth={ranking as RankingClothType[]}
-					item={item}
-					avatar={null}
-				/>
+			{ranking && ranking.length > 0 && (
+				<TopRankingCard ranking={ranking as RankingType[]} item={item} />
 			)}
 			<h1 className="text-3xl py-4 pl-4">デイリートレンド</h1>
-			{trend && trend.length > 0 && item === 'avatar' && (
-				<TopTrendCard
-					avatar={trend as RankingAvatarType[]}
-					item={item}
-					cloth={null}
-				/>
-			)}
-			{trend && trend.length > 0 && item === 'cloth' && (
-				<TopTrendCard
-					cloth={trend as RankingClothType[]}
-					item={item}
-					avatar={null}
-				/>
+			{trend && trend.length > 0 && (
+				<TopTrendCard ranking={trend as RankingType[]} item={item} />
 			)}
 		</div>
 	)

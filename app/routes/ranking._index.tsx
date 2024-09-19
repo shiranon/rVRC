@@ -1,15 +1,11 @@
 import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
 import { useEffect, useRef } from 'react'
-import { AvatarCard, ClothCard } from '~/components/card'
+import type { rankingLoader } from '~/.server/loaders'
+import { RankingItemCard } from '~/components/card/ranking-item-card'
 import { ItemControls } from '~/components/element/item-controls'
 import { Pagination } from '~/components/element/pagination'
 import { RankingControls } from '~/components/element/ranking-controls'
-import type {
-	RankingAvatarData,
-	RankingAvatarType,
-	RankingClothData,
-	RankingClothType,
-} from '~/types/items'
+import type { RankingType } from '~/types/items'
 
 const formatType = (type: string): string => {
 	if (type === 'month') {
@@ -24,8 +20,8 @@ const formatType = (type: string): string => {
 export { rankingLoader as loader } from '~/.server/loaders'
 
 export default function Ranking() {
-	const initialData = useLoaderData<RankingAvatarData | RankingClothData>()
-	const fetcher = useFetcher<RankingAvatarData | RankingClothData>()
+	const initialData = useLoaderData<rankingLoader>()
+	const fetcher = useFetcher<rankingLoader>()
 
 	const [searchParams] = useSearchParams()
 	const prevSearchParamsRef = useRef(searchParams.toString())
@@ -62,21 +58,11 @@ export default function Ranking() {
 							</h1>
 							<div className="pt-2">{rankingDate}</div>
 						</div>
-						{item === 'avatar' &&
-							data.map((avatar) => (
-								<div key={avatar.booth_id} className="mb-4">
-									<AvatarCard
-										item={avatar as RankingAvatarType}
-										category="rank"
-									/>
-								</div>
-							))}
-						{item === 'cloth' &&
-							data.map((cloth) => (
-								<div key={cloth.booth_id} className="mb-4">
-									<ClothCard item={cloth as RankingClothType} category="rank" />
-								</div>
-							))}
+						{data.map((ranking: RankingType) => (
+							<div key={ranking.booth_id} className="mb-4">
+								<RankingItemCard item={ranking} category="rank" type={item} />
+							</div>
+						))}
 					</div>
 					<div className="flex items-center justify-center sticky bottom-6 z-50">
 						<RankingControls />

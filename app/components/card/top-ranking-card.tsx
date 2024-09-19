@@ -1,53 +1,33 @@
 import { Link } from '@remix-run/react'
 import { Card, CardContent, CardFooter } from '~/components/ui/card'
-import type { RankingClothType } from '~/types/items'
-import { TopAvatar } from '../element/top-avatar'
-import { TopCloth } from '../element/top-cloth'
+import type { RankingType } from '~/types/items'
+import { TopItem } from '../element/top-item'
 import { Button } from '../ui/button'
 
-type RankingAvatarType = {
-	id: number
-	booth_id: number
-	rank: number
-	favorite_count: number
-	difference: number
-	avatar_name: string
-	avatar_price: number
-	avatar_image: string
-	avatar_added: string
-	shop_name: string
-	shop_id: string
-	shop_image: string
-}
-
 export const TopRankingCard = ({
-	avatar,
-	cloth,
+	ranking,
 	item,
 }: {
-	avatar: RankingAvatarType[] | null
-	cloth: RankingClothType[] | null
+	ranking: RankingType[] | null
 	item: string
 }) => {
 	return (
 		<Card className="bg-light-beige">
 			<CardContent className="grid grid-cols-2 gap-2 p-3">
-				{avatar &&
-					avatar.length > 0 &&
-					item === 'avatar' &&
-					avatar.map((item) => (
-						<TopAvatar key={item.booth_id} item={item} category="rank" />
-					))}
-				{cloth &&
-					cloth.length > 0 &&
-					item === 'cloth' &&
-					cloth.map((item) => (
-						<TopCloth key={item.booth_id} item={item} category="rank" />
+				{ranking &&
+					ranking.length > 0 &&
+					ranking.map((data) => (
+						<TopItem
+							key={data.booth_id}
+							data={data}
+							category="rank"
+							type={item}
+						/>
 					))}
 			</CardContent>
 			<CardFooter className="flex pb-4 justify-center">
 				<Button className="rounded-3xl text-lg text-light-gray border-[1px] border-beige hover:bg-white">
-					{avatar ? (
+					{item === 'avatar' ? (
 						<Link to={'/ranking'}>もっと見る</Link>
 					) : (
 						<Link to={'/ranking?item=cloth'}>もっと見る</Link>

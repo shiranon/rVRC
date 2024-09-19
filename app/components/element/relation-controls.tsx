@@ -22,15 +22,14 @@ type SortBy =
 	| 'favorite_desc'
 	| 'create_desc'
 	| 'create_asc'
-	| undefined
 
-export const SearchControls = ({
+export const RelationControls = ({
 	totalClothCount,
 }: { totalClothCount: number }) => {
 	const [searchParams, setSearchParams] = useSearchParams()
+	const navigate = useNavigate()
 	const [currentSort, setCurrentSort] = useState<SortBy>('default')
 	const [searchKeyword, setSearchKeyword] = useState<string>('')
-	const navigate = useNavigate()
 
 	const sortOptions = [
 		{ value: 'name_asc', label: '名前順' },
@@ -43,18 +42,9 @@ export const SearchControls = ({
 		{ value: 'create_asc', label: '登録が古い順' },
 	]
 
-	const updateSort = (sort: SortBy) => {
-		if (sort === 'default') return
+	const updateParams = (key: string, value: string) => {
 		setSearchParams((prev) => {
-			prev.set('sort', sort || '')
-			return prev
-		})
-		navigate(`?${searchParams.toString()}`, { replace: true })
-	}
-
-	const updateSearch = (search: string) => {
-		setSearchParams((prev) => {
-			prev.set('search', search || '')
+			prev.set(key, value || '')
 			return prev
 		})
 		navigate(`?${searchParams.toString()}`, { replace: true })
@@ -68,30 +58,24 @@ export const SearchControls = ({
 	}
 
 	useEffect(() => {
-		const sortParam = (searchParams.get('sort') as SortBy) || 'default'
-		const searchKeywordParam = searchParams.get('search') || ''
-		setCurrentSort(sortParam)
-		if (searchKeywordParam) {
-			setSearchKeyword(searchKeywordParam)
-		}
+		setCurrentSort((searchParams.get('sort') as SortBy) || 'default')
+		setSearchKeyword(searchParams.get('search') || '')
 	}, [searchParams])
+
 	return (
 		<>
 			<div className="grid pt-2 grid-cols-[70%_30%] gap-y-1">
 				<Input
 					className="bg-white rounded-r-none"
 					value={searchKeyword}
-					onBlur={() => setSearchKeyword(searchKeyword)}
 					onChange={(e) => setSearchKeyword(e.target.value)}
-					onKeyDown={(e) => {
-						if (e.key === 'Enter') {
-							updateSearch(searchKeyword)
-						}
-					}}
+					onKeyDown={(e) =>
+						e.key === 'Enter' && updateParams('search', searchKeyword)
+					}
 				/>
 				<Button
 					className="bg-light-gray rounded-l-none text-white hover:bg-slate-500"
-					onClick={() => updateSearch(searchKeyword)}
+					onClick={() => updateParams('search', searchKeyword)}
 				>
 					検索
 				</Button>
@@ -104,7 +88,7 @@ export const SearchControls = ({
 					<Select
 						value={currentSort === 'default' ? '' : currentSort}
 						onValueChange={(value) => {
-							updateSort(value as SortBy)
+							updateParams('sort', value as SortBy)
 						}}
 					>
 						<SelectTrigger className="bg-white rounded-r-none">

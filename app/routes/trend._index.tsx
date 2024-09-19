@@ -1,16 +1,11 @@
 import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
 import { useEffect, useRef } from 'react'
-import { AvatarCard, ClothCard } from '~/components/card'
+import type { trendLoader } from '~/.server/loaders'
+import { RankingItemCard } from '~/components/card'
 
 import { ItemControls } from '~/components/element/item-controls'
 import { Pagination } from '~/components/element/pagination'
-
-import type {
-	RankingAvatarData,
-	RankingAvatarType,
-	RankingClothData,
-	RankingClothType,
-} from '~/types/items'
+import type { RankingType } from '~/types/items'
 
 const formatType = (type: string): string => {
 	if (type === 'trend_month') {
@@ -25,8 +20,8 @@ const formatType = (type: string): string => {
 export { trendLoader as loader } from '~/.server/loaders'
 
 export default function Ranking() {
-	const initialData = useLoaderData<RankingAvatarData | RankingClothData>()
-	const fetcher = useFetcher<RankingAvatarData | RankingClothData>()
+	const initialData = useLoaderData<trendLoader>()
+	const fetcher = useFetcher<trendLoader>()
 
 	const [searchParams] = useSearchParams()
 	const prevSearchParamsRef = useRef(searchParams.toString())
@@ -51,21 +46,11 @@ export default function Ranking() {
 					<h1 className="text-2xl font-semibold p-4 my-2">
 						{formatType(type)}トレンド
 					</h1>
-					{item === 'avatar' &&
-						data.map((avatar) => (
-							<div key={avatar.booth_id} className="mb-4">
-								<AvatarCard
-									item={avatar as RankingAvatarType}
-									category="trend"
-								/>
-							</div>
-						))}
-					{item === 'cloth' &&
-						data.map((cloth) => (
-							<div key={cloth.booth_id} className="mb-4">
-								<ClothCard item={cloth as RankingClothType} category="trend" />
-							</div>
-						))}
+					{data.map((trend: RankingType) => (
+						<div key={trend.booth_id} className="mb-4">
+							<RankingItemCard item={trend} category="trend" type={item} />
+						</div>
+					))}
 					<Pagination totalItems={item === 'avatar' ? 50 : 100} />
 				</div>
 			) : (

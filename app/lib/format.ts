@@ -1,4 +1,4 @@
-import avatar_holder from 'public/images/avatar.png'
+import avatar_holder from '~/images/avatar.png'
 import { URLS } from '~/lib/constants/urls'
 
 const zeroPad = (date: number): string => {

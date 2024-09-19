@@ -7,7 +7,7 @@ const getYesterday = () => {
 
 const isBeforeRankingUpdate = () => getToday().getHours() < 21
 // 開発環境用のデフォルト日付
-const devDefaultDate = new Date(import.meta.env.VITE_LOCAL_DATE || '2024-09-05')
+const devDefaultDate = new Date(import.meta.env.VITE_LOCAL_DATE)
 
 const getDevYesterday = () => {
 	const devYesterday = new Date(devDefaultDate)

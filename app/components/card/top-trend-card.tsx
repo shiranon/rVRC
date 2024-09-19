@@ -1,38 +1,33 @@
 import { Link } from '@remix-run/react'
 import { Card, CardContent, CardFooter } from '~/components/ui/card'
-import type { RankingAvatarType, RankingClothType } from '~/types/items'
-import { TopAvatar } from '../element/top-avatar'
-import { TopCloth } from '../element/top-cloth'
+import type { RankingType } from '~/types/items'
+import { TopItem } from '../element/top-item'
 import { Button } from '../ui/button'
 
 export const TopTrendCard = ({
-	avatar,
-	cloth,
+	ranking,
 	item,
 }: {
-	avatar: RankingAvatarType[] | null
-	cloth: RankingClothType[] | null
+	ranking: RankingType[] | null
 	item: string
 }) => {
 	return (
 		<Card className="bg-light-beige">
 			<CardContent className="grid grid-cols-2 gap-3 p-4">
-				{avatar &&
-					avatar.length > 0 &&
-					item === 'avatar' &&
-					avatar.map((item) => (
-						<TopAvatar key={item.booth_id} item={item} category="trend" />
-					))}
-				{cloth &&
-					cloth.length > 0 &&
-					item === 'cloth' &&
-					cloth.map((item) => (
-						<TopCloth key={item.booth_id} item={item} category="trend" />
+				{ranking &&
+					ranking.length > 0 &&
+					ranking.map((data) => (
+						<TopItem
+							key={data.booth_id}
+							data={data}
+							category="trend"
+							type={item}
+						/>
 					))}
 			</CardContent>
 			<CardFooter className="pb-4 justify-center">
 				<Button className="rounded-3xl text-lg text-light-gray border-[1px] border-beige hover:bg-white">
-					{avatar ? (
+					{item === 'avatar' ? (
 						<Link to={'/trend'}>もっと見る</Link>
 					) : (
 						<Link to={'/trend?item=cloth'}>もっと見る</Link>

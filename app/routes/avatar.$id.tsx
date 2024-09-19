@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef } from 'react'
 import type { avatarPageLoader } from '~/.server/loaders'
 import { FavoriteTag } from '~/components/element/favorite-tag'
 import { Pagination } from '~/components/element/pagination'
-import { SearchControls } from '~/components/element/search-controls'
+import { RelationControls } from '~/components/element/relation-controls'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
@@ -96,7 +96,7 @@ export default function avatarPage() {
 				<div ref={relatedClothRef} className="text-2xl pt-4">
 					関連衣装
 				</div>
-				<SearchControls totalClothCount={totalClothCount} />
+				<RelationControls totalClothCount={totalClothCount} />
 				{relationCloth && relationCloth.length > 0 ? (
 					<>
 						<Card className="bg-light-beige mt-4">
