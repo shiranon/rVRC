@@ -1,5 +1,4 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { X } from 'lucide-react'
 import * as React from 'react'
 
 import { cn } from '~/lib/utils'
@@ -52,10 +51,7 @@ const DialogHeader = ({
 	...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
 	<div
-		className={cn(
-			'flex flex-col space-y-1.5 text-center sm:text-left',
-			className,
-		)}
+		className={cn('flex flex-col space-y-1.5 text-center', className)}
 		{...props}
 	/>
 )
@@ -104,13 +100,13 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName
 
 export {
 	Dialog,
-	DialogPortal,
-	DialogOverlay,
 	DialogClose,
-	DialogTrigger,
 	DialogContent,
-	DialogHeader,
-	DialogFooter,
-	DialogTitle,
 	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogOverlay,
+	DialogPortal,
+	DialogTitle,
+	DialogTrigger,
 }

@@ -6,6 +6,7 @@ export type ItemType = {
 	price: number
 }
 export type RankingAvatarType = {
+	id: number
 	booth_id: number
 	rank: number
 	favorite_count: number
@@ -40,6 +41,7 @@ export type TopAvatarData = {
 }
 
 export type RankingClothType = {
+	id: number
 	booth_id: number
 	rank: number
 	favorite_count: number

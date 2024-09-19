@@ -16,8 +16,7 @@ export const ItemControls = () => {
 	useEffect(() => {
 		const itemPram = searchParams.get('item') || 'avatar'
 		setCurrentItem(itemPram)
-		console.log(currentItem)
-	}, [searchParams, currentItem])
+	}, [searchParams])
 	return (
 		<div className="flex justify-center space-x-2 py-4">
 			<Button

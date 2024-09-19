@@ -20,3 +20,5 @@ export const indexLoader = async ({ request, context }: LoaderFunctionArgs) => {
 	const trend = await getAvatarRanking('trend', 1, supabase, getTodayDate())
 	return json({ ranking, trend, item })
 }
+
+export type indexLoader = typeof indexLoader
