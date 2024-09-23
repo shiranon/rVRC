@@ -1,4 +1,4 @@
-import avatar_holder from 'public/images/avatar.png'
+import avatar_holder from '~/images/avatar.png'
 import { URLS } from '~/lib/constants/urls'
 
 const zeroPad = (date: number): string => {
@@ -43,10 +43,16 @@ const formatValue = (number: number) => {
 	return new Intl.NumberFormat().format(number)
 }
 
+const formatJapaneseDate = (dateString: string | null): string => {
+	const date = dateString ? new Date(dateString) : new Date()
+	return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
+}
+
 export {
 	formatTimestamp,
 	excludeOldDate,
 	buildAvatarImage,
 	buildShopImage,
 	formatValue,
+	formatJapaneseDate,
 }

@@ -1,76 +1,48 @@
-export type ItemType = {
-	name: string
-	booth_id: number
-	deleted: boolean
-	image_url: string | null
-	price: number
-}
-export type RankingAvatarType = {
+export type RankingType = {
 	id: number
 	booth_id: number
 	rank: number
 	favorite_count: number
 	difference: number
-	avatar_name: string
-	avatar_price: number
-	avatar_image: string
-	avatar_added: string
+	item_name: string
+	item_price: number
+	item_image: string
+	item_added: string
 	shop_name: string
 	shop_id: string
 	shop_image: string
 }
-
-export type RankingAvatarData = {
-	ranking: {
-		data: RankingAvatarType[] | null
-	}
-	trend: {
-		data: RankingAvatarType[] | null
-	}
-	type: string
-	item: string
-}
-export type TopAvatarData = {
-	ranking: {
-		data: RankingAvatarType[] | null
-	}
-	trend: {
-		data: RankingAvatarType[] | null
-	}
-	item: string
-}
-
-export type RankingClothType = {
+export type SearchType = {
 	id: number
 	booth_id: number
-	rank: number
-	favorite_count: number
-	difference: number
-	cloth_name: string
-	cloth_price: number
-	cloth_image: string
-	cloth_added: string
+	item_name: string
+	item_price: number
+	latest_favorite: number
+	item_image: string
 	shop_name: string
 	shop_id: string
 	shop_image: string
 }
 
-export type RankingClothData = {
-	ranking: {
-		data: RankingClothType[] | null
-	}
-	trend: {
-		data: RankingClothType[] | null
-	}
-	type: string
-	item: string
-}
-export type TopClothData = {
-	ranking: {
-		data: RankingClothType[] | null
-	}
-	trend: {
-		data: RankingClothType[] | null
-	}
-	item: string
-}
+export type SortBy =
+	| 'name_asc'
+	| 'name_desc'
+	| 'price_asc'
+	| 'price_desc'
+	| 'favorite_asc'
+	| 'favorite_desc'
+	| 'create_desc'
+	| 'create_asc'
+	| undefined
+
+export type FavoriteFilter =
+	| 'all'
+	| '0_99'
+	| '100_499'
+	| '500_999'
+	| '1000_4999'
+	| '5000_9999'
+	| '10000_plus'
+	| undefined
+
+export type Item = 'avatar' | 'cloth'
