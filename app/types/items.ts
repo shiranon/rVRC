@@ -12,3 +12,37 @@ export type RankingType = {
 	shop_id: string
 	shop_image: string
 }
+export type SearchType = {
+	id: number
+	booth_id: number
+	item_name: string
+	item_price: number
+	latest_favorite: number
+	item_image: string
+	shop_name: string
+	shop_id: string
+	shop_image: string
+}
+
+export type SortBy =
+	| 'name_asc'
+	| 'name_desc'
+	| 'price_asc'
+	| 'price_desc'
+	| 'favorite_asc'
+	| 'favorite_desc'
+	| 'create_desc'
+	| 'create_asc'
+	| undefined
+
+export type FavoriteFilter =
+	| 'all'
+	| '0_99'
+	| '100_499'
+	| '500_999'
+	| '1000_4999'
+	| '5000_9999'
+	| '10000_plus'
+	| undefined
+
+export type Item = 'avatar' | 'cloth'
