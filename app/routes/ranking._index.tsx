@@ -1,64 +1,39 @@
-import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
-import { useEffect, useRef } from 'react'
+import { useLoaderData, useSearchParams } from '@remix-run/react'
 import type { rankingLoader } from '~/.server/loaders'
 import { RankingItemCard } from '~/components/card/ranking-item-card'
 import { ItemControls } from '~/components/element/item-controls'
 import { Pagination } from '~/components/element/pagination'
 import { RankingControls } from '~/components/element/ranking-controls'
+import { formatJapaneseDate } from '~/lib/format'
 import type { RankingType } from '~/types/items'
 
 const formatType = (type: string): string => {
-	if (type === 'month') {
-		return 'マンスリー'
+	const typeMap: Record<string, string> = {
+		month: 'マンスリー',
+		day: 'デイリー',
 	}
-	if (type === 'day') {
-		return 'デイリー'
-	}
-	return ''
+	return typeMap[type] || ''
 }
 
 export { rankingLoader as loader } from '~/.server/loaders'
 
 export default function Ranking() {
-	const initialData = useLoaderData<rankingLoader>()
-	const fetcher = useFetcher<rankingLoader>()
-
+	const { ranking, type, item } = useLoaderData<rankingLoader>()
 	const [searchParams] = useSearchParams()
-	const prevSearchParamsRef = useRef(searchParams.toString())
 	const dateParam = searchParams.get('date')
+	const rankingDate = formatJapaneseDate(dateParam)
 
-	useEffect(() => {
-		const currentSearchParams = searchParams.toString()
-		if (currentSearchParams !== prevSearchParamsRef.current) {
-			fetcher.load(`/ranking?${currentSearchParams}`)
-			prevSearchParamsRef.current = currentSearchParams
-		}
-	}, [searchParams, fetcher])
-
-	const { data } = fetcher.data?.ranking || initialData.ranking
-	const type = fetcher.data?.type || initialData.type
-	const item = fetcher.data?.item || initialData.item
-	let rankingDate: string | null
-	if (dateParam) {
-		const date = new Date(dateParam)
-		rankingDate = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
-	} else {
-		const date = new Date()
-		rankingDate = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
-	}
 	return (
 		<>
-			{data && data.length > 0 ? (
+			{ranking && ranking.length > 0 ? (
 				<div className="relative">
-					<div className="px-4 flex-1e">
+					<div className="px-4 flex-1">
 						<ItemControls />
-						<div className="pt-4 pb-2 px-4 my-2">
-							<h1 className="text-2xl font-semibold">
-								{formatType(type)}ランキング
-							</h1>
-							<div className="pt-2">{rankingDate}</div>
-						</div>
-						{data.map((ranking: RankingType) => (
+						<h1 className="text-2xl font-bold p-4">
+							{formatType(type)}ランキング
+						</h1>
+						<div className="pb-4 px-4 text-xl">{rankingDate}</div>
+						{ranking.map((ranking: RankingType) => (
 							<div key={ranking.booth_id} className="mb-4">
 								<RankingItemCard item={ranking} category="rank" type={item} />
 							</div>
