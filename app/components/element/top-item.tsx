@@ -47,7 +47,7 @@ export const TopItem = ({
 				</CardContent>
 			</Link>
 			<CardFooter className="pb-4 justify-between">
-				<div className="flex datas-center gap-2">
+				<div className="flex items-center gap-2">
 					<Avatar>
 						<AvatarImage
 							src={buildShopImage(data.shop_image)}

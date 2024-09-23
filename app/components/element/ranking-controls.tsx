@@ -41,7 +41,7 @@ export function RankingControls() {
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger>
 				<div className="flex p-2 items-center justify-center sticky bottom-11 z-50 bg-[#DBB5B5] hover:bg-[#C39898] text-white rounded-lg">
-					<div className="text-lg px-24">絞り込み</div>
+					<div className="text-lg px-24">オプション</div>
 				</div>
 			</DialogTrigger>
 			<DialogContent className="rounded-md">

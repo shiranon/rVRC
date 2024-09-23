@@ -1,4 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
+import type { RankingType } from '~/types/items'
 
 export const getClothRanking = async (
 	type: string,
@@ -6,7 +7,7 @@ export const getClothRanking = async (
 	supabase: SupabaseClient,
 	date: string,
 	limit = 4,
-) => {
+): Promise<{ data: RankingType[] | null }> => {
 	const offset = (page - 1) * 10
 	try {
 		const { data, error } = await supabase.rpc('get_cloth_ranking', {

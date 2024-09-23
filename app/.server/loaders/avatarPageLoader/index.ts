@@ -1,17 +1,7 @@
 import { type LoaderFunctionArgs, json, redirect } from '@remix-run/cloudflare'
 import { loadEnvironment } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-component.server'
-
-type SortBy =
-	| 'name_asc'
-	| 'name_desc'
-	| 'price_asc'
-	| 'price_desc'
-	| 'favorite_asc'
-	| 'favorite_desc'
-	| 'create_desc'
-	| 'create_asc'
-	| undefined
+import type { SortBy } from '~/types/items'
 
 export const avatarPageLoader = async ({
 	request,

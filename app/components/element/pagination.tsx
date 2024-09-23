@@ -1,5 +1,5 @@
-import { useNavigate, useSearchParams } from '@remix-run/react'
-import { useEffect, useState } from 'react'
+import { useSearchParams } from '@remix-run/react'
+import { useCallback, useEffect, useState } from 'react'
 import {
 	PaginationContent,
 	PaginationEllipsis,
@@ -20,15 +20,17 @@ export const Pagination = ({
 	itemsPerPage?: number
 	delta?: number
 }) => {
-	const [searchParams] = useSearchParams()
+	const [searchParams, setSearchParams] = useSearchParams()
 	const [currentPage, setCurrentPage] = useState<number>(1)
 
-	const navigate = useNavigate()
-	const updatePage = (page: number) => {
-		const newSearchParams = new URLSearchParams(searchParams)
-		newSearchParams.set('page', page.toString())
-		navigate(`?${newSearchParams.toString()}`, { replace: true })
-	}
+	const updatePage = useCallback(
+		(page: number) => {
+			const newSearchParams = new URLSearchParams(searchParams)
+			newSearchParams.set('page', page.toString())
+			setSearchParams(newSearchParams)
+		},
+		[searchParams, setSearchParams],
+	)
 
 	const { pages, isFirstPage, isLastPage } = paginate({
 		totalItems,

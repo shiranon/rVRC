@@ -1,5 +1,5 @@
-import { useNavigate, useSearchParams } from '@remix-run/react'
-import { useEffect, useState } from 'react'
+import { useSearchParams } from '@remix-run/react'
+import { useCallback, useEffect, useState } from 'react'
 import {
 	Select,
 	SelectContent,
@@ -23,44 +23,44 @@ type SortBy =
 	| 'create_desc'
 	| 'create_asc'
 
+const sortOptions = [
+	{ value: 'name_asc', label: '名前順' },
+	{ value: 'name_desc', label: '名前逆順' },
+	{ value: 'price_asc', label: '価格が安い順' },
+	{ value: 'price_desc', label: '価格が高い順' },
+	{ value: 'favorite_desc', label: 'スキ数が多い順' },
+	{ value: 'favorite_asc', label: 'スキ数が少ない順' },
+	{ value: 'create_desc', label: '登録が新しい順' },
+	{ value: 'create_asc', label: '登録が古い順' },
+]
+
 export const RelationControls = ({
 	totalClothCount,
 }: { totalClothCount: number }) => {
 	const [searchParams, setSearchParams] = useSearchParams()
-	const navigate = useNavigate()
 	const [currentSort, setCurrentSort] = useState<SortBy>('default')
 	const [searchKeyword, setSearchKeyword] = useState<string>('')
 
-	const sortOptions = [
-		{ value: 'name_asc', label: '名前順' },
-		{ value: 'name_desc', label: '名前逆順' },
-		{ value: 'price_asc', label: '価格が安い順' },
-		{ value: 'price_desc', label: '価格が高い順' },
-		{ value: 'favorite_desc', label: 'スキ数が多い順' },
-		{ value: 'favorite_asc', label: 'スキ数が少ない順' },
-		{ value: 'create_desc', label: '登録が新しい順' },
-		{ value: 'create_asc', label: '登録が古い順' },
-	]
+	const updateParams = useCallback(
+		(key: string, value: string) => {
+			const newSearchParams = new URLSearchParams(searchParams)
+			newSearchParams.set(key, value || '')
+			setSearchParams(newSearchParams)
+		},
+		[searchParams, setSearchParams],
+	)
 
-	const updateParams = (key: string, value: string) => {
-		setSearchParams((prev) => {
-			prev.set(key, value || '')
-			return prev
-		})
-		navigate(`?${searchParams.toString()}`, { replace: true })
-	}
-
-	const clearSearchParams = () => {
+	const clearParams = useCallback(() => {
 		if (!searchParams.toString()) return
-		navigate('', { replace: true })
-		setCurrentSort('default')
-		setSearchKeyword('')
-	}
+		setSearchParams({})
+	}, [setSearchParams, searchParams])
 
 	useEffect(() => {
 		setCurrentSort((searchParams.get('sort') as SortBy) || 'default')
 		setSearchKeyword(searchParams.get('search') || '')
 	}, [searchParams])
+
+	const formatCount = formatValue(totalClothCount)
 
 	return (
 		<>
@@ -82,8 +82,9 @@ export const RelationControls = ({
 			</div>
 			<div className="grid pt-2 grid-cols-[30%_70%] gap-y-1">
 				<div className="flex items-center text-lg">
-					対応衣装（{formatValue(totalClothCount)}点）
+					対応衣装（{formatCount}点）
 				</div>
+
 				<div className="flex">
 					<Select
 						value={currentSort === 'default' ? '' : currentSort}
@@ -106,7 +107,7 @@ export const RelationControls = ({
 					</Select>
 					<Button
 						className="w-40 bg-light-gray text-white rounded-l-none hover:bg-slate-500"
-						onClick={clearSearchParams}
+						onClick={clearParams}
 					>
 						クリア
 					</Button>

@@ -22,12 +22,12 @@ export const rankingLoader = async ({
 	}
 
 	if (item === 'cloth') {
-		const ranking = await getClothRanking(type, page, supabase, date, 10)
-		return json({ ranking, type, item })
+		const { data } = await getClothRanking(type, page, supabase, date, 10)
+		return json({ ranking: data, type, item })
 	}
 
-	const ranking = await getAvatarRanking(type, page, supabase, date, 10)
-	return json({ ranking, type, item })
+	const { data } = await getAvatarRanking(type, page, supabase, date, 10)
+	return json({ ranking: data, type, item })
 }
 
 export type rankingLoader = typeof rankingLoader

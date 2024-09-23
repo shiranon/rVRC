@@ -52,7 +52,7 @@ export const HamburgerMenu = () => {
 					<div className="flex flex-col space-y-1">
 						<div className="hover:bg-beige">
 							<Link
-								to={'#'}
+								to={'/'}
 								className="pl-3 py-2 flex items-center"
 								onClick={() => setIsOpen(false)}
 							>
@@ -62,7 +62,7 @@ export const HamburgerMenu = () => {
 						</div>
 						<div className="hover:bg-beige">
 							<Link
-								to={'#'}
+								to={'/search'}
 								className="pl-3 py-2 flex items-center"
 								onClick={() => setIsOpen(false)}
 							>
