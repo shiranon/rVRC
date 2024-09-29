@@ -8,20 +8,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '~/components/ui/select'
-import { formatValue } from '~/lib/format'
+import type { FavoriteFilter, SortBy } from '~/types/items'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
-
-type SortBy =
-	| 'default'
-	| 'name_asc'
-	| 'name_desc'
-	| 'price_asc'
-	| 'price_desc'
-	| 'favorite_asc'
-	| 'favorite_desc'
-	| 'create_desc'
-	| 'create_asc'
 
 const sortOptions = [
 	{ value: 'name_asc', label: '名前順' },
@@ -34,17 +23,28 @@ const sortOptions = [
 	{ value: 'create_asc', label: '登録が古い順' },
 ]
 
-export const RelationControls = ({
-	totalClothCount,
-}: { totalClothCount: number }) => {
+const favoriteFilterOptions = [
+	{ value: 'all', label: 'すべて' },
+	{ value: '10000_plus', label: '10000以上' },
+	{ value: '5000_9999', label: '5000〜9999' },
+	{ value: '1000_4999', label: '1000〜4999' },
+	{ value: '500_999', label: '500〜999' },
+	{ value: '100_499', label: '100〜499' },
+	{ value: '0_99', label: '0〜99' },
+]
+
+export const RelationControls = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
-	const [currentSort, setCurrentSort] = useState<SortBy>('default')
+	const [currentSort, setCurrentSort] = useState<SortBy>(undefined)
 	const [searchKeyword, setSearchKeyword] = useState<string>('')
+	const [currentFavoriteFilter, setFavoriteFilter] =
+		useState<FavoriteFilter>(undefined)
 
 	const updateParams = useCallback(
 		(key: string, value: string) => {
 			const newSearchParams = new URLSearchParams(searchParams)
 			newSearchParams.set(key, value || '')
+			newSearchParams.delete('page')
 			setSearchParams(newSearchParams)
 		},
 		[searchParams, setSearchParams],
@@ -56,11 +56,25 @@ export const RelationControls = ({
 	}, [setSearchParams, searchParams])
 
 	useEffect(() => {
-		setCurrentSort((searchParams.get('sort') as SortBy) || 'default')
-		setSearchKeyword(searchParams.get('search') || '')
-	}, [searchParams])
+		const searchParam = searchParams.get('search')
+		if (searchParam !== null && searchParam !== searchKeyword) {
+			setSearchKeyword(searchParam)
+		}
+	}, [searchParams, searchKeyword])
 
-	const formatCount = formatValue(totalClothCount)
+	useEffect(() => {
+		const sortParam = searchParams.get('sort') as SortBy
+		if (sortParam !== currentSort) {
+			setCurrentSort(sortParam || undefined)
+		}
+	}, [searchParams, currentSort])
+
+	useEffect(() => {
+		const favoriteParam = searchParams.get('favorite') as FavoriteFilter
+		if (favoriteParam !== currentFavoriteFilter) {
+			setFavoriteFilter(favoriteParam || undefined)
+		}
+	}, [searchParams, currentFavoriteFilter])
 
 	return (
 		<>
@@ -80,38 +94,53 @@ export const RelationControls = ({
 					検索
 				</Button>
 			</div>
-			<div className="grid pt-2 grid-cols-[30%_70%] gap-y-1">
-				<div className="flex items-center text-lg">
-					対応衣装（{formatCount}点）
-				</div>
-
-				<div className="flex">
-					<Select
-						value={currentSort === 'default' ? '' : currentSort}
-						onValueChange={(value) => {
-							updateParams('sort', value as SortBy)
-						}}
-					>
-						<SelectTrigger className="bg-white rounded-r-none">
-							<SelectValue placeholder="ソート" />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectGroup>
-								{sortOptions.map((option) => (
-									<SelectItem key={option.value} value={option.value}>
-										{option.label}
-									</SelectItem>
-								))}
-							</SelectGroup>
-						</SelectContent>
-					</Select>
-					<Button
-						className="w-40 bg-light-gray text-white rounded-l-none hover:bg-slate-500"
-						onClick={clearParams}
-					>
-						クリア
-					</Button>
-				</div>
+			<div className="grid pt-2 grid-cols-[40%_40%_20%] gap-y-1">
+				<Select
+					value={
+						currentFavoriteFilter === undefined ? '' : currentFavoriteFilter
+					}
+					onValueChange={(value) => {
+						updateParams('favorite', value)
+					}}
+				>
+					<SelectTrigger className="bg-white rounded-r-none">
+						<SelectValue placeholder="スキ数で絞り込み" />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectGroup>
+							{favoriteFilterOptions.map((option) => (
+								<SelectItem key={option.value} value={option.value}>
+									{option.label}
+								</SelectItem>
+							))}
+						</SelectGroup>
+					</SelectContent>
+				</Select>
+				<Select
+					value={currentSort === undefined ? '' : currentSort}
+					onValueChange={(value) => {
+						updateParams('sort', value)
+					}}
+				>
+					<SelectTrigger className="bg-white rounded-r-none">
+						<SelectValue placeholder="ソート" />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectGroup>
+							{sortOptions.map((option) => (
+								<SelectItem key={option.value} value={option.value}>
+									{option.label}
+								</SelectItem>
+							))}
+						</SelectGroup>
+					</SelectContent>
+				</Select>
+				<Button
+					className="bg-light-gray text-white rounded-l-none hover:bg-slate-500"
+					onClick={clearParams}
+				>
+					クリア
+				</Button>
 			</div>
 		</>
 	)

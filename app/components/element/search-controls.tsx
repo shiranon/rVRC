@@ -8,7 +8,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '~/components/ui/select'
-import type { Item } from '~/types/items'
+import type { FavoriteFilter } from '~/types/items'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 
@@ -22,16 +22,6 @@ type SortBy =
 	| 'favorite_desc'
 	| 'create_desc'
 	| 'create_asc'
-
-type FavoriteFilter =
-	| 'default'
-	| 'all'
-	| '0_99'
-	| '100_499'
-	| '500_999'
-	| '1000_4999'
-	| '5000_9999'
-	| '10000_plus'
 
 const sortOptions = [
 	{ value: 'name_asc', label: '名前順' },
@@ -57,65 +47,64 @@ const favoriteFilterOptions = [
 export const SearchControls = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const [currentFavoriteFilter, setFavoriteFilter] =
-		useState<FavoriteFilter>('default')
+		useState<FavoriteFilter>(undefined)
 	const [currentSort, setCurrentSort] = useState<SortBy>('default')
-	const [currentItem, setCurrentItem] = useState<Item>('avatar')
 	const [searchKeyword, setSearchKeyword] = useState<string>('')
 
-	const previousItem = useRef<string>('avatar')
-
-	const updateParams = useCallback(
-		(key: string, value: string) => {
-			const newSearchParams = new URLSearchParams(searchParams)
-			newSearchParams.set(key, value || '')
-			setSearchParams(newSearchParams)
-		},
-		[searchParams, setSearchParams],
-	)
+	const previousSearch = useRef<string>('search')
+	const previousSort = useRef<string>('sort')
+	const previousFavorite = useRef<string>('favorite')
 
 	const clearParams = useCallback(() => {
 		setSearchParams({})
 	}, [setSearchParams])
 
+	const updateParams = useCallback(
+		(key: string, value: string) => {
+			const newSearchParams = new URLSearchParams(searchParams)
+			newSearchParams.set(key, value || '')
+			newSearchParams.delete('page')
+			setSearchParams(newSearchParams)
+		},
+		[searchParams, setSearchParams],
+	)
+
 	useEffect(() => {
-		const itemPram = searchParams.get('item') || 'avatar'
-		setCurrentItem(itemPram as Item)
-		if (itemPram !== previousItem.current) {
-			updateParams('page', '1')
-			previousItem.current = itemPram
+		const sortPram = searchParams.get('sort') as SortBy
+		if (!sortPram) return
+		setCurrentSort(sortPram)
+		if (sortPram !== previousSort.current) {
+			updateParams('sort', sortPram)
+			previousSort.current = sortPram
 		}
 	}, [searchParams, updateParams])
 
 	useEffect(() => {
-		setCurrentSort((searchParams.get('sort') as SortBy) || 'default')
-		setFavoriteFilter(
-			(searchParams.get('favorite') as FavoriteFilter) || 'default',
-		)
-		setSearchKeyword(searchParams.get('search') || '')
-	}, [searchParams])
+		const favoritePram = searchParams.get('favorite') as FavoriteFilter
+		if (!favoritePram) {
+			return
+		}
+		setFavoriteFilter(favoritePram)
+		if (favoritePram !== previousFavorite.current) {
+			updateParams('favorite', favoritePram)
+			previousFavorite.current = favoritePram
+		}
+	}, [searchParams, updateParams])
+
+	useEffect(() => {
+		const searchPram = (searchParams.get('search') as string) || null
+		if (searchPram === null) {
+			return
+		}
+		setSearchKeyword(searchPram || '')
+		if (searchPram !== previousSearch.current) {
+			updateParams('search', searchPram)
+			previousSearch.current = searchPram
+		}
+	}, [searchParams, updateParams])
 
 	return (
 		<>
-			<div className="flex justify-center space-x-2 py-4">
-				<Button
-					onClick={() => {
-						clearParams()
-						updateParams('item', 'avatar')
-					}}
-					className={`rounded-2xl text-lg text-light-gray border-[1px] border-beige ${currentItem !== 'avatar' ? 'hover:border-light-gray' : 'bg-beige hover:bg-beige'}`}
-				>
-					アバター
-				</Button>
-				<Button
-					onClick={() => {
-						clearParams()
-						updateParams('item', 'cloth')
-					}}
-					className={`rounded-2xl text-lg text-light-gray border-[1px] border-beige ${currentItem !== 'cloth' ? 'hover:border-light-gray' : 'bg-beige hover:bg-beige'}`}
-				>
-					衣装
-				</Button>
-			</div>
 			<div className="grid pt-2 grid-cols-[70%_30%] gap-y-1">
 				<Input
 					className="bg-white rounded-r-none"
@@ -135,7 +124,7 @@ export const SearchControls = () => {
 			<div className="grid pt-2 grid-cols-[40%_40%_20%] gap-y-1">
 				<Select
 					value={
-						currentFavoriteFilter === 'default' ? '' : currentFavoriteFilter
+						currentFavoriteFilter === undefined ? '' : currentFavoriteFilter
 					}
 					onValueChange={(value) => {
 						updateParams('favorite', value as SortBy)

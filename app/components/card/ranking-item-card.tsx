@@ -7,7 +7,6 @@ import {
 	excludeOldDate,
 	formatValue,
 } from '~/lib/format'
-import { truncateString } from '~/lib/utils'
 import type { RankingType } from '~/types/items'
 import { FavoriteTag } from '../element/favorite-tag'
 import { RankingTag } from '../element/ranking-tag'
@@ -43,10 +42,10 @@ export const RankingItemCard = ({
 			</Link>
 			<CardContent className="px-6 pt-0 pb-1">
 				<Link to={`/avatar/${item.id}`}>
-					<CardTitle className="leading-relaxed">
-						{truncateString(item.item_name, 35)}
+					<CardTitle className="leading-relaxed text-2xl">
+						<div className="line-clamp-2 break-words">{item.item_name}</div>
 					</CardTitle>
-					<div className="text-right font-bold text-xl">
+					<div className="text-right font-bold text-xl pt-2">
 						￥{formatValue(item.item_price)}
 					</div>
 				</Link>

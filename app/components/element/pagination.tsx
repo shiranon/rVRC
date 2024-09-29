@@ -62,7 +62,7 @@ export const Pagination = ({
 					if (page.type === 'dots') {
 						return (
 							<PaginationItem key={`page-${page.value}`}>
-								<PaginationEllipsis className="text-lg hover:bg-beige" />
+								<PaginationEllipsis className="text-lg" />
 							</PaginationItem>
 						)
 					}
