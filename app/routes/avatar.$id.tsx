@@ -208,7 +208,6 @@ export default function avatarPage() {
 					関連衣装
 				</div>
 				<RelationControls />
-				{/* <SearchControls /> */}
 				<div className="py-4 text-lg">
 					対応衣装（{formatValue(totalClothCount)}件）
 				</div>

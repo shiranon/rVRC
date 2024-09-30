@@ -37,6 +37,8 @@ export const RelationControls = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const [currentSort, setCurrentSort] = useState<SortBy>(undefined)
 	const [searchKeyword, setSearchKeyword] = useState<string>('')
+	const [inputValue, setInputValue] = useState<string>('')
+
 	const [currentFavoriteFilter, setFavoriteFilter] =
 		useState<FavoriteFilter>(undefined)
 
@@ -57,10 +59,11 @@ export const RelationControls = () => {
 
 	useEffect(() => {
 		const searchParam = searchParams.get('search')
-		if (searchParam !== null && searchParam !== searchKeyword) {
+		if (searchParam !== null) {
 			setSearchKeyword(searchParam)
+			setInputValue(searchParam)
 		}
-	}, [searchParams, searchKeyword])
+	}, [searchParams])
 
 	useEffect(() => {
 		const sortParam = searchParams.get('sort') as SortBy
@@ -81,15 +84,15 @@ export const RelationControls = () => {
 			<div className="grid pt-2 grid-cols-[70%_30%] gap-y-1">
 				<Input
 					className="bg-white rounded-r-none"
-					value={searchKeyword}
-					onChange={(e) => setSearchKeyword(e.target.value)}
+					value={inputValue}
+					onChange={(e) => setInputValue(e.target.value)}
 					onKeyDown={(e) =>
-						e.key === 'Enter' && updateParams('search', searchKeyword)
+						e.key === 'Enter' && updateParams('search', inputValue)
 					}
 				/>
 				<Button
 					className="bg-light-gray rounded-l-none text-white hover:bg-slate-500"
-					onClick={() => updateParams('search', searchKeyword)}
+					onClick={() => updateParams('search', inputValue)}
 				>
 					検索
 				</Button>

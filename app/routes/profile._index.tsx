@@ -82,7 +82,7 @@ export default function Profile() {
 		<div className="w-full p-6">
 			<div className="flex justify-start items-center">
 				<img
-					src={profile.avatar}
+					src={`/api/avatar/${profile.avatar}`}
 					alt={profile.name}
 					className="size-20 rounded-full"
 				/>
@@ -127,7 +127,8 @@ export default function Profile() {
 										</div>
 									</div>
 									<div>
-										<div>{folder.avatar_count}</div>
+										<div>アバター:{folder.avatar_count}個</div>
+										<div>衣装:{folder.cloth_count}個</div>
 									</div>
 								</div>
 							</CardContent>

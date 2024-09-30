@@ -25,7 +25,12 @@ export const UserMenu = ({ user }: UserData) => {
 				<PopoverTrigger>
 					<div className="flex items-center p-4 h-14 -my-2">
 						<Avatar>
-							{user && <AvatarImage src={user.avatar} alt={user.name} />}
+							{user && (
+								<AvatarImage
+									src={`/api/avatar/${user.avatar}`}
+									alt={user.name}
+								/>
+							)}
 						</Avatar>
 					</div>
 				</PopoverTrigger>

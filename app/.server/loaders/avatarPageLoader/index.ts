@@ -50,6 +50,8 @@ export const avatarPageLoader = async ({
 
 	const totalCloth = await supabase.rpc('get_relation_cloth_total', {
 		avatar_booth_id: avatarData.data.booth_id,
+		search_keyword: search_keyword,
+		favorite_filter: favorite_filter,
 	})
 
 	if (!totalCloth.data) {
@@ -79,8 +81,9 @@ export const avatarPageLoader = async ({
 
 	const { data: avatar } = avatarData
 	const { data: relationClothData } = relationCloth
-	const [{ total_count: totalClothCount } = { total_count: 0 }] =
-		totalCloth.data || []
+	const totalClothCount = Array.isArray(totalCloth.data)
+		? totalCloth.data[0]?.total_count ?? 0
+		: 0
 
 	const foldersData = folders?.data || null
 

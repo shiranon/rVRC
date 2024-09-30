@@ -58,10 +58,8 @@ export const uploadFirstUserAvatar = async (
 		console.error('画像のアップロードに失敗しました:', error)
 		return null
 	}
-	const { data } = supabase.storage.from('avatar').getPublicUrl(fileName)
-	const imageUrl = data.publicUrl
 
-	updateAvatar(user.id, imageUrl, supabase)
+	updateAvatar(user.id, fileName, supabase)
 		.then((data) => {
 			console.log('avatarのパスがupdateされました:', data)
 		})
