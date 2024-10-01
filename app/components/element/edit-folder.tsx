@@ -15,9 +15,17 @@ import {
 import { Input } from '../ui/input'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 
+interface Folder {
+	id: string
+	name: string
+	description: string
+	is_private: boolean
+}
+
 interface CreateFolderProps {
 	actionPath: string
 	children: React.ReactNode
+	folder: Folder
 }
 
 type ActionData =
@@ -25,10 +33,14 @@ type ActionData =
 	| { folderError: string }
 	| { success: boolean }
 
-export const CreateFolder = ({ actionPath, children }: CreateFolderProps) => {
+export const EditFolder = ({
+	actionPath,
+	children,
+	folder,
+}: CreateFolderProps) => {
 	const [open, setOpen] = useState(false)
-	const [folderName, setFolderName] = useState('')
-	const [folderDescription, setFolderDescription] = useState('')
+	const [folderName, setFolderName] = useState(folder.name)
+	const [folderDescription, setFolderDescription] = useState(folder.description)
 	const actionData = useActionData<ActionData>()
 	const errorMessages: string[] = []
 
@@ -51,9 +63,9 @@ export const CreateFolder = ({ actionPath, children }: CreateFolderProps) => {
 			<DialogTrigger asChild>{children}</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px] bg-white rounded-lg">
 				<DialogHeader>
-					<DialogTitle>フォルダ作成</DialogTitle>
+					<DialogTitle>フォルダ編集</DialogTitle>
 					<DialogDescription className="sr-only">
-						フォルダを作成できます。
+						フォルダを編集できます。
 					</DialogDescription>
 				</DialogHeader>
 				<Form method="post" action={actionPath}>
@@ -65,8 +77,8 @@ export const CreateFolder = ({ actionPath, children }: CreateFolderProps) => {
 						<Input
 							id="foldername"
 							name="foldername"
-							placeholder="新しいフォルダ"
 							autoComplete="off"
+							value={folder.name}
 							onChange={(e) => setFolderName(e.target.value)}
 							className="bg-white rounded-none border-x-0 border-t-0 border-b-2 border-gray-200 focus:border-blue-500"
 						/>
@@ -82,6 +94,7 @@ export const CreateFolder = ({ actionPath, children }: CreateFolderProps) => {
 							id="folderDescription"
 							name="folderDescription"
 							placeholder="フォルダの説明"
+							value={folder.description}
 							autoComplete="off"
 							onChange={(e) => setFolderDescription(e.target.value)}
 							className="bg-white rounded-none border-x-0 border-t-0 border-b-2 border-gray-200 focus:border-blue-500"
@@ -93,7 +106,7 @@ export const CreateFolder = ({ actionPath, children }: CreateFolderProps) => {
 						</div>
 						<RadioGroup
 							required
-							defaultValue="private"
+							defaultValue={folder.is_private ? 'private' : 'public'}
 							name="visibility"
 							className="flex pt-2 gap-4"
 						>
@@ -118,10 +131,10 @@ export const CreateFolder = ({ actionPath, children }: CreateFolderProps) => {
 						<Button
 							type="submit"
 							name="intent"
-							value="createFolder"
+							value="updateFolder"
 							className="hover:bg-beige"
 						>
-							作成
+							変更
 						</Button>
 					</DialogFooter>
 				</Form>

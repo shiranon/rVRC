@@ -27,7 +27,7 @@ export const loader = async ({
 
 	try {
 		const { data, error } = await supabase.storage
-			.from('avatars')
+			.from('avatar')
 			.download(filename)
 
 		if (error) {

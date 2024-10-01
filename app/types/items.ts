@@ -24,6 +24,18 @@ export type SearchType = {
 	shop_image: string
 }
 
+export type ItemType = {
+	id: number
+	item_name: string
+	price: number
+	latest_favorite: number
+	booth_id: number
+	image: string
+	shop_name: string
+	shop_id: string
+	shop_image: string
+}
+
 export type SortBy =
 	| 'name_asc'
 	| 'name_desc'

@@ -13,6 +13,7 @@ import {
 } from '@remix-run/react'
 import { Folder, FolderPlus, Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { FlexItemCard } from '~/components/card/flex-item-card'
 import { CreateFolder } from '~/components/element/create-folder'
 import { FavoriteTag } from '~/components/element/favorite-tag'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
@@ -24,6 +25,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '~/components/ui/popover'
+import { useActionToast } from '~/hooks/use-action-toast'
 import { useToast } from '~/hooks/use-toast'
 import { buildAvatarImage, buildShopImage, formatValue } from '~/lib/format'
 import { loadEnvironment, truncateString } from '~/lib/utils'
@@ -129,22 +131,10 @@ export default function clothPage() {
 		cloth: null,
 		relationAvatar: null,
 	}
-	const actionData = useActionData<ActionData>()
 	const [isOpen, setIsOpen] = useState(false)
-	const { toast } = useToast()
 	const { id } = useParams()
 
-	useEffect(() => {
-		if (actionData) {
-			if ('success' in actionData) {
-				toast({
-					title: actionData.success ? '成功' : 'エラー',
-					description: actionData.message,
-					variant: actionData.success ? 'default' : 'destructive',
-				})
-			}
-		}
-	}, [actionData, toast])
+	useActionToast()
 
 	if (!cloth) return null
 	return (
@@ -240,58 +230,23 @@ export default function clothPage() {
 						<XIcon />
 					</div>
 				</div>
-				{relationAvatar && relationAvatar.length > 0 && (
+				{relationAvatar && relationAvatar.length > 0 ? (
 					<>
 						<div className="text-2xl pt-2">関連アバター</div>
-						<Card className="bg-light-beige">
-							<CardContent className="grid grid-cols-2 gap-3 p-4">
+						<Card className="bg-light-beige mt-4">
+							<CardContent className="grid grid-cols-2 gap-2 p-2">
 								{relationAvatar.map((avatar) => (
 									<Card key={avatar.booth_id}>
 										<Link to={`/avatar/${avatar.id}`}>
-											<CardContent className="p-4">
-												<div className="relative block overflow-hidden aspect-square">
-													<div className="z-10 font-bold">
-														<FavoriteTag
-															favorite_count={avatar.latest_favorite}
-														/>
-													</div>
-													<img
-														className="rounded-md"
-														src={buildAvatarImage(avatar.image)}
-														loading="lazy"
-														alt={avatar.avatar_name}
-													/>
-												</div>
-											</CardContent>
-											<CardContent className="px-4 pt-0 pb-1">
-												<CardTitle className="leading-relaxed text-lg h-[4rem]">
-													<div className="line-clamp-2 break-words">
-														{avatar.avatar_name}
-													</div>
-												</CardTitle>
-												<div className="text-right font-bold text-lg">
-													￥{avatar.price}
-												</div>
-											</CardContent>
-											<CardFooter className="pb-4 justify-between">
-												<div className="flex items-center gap-2">
-													<Avatar>
-														<AvatarImage
-															src={buildShopImage(avatar.shop_image)}
-															loading="lazy"
-															alt={avatar.shop_name}
-														/>
-														<AvatarFallback />
-													</Avatar>
-													<div className="pl-1 text-sm">{avatar.shop_name}</div>
-												</div>
-											</CardFooter>
+											<FlexItemCard item={avatar} />
 										</Link>
 									</Card>
 								))}
 							</CardContent>
 						</Card>
 					</>
+				) : (
+					<div className="text-xl pt-4">関連アバターはありません</div>
 				)}
 			</div>
 		</>

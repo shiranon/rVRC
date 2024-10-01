@@ -1,3 +1,4 @@
+import { redirect } from '@remix-run/react'
 import type { SupabaseClient, User } from '@supabase/supabase-js'
 import { z } from 'zod'
 import { folderCreateSchema } from '~/lib/zod'
@@ -5,10 +6,12 @@ import { folderCreateSchema } from '~/lib/zod'
 export class FolderManager {
 	private supabase
 	private user: User | null
+	private id: string | null = null
 
-	constructor(supabase: SupabaseClient) {
+	constructor(supabase: SupabaseClient, id: string | null = null) {
 		this.supabase = supabase
 		this.user = null
+		this.id = id
 	}
 
 	async initialize() {
@@ -21,13 +24,6 @@ export class FolderManager {
 		}
 
 		this.user = user
-		const folderCount = (
-			await this.supabase
-				.from('folders')
-				.select('id')
-				.eq('user_id', this.user.id)
-		).count
-		console.log(folderCount)
 	}
 
 	async createFolder(formData: FormData) {
@@ -36,13 +32,6 @@ export class FolderManager {
 		}
 
 		const rawInput = Object.fromEntries(formData)
-
-		const folderCount = (
-			await this.supabase
-				.from('folders')
-				.select('id')
-				.eq('user_id', this.user.id)
-		).count
 
 		try {
 			const validatedData = folderCreateSchema.parse(rawInput)
@@ -73,6 +62,44 @@ export class FolderManager {
 		}
 	}
 
+	async updateFolder(formData: FormData) {
+		if (!this.user) {
+			throw new Error('ユーザーが初期化されていません')
+		}
+
+		const rawInput = Object.fromEntries(formData)
+
+		try {
+			const validatedData = folderCreateSchema.parse(rawInput)
+
+			const { error } = await this.supabase
+				.from('folders')
+				.update([
+					{
+						name: validatedData.foldername,
+						user_id: this.user.id,
+						description: validatedData.folderDescription,
+						is_private: validatedData.visibility === 'private',
+					},
+				])
+				.eq('id', this.id)
+				.eq('user_id', this.user.id)
+				.select('id, name, is_private')
+
+			if (error) {
+				console.error('フォルダ編集エラー:', error)
+				return { success: false, message: 'フォルダの編集に失敗' }
+			}
+
+			return { success: true, message: 'フォルダを編集しました' }
+		} catch (error) {
+			if (error instanceof z.ZodError) {
+				return { folderErrors: error.errors }
+			}
+			return { folderError: '予期せぬエラー' }
+		}
+	}
+
 	async deleteFolder(formData: FormData) {
 		if (!this.user) {
 			throw new Error('ユーザーが初期化されていません')
@@ -80,23 +107,28 @@ export class FolderManager {
 
 		const input = Object.fromEntries(formData)
 
+		console.log('called')
+
 		try {
-			const { error } = await this.supabase
+			const { data, error } = await this.supabase
 				.from('folders')
 				.delete()
-				.eq('id', input.folderId)
+				.eq('id', input.id)
 				.eq('user_id', this.user.id)
 
 			if (error) {
 				console.error('フォルダ削除エラー:', error)
 				return { success: false, message: 'フォルダの削除に失敗' }
 			}
-
-			return { success: true, message: 'フォルダを削除しました' }
-		} catch (error) {
-			if (error instanceof z.ZodError) {
-				return { folderErrors: error.errors }
+			if (data === null) {
+				console.log('フォルダを削除しました')
+				return {
+					success: true,
+					message: 'フォルダを削除しました',
+					redirect: '/profile',
+				}
 			}
+		} catch (error) {
 			return { folderError: '予期せぬエラー' }
 		}
 	}

@@ -11,19 +11,20 @@ import {
 import { Folder, FolderPlus, Plus } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { avatarPageLoader } from '~/.server/loaders'
+import { FlexItemCard } from '~/components/card/flex-item-card'
 import { CreateFolder } from '~/components/element/create-folder'
-import { FavoriteTag } from '~/components/element/favorite-tag'
 import { Pagination } from '~/components/element/pagination'
 import { RelationControls } from '~/components/element/relation-controls'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Button } from '~/components/ui/button'
-import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
+import { Card, CardContent } from '~/components/ui/card'
 import { XIcon } from '~/components/ui/icons'
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from '~/components/ui/popover'
+import { useActionToast } from '~/hooks/use-action-toast'
 import { useToast } from '~/hooks/use-toast'
 import { buildAvatarImage, buildShopImage, formatValue } from '~/lib/format'
 import { loadEnvironment, truncateString } from '~/lib/utils'
@@ -52,13 +53,13 @@ export const action = async ({
 	const { supabase } = createClient(request, env)
 	switch (intent) {
 		case 'createFolder': {
-			const folderManager = new FolderManager(supabase)
+			const folderManager = new FolderManager(supabase, id)
 			await folderManager.initialize()
 			const result = await folderManager.createFolder(formData)
 			return json(result)
 		}
 		case 'addFolder': {
-			const folderManager = new FolderManager(supabase)
+			const folderManager = new FolderManager(supabase, id)
 			await folderManager.initialize()
 			const result = await folderManager.addAvatar(formData, id)
 			return json(result)
@@ -70,11 +71,9 @@ export const action = async ({
 }
 
 export default function avatarPage() {
-	const { avatar, relationCloth, totalClothCount, foldersData } =
+	const { avatar, relationCloth, totalClothCount, foldersData, isLoggedIn } =
 		useLoaderData<typeof avatarPageLoader>()
-	const actionData = useActionData<ActionData>()
 	const [isOpen, setIsOpen] = useState(false)
-	const { toast } = useToast()
 	const relatedClothRef = useRef<HTMLDivElement>(null)
 	const [searchParams] = useSearchParams()
 	const { id } = useParams()
@@ -88,17 +87,7 @@ export default function avatarPage() {
 		}
 	}, [])
 
-	useEffect(() => {
-		if (actionData) {
-			if ('success' in actionData) {
-				toast({
-					title: actionData.success ? '成功' : 'エラー',
-					description: actionData.message,
-					variant: actionData.success ? 'default' : 'destructive',
-				})
-			}
-		}
-	}, [actionData, toast])
+	useActionToast()
 
 	useEffect(() => {
 		if (searchParams.toString()) {
@@ -159,48 +148,53 @@ export default function avatarPage() {
 								BOOTHで購入する
 							</Link>
 						</Button>
-						<Popover open={isOpen} onOpenChange={setIsOpen}>
-							<PopoverTrigger className="ml-4">
-								<FolderPlus className="size-10" />
-							</PopoverTrigger>
-							<PopoverContent className="p-0 space-y-1 z-[1000]">
-								{foldersData &&
-									foldersData.length > 0 &&
-									foldersData.map((folder) => (
-										<Form method="post" key={folder.id}>
-											<div>
-												<input
-													type="hidden"
-													name="folderId"
-													value={folder.id}
-												/>
-												<Button
-													className="p-2 flex justify-start bg-white hover:bg-slate-200 w-full"
-													type="submit"
-													name="intent"
-													value="addFolder"
-													onClick={() => setIsOpen(false)}
-												>
-													<Folder />
-													<div className="pl-2">
-														{truncateString(folder.name, 15)}
+						<div className="flex items-center pl-2">
+							{isLoggedIn && (
+								<Popover open={isOpen} onOpenChange={setIsOpen}>
+									<PopoverTrigger className="px-2">
+										<FolderPlus className="size-10" />
+									</PopoverTrigger>
+									<PopoverContent className="p-0 space-y-1 z-[1000]">
+										{foldersData &&
+											foldersData.length > 0 &&
+											foldersData.map((folder) => (
+												<Form method="post" key={folder.id}>
+													<div>
+														<input
+															type="hidden"
+															name="folderId"
+															value={folder.id}
+														/>
+														<Button
+															className="p-2 flex justify-start bg-white hover:bg-slate-200 w-full"
+															type="submit"
+															name="intent"
+															value="addFolder"
+															onClick={() => setIsOpen(false)}
+														>
+															<Folder />
+															<div className="pl-2">
+																{truncateString(folder.name, 15)}
+															</div>
+														</Button>
 													</div>
+												</Form>
+											))}
+
+										<CreateFolder actionPath={`/avatar/${id}`}>
+											<div>
+												<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
+													<Plus />
+													<div>新規作成</div>
 												</Button>
 											</div>
-										</Form>
-									))}
-								<CreateFolder actionPath={`/avatar/${id}`}>
-									<div>
-										<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
-											<Plus />
-											<div>新規作成</div>
-										</Button>
-									</div>
-								</CreateFolder>
-							</PopoverContent>
-						</Popover>
-						<div className="size-8">
-							<XIcon />
+										</CreateFolder>
+									</PopoverContent>
+								</Popover>
+							)}
+							<div className="size-8">
+								<XIcon />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -218,44 +212,7 @@ export default function avatarPage() {
 								{relationCloth.map((cloth) => (
 									<Card key={cloth.booth_id}>
 										<Link to={`/cloth/${cloth.id}`}>
-											<CardContent className="p-4">
-												<div className="relative block overflow-hidden aspect-square">
-													<div className="z-10 font-bold">
-														<FavoriteTag
-															favorite_count={cloth.latest_favorite}
-														/>
-													</div>
-													<img
-														className="rounded-md"
-														src={buildAvatarImage(cloth.image)}
-														loading="lazy"
-														alt={cloth.cloth_name}
-													/>
-												</div>
-											</CardContent>
-											<CardContent className="px-4 pt-0 pb-1">
-												<CardTitle className="leading-relaxed text-lg h-[4rem]">
-													<div className="line-clamp-2 break-words">
-														{cloth.cloth_name}
-													</div>
-												</CardTitle>
-												<div className="text-right font-bold text-lg">
-													￥{formatValue(cloth.price)}
-												</div>
-											</CardContent>
-											<CardFooter className="pb-4 justify-between">
-												<div className="flex items-center gap-2">
-													<Avatar>
-														<AvatarImage
-															src={buildShopImage(cloth.shop_image)}
-															loading="lazy"
-															alt={cloth.shop_name}
-														/>
-														<AvatarFallback />
-													</Avatar>
-													<div className="pl-1 text-sm">{cloth.shop_name}</div>
-												</div>
-											</CardFooter>
+											<FlexItemCard item={cloth} />
 										</Link>
 									</Card>
 								))}

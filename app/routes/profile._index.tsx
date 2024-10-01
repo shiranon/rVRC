@@ -4,11 +4,12 @@ import {
 	json,
 	redirect,
 } from '@remix-run/cloudflare'
-import { useLoaderData } from '@remix-run/react'
+import { Link, useLoaderData } from '@remix-run/react'
 import { CreateFolder } from '~/components/element/create-folder'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent } from '~/components/ui/card'
 import { Separator } from '~/components/ui/separator'
+import { useActionToast } from '~/hooks/use-action-toast'
 import avatar_holder from '~/images/avatar.png'
 import { buildAvatarImage } from '~/lib/format'
 import { loadEnvironment } from '~/lib/utils'
@@ -78,6 +79,7 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
 
 export default function Profile() {
 	const { profile, folders } = useLoaderData<typeof loader>()
+	useActionToast()
 	return (
 		<div className="w-full p-6">
 			<div className="flex justify-start items-center">
@@ -103,35 +105,37 @@ export default function Profile() {
 				<div className="grid gap-2 pt-4">
 					{folders.map((folder) => (
 						<Card key={folder.id} className="">
-							<CardContent
-								className={`p-0 ${folder.is_private ? 'bg-gray-100 dark:bg-gray-800' : ''}`}
-							>
-								<div className="max-w-full flex flex-row justify-between">
-									<div className="flex aspect-square">
-										<img
-											src={
-												folder.image_url
-													? buildAvatarImage(folder.image_url)
-													: avatar_holder
-											}
-											alt={folder.name}
-											className="size-32"
-										/>
-									</div>
-									<div className="grow grid place-items-center">
-										<div className="p-3 w-full flex flex-col gap-1">
-											<div className="text-lg font-bold">{folder.name}</div>
-											<div className="text-sm text-gray-500">
-												{folder.description}
+							<Link to={`/folder/${folder.id}`}>
+								<CardContent
+									className={`p-0 ${folder.is_private ? 'bg-gray-100 dark:bg-gray-800' : ''}`}
+								>
+									<div className="max-w-full flex flex-row justify-between">
+										<div className="flex aspect-square">
+											<img
+												src={
+													folder.image_url
+														? buildAvatarImage(folder.image_url)
+														: avatar_holder
+												}
+												alt={folder.name}
+												className="size-32 rounded-l-lg"
+											/>
+										</div>
+										<div className="grow grid place-items-center">
+											<div className="p-3 w-full flex flex-col gap-1">
+												<div className="text-lg font-bold">{folder.name}</div>
+												<div className="text-sm text-gray-500">
+													{folder.description}
+												</div>
 											</div>
 										</div>
+										<div>
+											<div>アバター:{folder.avatar_count}個</div>
+											<div>衣装:{folder.cloth_count}個</div>
+										</div>
 									</div>
-									<div>
-										<div>アバター:{folder.avatar_count}個</div>
-										<div>衣装:{folder.cloth_count}個</div>
-									</div>
-								</div>
-							</CardContent>
+								</CardContent>
+							</Link>
 						</Card>
 					))}
 				</div>

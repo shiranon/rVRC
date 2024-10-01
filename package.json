@@ -21,6 +21,7 @@
 		"biome": "biome check --write"
 	},
 	"dependencies": {
+		"@radix-ui/react-alert-dialog": "^1.1.1",
 		"@radix-ui/react-avatar": "^1.1.0",
 		"@radix-ui/react-dialog": "^1.1.1",
 		"@radix-ui/react-popover": "^1.1.1",

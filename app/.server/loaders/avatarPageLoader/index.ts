@@ -92,6 +92,7 @@ export const avatarPageLoader = async ({
 		relationCloth: relationClothData,
 		totalClothCount,
 		foldersData,
+		isLoggedIn: !!user,
 	})
 }
 
