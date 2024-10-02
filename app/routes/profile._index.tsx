@@ -11,7 +11,7 @@ import { Card, CardContent } from '~/components/ui/card'
 import { Separator } from '~/components/ui/separator'
 import { useActionToast } from '~/hooks/use-action-toast'
 import avatar_holder from '~/images/avatar.png'
-import { buildAvatarImage } from '~/lib/format'
+import { buildSmallItemImage } from '~/lib/format'
 import { loadEnvironment } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-server.server'
 import { FolderManager } from '~/module/supabase/folder-manager'
@@ -88,7 +88,10 @@ export default function Profile() {
 					alt={profile.name}
 					className="size-20 rounded-full"
 				/>
-				<div className="pl-8 text-xl font-bold">{profile.name}</div>
+				<div className="grid pl-8 pb-4">
+					<div className="text-sm">名前</div>
+					<div className="text-xl font-bold">{profile.name}</div>
+				</div>
 			</div>
 			<div className="flex justify-center pt-4 bg-light-beige">
 				<Separator className="bg-slate-400" />
@@ -114,7 +117,7 @@ export default function Profile() {
 											<img
 												src={
 													folder.image_url
-														? buildAvatarImage(folder.image_url)
+														? buildSmallItemImage(folder.image_url)
 														: avatar_holder
 												}
 												alt={folder.name}

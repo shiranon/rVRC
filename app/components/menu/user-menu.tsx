@@ -45,16 +45,6 @@ export const UserMenu = ({ user }: UserData) => {
 							<UserIcon className="pr-2" />
 						</Link>
 					</div>
-					<div className="hover:bg-slate-200">
-						<Link
-							to={'#'}
-							className="p-2 flex justify-between"
-							onClick={() => setIsOpen(false)}
-						>
-							<div>フォルダー</div>
-							<Folder className="pr-2" />
-						</Link>
-					</div>
 					<div className="hover:bg-slate-200 rounded-b-md">
 						<Form action="/sign-out" method="post">
 							<button type="submit" className="p-2 w-full flex justify-between">

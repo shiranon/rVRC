@@ -2,7 +2,7 @@ import { Link } from '@remix-run/react'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
 import {
-	buildAvatarImage,
+	buildItemImage,
 	buildShopImage,
 	excludeOldDate,
 	formatValue,
@@ -33,7 +33,7 @@ export const RankingItemCard = ({
 						</div>
 						<img
 							className="rounded-md"
-							src={buildAvatarImage(item.item_image)}
+							src={buildItemImage(item.item_image)}
 							loading="lazy"
 							alt={item.item_name}
 						/>

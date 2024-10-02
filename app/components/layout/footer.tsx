@@ -10,14 +10,14 @@ export const Footer = () => {
 					<FlaskConical className="size-10" />
 				</Link>
 				<div className="flex gap-4">
-					<Link to={'#'} className="size-8">
-						<XIcon />
+					<Link to={'#'}>
+						<XIcon className="size-8" />
 					</Link>
-					<Link to={'#'} className="size-8">
-						<GithubIcon />
+					<Link to={'#'}>
+						<GithubIcon className="size-8" />
 					</Link>
-					<Link to={'#'} className="size-8">
-						<DiscordIcon />
+					<Link to={'#'}>
+						<DiscordIcon className="size-8" />
 					</Link>
 				</div>
 			</div>

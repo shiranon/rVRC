@@ -24,8 +24,6 @@ const subjectMap = {
 	folder: 'フォルダー',
 }
 const intentMap = {
-	avatar: 'deleteAvatar',
-	cloth: 'deleteCloth',
 	folder: 'deleteFolder',
 }
 

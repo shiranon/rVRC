@@ -107,8 +107,6 @@ export class FolderManager {
 
 		const input = Object.fromEntries(formData)
 
-		console.log('called')
-
 		try {
 			const { data, error } = await this.supabase
 				.from('folders')
@@ -195,6 +193,58 @@ export class FolderManager {
 		return { success: true, message: '衣装をフォルダに追加しました' }
 	}
 
+	async deleteCloth(formData: FormData) {
+		if (!this.user) {
+			throw new Error('ユーザーが初期化されていません')
+		}
+
+		const input = Object.fromEntries(formData)
+
+		console.log('フォーム', input)
+
+		// フォルダの確認
+		const { data: folderData, error: folderError } = await this.supabase
+			.from('folders')
+			.select('*')
+			.eq('id', input.folderId)
+			.eq('user_id', this.user.id)
+			.single()
+
+		console.log('フォルダ確認', folderData, folderError)
+		if (folderError || !folderData) {
+			console.error('フォルダの確認に失敗しました')
+			return { success: false, message: 'フォームから送信してください' }
+		}
+
+		// 衣装の確認
+		const { data: clothData, error: clothError } = await this.supabase
+			.from('cloths')
+			.select('booth_id')
+			.eq('booth_id', input.boothId)
+			.single()
+
+		console.log('衣装確認', clothData, clothError)
+		if (clothError || !clothData) {
+			console.error('衣装が存在しません')
+			return { success: false, message: '衣装が存在しません' }
+		}
+
+		// 衣装とフォルダの関連削除
+		const { error: deleteError } = await this.supabase
+			.from('folder_cloth')
+			.delete()
+			.eq('folder_id', input.folderId)
+			.eq('booth_id', input.boothId)
+
+		console.log('衣装削除', deleteError)
+		if (deleteError) {
+			console.error('衣装の削除に失敗しました')
+			return { success: false, message: '衣装の削除に失敗しました' }
+		}
+
+		return { success: true, message: '衣装をフォルダから削除しました' }
+	}
+
 	async addAvatar(formData: FormData, id: string) {
 		if (!this.user) {
 			throw new Error('ユーザーが初期化されていません')
@@ -253,5 +303,56 @@ export class FolderManager {
 			return { success: false, message: 'アバターの追加に失敗しました' }
 		}
 		return { success: true, message: 'アバターをフォルダに追加しました' }
+	}
+	async deleteAvatar(formData: FormData) {
+		if (!this.user) {
+			throw new Error('ユーザーが初期化されていません')
+		}
+
+		const input = Object.fromEntries(formData)
+
+		console.log('フォーム', input)
+
+		// フォルダの確認
+		const { data: folderData, error: folderError } = await this.supabase
+			.from('folders')
+			.select('*')
+			.eq('id', input.folderId)
+			.eq('user_id', this.user.id)
+			.single()
+
+		console.log('フォルダ確認', folderData, folderError)
+		if (folderError || !folderData) {
+			console.error('フォルダの確認に失敗しました')
+			return { success: false, message: 'フォームから送信してください' }
+		}
+
+		// アバターの確認
+		const { data: avatarData, error: avatarError } = await this.supabase
+			.from('avatars')
+			.select('booth_id')
+			.eq('booth_id', input.boothId)
+			.single()
+
+		console.log('アバター確認', avatarData, avatarError)
+		if (avatarError || !avatarData) {
+			console.error('アバターが存在しません')
+			return { success: false, message: 'アバターが存在しません' }
+		}
+
+		// アバターとフォルダの関連削除
+		const { error: deleteError } = await this.supabase
+			.from('folder_avatar')
+			.delete()
+			.eq('folder_id', input.folderId)
+			.eq('booth_id', input.boothId)
+
+		console.log('アバター削除', deleteError)
+		if (deleteError) {
+			console.error('アバターの削除に失敗しました')
+			return { success: false, message: 'アバターの削除に失敗しました' }
+		}
+
+		return { success: true, message: 'アバターをフォルダから削除しました' }
 	}
 }

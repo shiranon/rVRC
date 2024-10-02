@@ -19,7 +19,7 @@ import { FavoriteTag } from '~/components/element/favorite-tag'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
-import { XIcon } from '~/components/ui/icons'
+import { HeartIcon, XIcon } from '~/components/ui/icons'
 import {
 	Popover,
 	PopoverContent,
@@ -27,7 +27,7 @@ import {
 } from '~/components/ui/popover'
 import { useActionToast } from '~/hooks/use-action-toast'
 import { useToast } from '~/hooks/use-toast'
-import { buildAvatarImage, buildShopImage, formatValue } from '~/lib/format'
+import { buildItemImage, buildShopImage, formatValue } from '~/lib/format'
 import { loadEnvironment, truncateString } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-server.server'
 import { FolderManager } from '~/module/supabase/folder-manager'
@@ -142,32 +142,19 @@ export default function clothPage() {
 			<div className="flex flex-col pt-10 px-6">
 				<img
 					className="rounded-md"
-					src={buildAvatarImage(cloth.image_url)}
+					src={buildItemImage(cloth.image_url)}
 					loading="lazy"
 					alt={cloth.name}
 				/>
 				<div className="text-3xl pt-4 font-semibold tracking-tight leading-relaxed">
 					{cloth.name}
 				</div>
-				<div className="text-3xl font-semibold tracking-tight leading-relaxed">
-					{`￥${formatValue(cloth.price)}`}
-				</div>
 				<div className="flex items-center justify-end text-xl font-bold">
-					<svg
-						aria-hidden="true"
-						focusable="false"
-						viewBox="0 0 24 24"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-						className="w-5 h-5 mr-1"
-					>
-						<path
-							d="M2 9.1371C2 14 6.01943 16.5914 8.96173 18.9109C10 19.7294 11 20.5 12 20.5C13 20.5 14 19.7294 15.0383 18.9109C17.9806 16.5914 22 14 22 9.1371C22 4.27416 16.4998 0.825464 12 5.50063C7.50016 0.825464 2 4.27416 2 9.1371Z"
-							fill="#111111"
-						/>
-					</svg>
-
+					<HeartIcon className="w-4 h-4 mr-1" pathProps={{ fill: '#111111' }} />
 					<div>{formatValue(cloth.latest_favorite)}</div>
+				</div>
+				<div className="text-3xl font-semibold tracking-tight leading-relaxed text-right">
+					{`￥${formatValue(cloth.price)}`}
 				</div>
 				<div className="flex items-center gap-2">
 					<Avatar>

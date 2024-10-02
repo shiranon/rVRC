@@ -1,7 +1,7 @@
 import { Link } from '@remix-run/react'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
-import { buildAvatarImage, buildShopImage, formatValue } from '~/lib/format'
+import { buildShopImage, buildSmallItemImage, formatValue } from '~/lib/format'
 import type { RankingType } from '~/types/items'
 import { FavoriteTag } from './favorite-tag'
 import { RankingTag } from './ranking-tag'
@@ -28,7 +28,7 @@ export const TopItem = ({
 						</div>
 						<img
 							className="rounded-md pointer-events-none"
-							src={buildAvatarImage(data.item_image)}
+							src={buildSmallItemImage(data.item_image)}
 							loading="lazy"
 							alt={data.item_name}
 						/>

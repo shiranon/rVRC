@@ -1,4 +1,4 @@
-import { buildAvatarImage, buildShopImage } from '~/lib/format'
+import { buildShopImage, buildSmallItemImage } from '~/lib/format'
 import type { ItemType } from '~/types/items'
 import { FavoriteTag } from '../element/favorite-tag'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
@@ -18,7 +18,7 @@ export const FlexItemCard = ({ item }: FlexItemCardProp) => {
 					</div>
 					<img
 						className="rounded-md"
-						src={buildAvatarImage(item.image)}
+						src={buildSmallItemImage(item.image)}
 						loading="lazy"
 						alt={item.item_name}
 					/>
