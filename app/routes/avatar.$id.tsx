@@ -3,7 +3,6 @@ import {
 	Form,
 	Link,
 	redirect,
-	useActionData,
 	useLoaderData,
 	useParams,
 	useSearchParams,
@@ -25,15 +24,10 @@ import {
 	PopoverTrigger,
 } from '~/components/ui/popover'
 import { useActionToast } from '~/hooks/use-action-toast'
-import { useToast } from '~/hooks/use-toast'
 import { buildItemImage, buildShopImage, formatValue } from '~/lib/format'
 import { loadEnvironment, truncateString } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-server.server'
 import { FolderManager } from '~/module/supabase/folder-manager'
-
-type ActionData =
-	| { success: true; message: string }
-	| { success: false; message: string }
 
 export { avatarPageLoader as loader } from '~/.server/loaders'
 

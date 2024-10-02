@@ -5,7 +5,7 @@ import {
 	json,
 	redirect,
 } from '@remix-run/cloudflare'
-import { Link, useLoaderData, useParams } from '@remix-run/react'
+import { useLoaderData, useParams } from '@remix-run/react'
 import { useState } from 'react'
 import { FolderItemCard } from '~/components/card/folder-item-card'
 import { DeleteOrderDialog } from '~/components/element/delete-order-dialog'
@@ -190,7 +190,9 @@ export default function Folder() {
 			</div>
 			{avatars && avatars.length > 0 && (
 				<>
-					<div className="pl-3 pt-3 text-xl font-bold">アバター</div>
+					<div className="pl-3 pt-8 text-xl font-bold">
+						{`アバター ${avatars.length}件`}
+					</div>
 					<Card className="mt-2 bg-transparent shadow-none border-none">
 						<CardContent className="grid grid-cols-2 gap-2 p-0">
 							{avatars.map((item) => (
@@ -204,7 +206,9 @@ export default function Folder() {
 			)}
 			{cloths && cloths.length > 0 && (
 				<>
-					<div className="pl-3 pt-3 text-xl font-bold">衣装</div>
+					<div className="pl-3 pt-8 text-xl font-bold">
+						{`衣装 ${cloths.length}件`}
+					</div>
 					<Card className="mt-2 bg-transparent shadow-none border-none">
 						<CardContent className="grid grid-cols-2 gap-2 p-0">
 							{cloths.map((item) => (

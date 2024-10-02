@@ -5,6 +5,7 @@ import {
 	redirect,
 } from '@remix-run/cloudflare'
 import { Link, useLoaderData } from '@remix-run/react'
+import { Shirt, VenetianMask } from 'lucide-react'
 import { CreateFolder } from '~/components/element/create-folder'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent } from '~/components/ui/card'
@@ -107,10 +108,10 @@ export default function Profile() {
 				</div>
 				<div className="grid gap-2 pt-4">
 					{folders.map((folder) => (
-						<Card key={folder.id} className="">
+						<Card key={folder.id}>
 							<Link to={`/folder/${folder.id}`}>
 								<CardContent
-									className={`p-0 ${folder.is_private ? 'bg-gray-100 dark:bg-gray-800' : ''}`}
+									className={`p-0 ${folder.is_private ? 'bg-gray-100' : ''}`}
 								>
 									<div className="max-w-full flex flex-row justify-between">
 										<div className="flex aspect-square">
@@ -132,9 +133,15 @@ export default function Profile() {
 												</div>
 											</div>
 										</div>
-										<div>
-											<div>アバター:{folder.avatar_count}個</div>
-											<div>衣装:{folder.cloth_count}個</div>
+										<div className="pt-2 px-4">
+											<div className="flex items-center">
+												<VenetianMask />
+												<span>{folder.avatar_count}</span>
+											</div>
+											<div className="flex items-center">
+												<Shirt />
+												<span>{folder.cloth_count}</span>
+											</div>
 										</div>
 									</div>
 								</CardContent>

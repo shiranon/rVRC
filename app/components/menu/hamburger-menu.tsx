@@ -96,7 +96,7 @@ export const HamburgerMenu = () => {
 					</div>
 					<div className="hover:bg-beige">
 						<Link
-							to={'#'}
+							to={'/folder'}
 							className="pl-3 py-2 flex items-center"
 							onClick={() => setIsOpen(false)}
 						>
