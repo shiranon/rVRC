@@ -7,18 +7,16 @@ import {
 	Link,
 	json,
 	redirect,
-	useActionData,
 	useLoaderData,
 	useParams,
 } from '@remix-run/react'
 import { Folder, FolderPlus, Plus } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { FlexItemCard } from '~/components/card/flex-item-card'
 import { CreateFolder } from '~/components/element/create-folder'
-import { FavoriteTag } from '~/components/element/favorite-tag'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Button } from '~/components/ui/button'
-import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
+import { Card, CardContent, } from '~/components/ui/card'
 import { HeartIcon, XIcon } from '~/components/ui/icons'
 import {
 	Popover,
@@ -26,15 +24,10 @@ import {
 	PopoverTrigger,
 } from '~/components/ui/popover'
 import { useActionToast } from '~/hooks/use-action-toast'
-import { useToast } from '~/hooks/use-toast'
 import { buildItemImage, buildShopImage, formatValue } from '~/lib/format'
 import { loadEnvironment, truncateString } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-server.server'
 import { FolderManager } from '~/module/supabase/folder-manager'
-
-type ActionData =
-	| { success: true; message: string }
-	| { success: false; message: string }
 
 export const loader = async ({
 	request,

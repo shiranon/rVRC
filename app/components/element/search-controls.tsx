@@ -1,5 +1,5 @@
 import { useSearchParams } from '@remix-run/react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
 	Select,
 	SelectContent,
@@ -8,20 +8,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '~/components/ui/select'
-import type { FavoriteFilter } from '~/types/items'
+import type { FavoriteFilter, SortBy } from '~/types/items'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
-
-type SortBy =
-	| 'default'
-	| 'name_asc'
-	| 'name_desc'
-	| 'price_asc'
-	| 'price_desc'
-	| 'favorite_asc'
-	| 'favorite_desc'
-	| 'create_desc'
-	| 'create_asc'
 
 const sortOptions = [
 	{ value: 'name_asc', label: '名前順' },
@@ -46,18 +35,11 @@ const favoriteFilterOptions = [
 
 export const SearchControls = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
+	const [currentSort, setCurrentSort] = useState<SortBy>(undefined)
+	const [inputValue, setInputValue] = useState<string>('')
+
 	const [currentFavoriteFilter, setFavoriteFilter] =
 		useState<FavoriteFilter>(undefined)
-	const [currentSort, setCurrentSort] = useState<SortBy>('default')
-	const [searchKeyword, setSearchKeyword] = useState<string>('')
-
-	const previousSearch = useRef<string>('search')
-	const previousSort = useRef<string>('sort')
-	const previousFavorite = useRef<string>('favorite')
-
-	const clearParams = useCallback(() => {
-		setSearchParams({})
-	}, [setSearchParams])
 
 	const updateParams = useCallback(
 		(key: string, value: string) => {
@@ -69,54 +51,47 @@ export const SearchControls = () => {
 		[searchParams, setSearchParams],
 	)
 
-	useEffect(() => {
-		const sortPram = searchParams.get('sort') as SortBy
-		if (!sortPram) return
-		setCurrentSort(sortPram)
-		if (sortPram !== previousSort.current) {
-			updateParams('sort', sortPram)
-			previousSort.current = sortPram
-		}
-	}, [searchParams, updateParams])
+	const clearParams = useCallback(() => {
+		if (!searchParams.toString()) return
+		setSearchParams({})
+		setInputValue('')
+	}, [setSearchParams, searchParams])
 
 	useEffect(() => {
-		const favoritePram = searchParams.get('favorite') as FavoriteFilter
-		if (!favoritePram) {
-			return
+		const searchParam = searchParams.get('search')
+		if (searchParam !== null) {
+			setInputValue(searchParam)
 		}
-		setFavoriteFilter(favoritePram)
-		if (favoritePram !== previousFavorite.current) {
-			updateParams('favorite', favoritePram)
-			previousFavorite.current = favoritePram
-		}
-	}, [searchParams, updateParams])
+	}, [searchParams])
 
 	useEffect(() => {
-		const searchPram = (searchParams.get('search') as string) || null
-		if (searchPram === null) {
-			return
+		const sortParam = searchParams.get('sort') as SortBy
+		if (sortParam !== currentSort) {
+			setCurrentSort(sortParam || undefined)
 		}
-		setSearchKeyword(searchPram || '')
-		if (searchPram !== previousSearch.current) {
-			updateParams('search', searchPram)
-			previousSearch.current = searchPram
+	}, [searchParams, currentSort])
+
+	useEffect(() => {
+		const favoriteParam = searchParams.get('favorite') as FavoriteFilter
+		if (favoriteParam !== currentFavoriteFilter) {
+			setFavoriteFilter(favoriteParam || undefined)
 		}
-	}, [searchParams, updateParams])
+	}, [searchParams, currentFavoriteFilter])
 
 	return (
 		<>
 			<div className="grid pt-2 grid-cols-[70%_30%] gap-y-1">
 				<Input
 					className="bg-white rounded-r-none"
-					value={searchKeyword}
-					onChange={(e) => setSearchKeyword(e.target.value)}
+					value={inputValue}
+					onChange={(e) => setInputValue(e.target.value)}
 					onKeyDown={(e) =>
-						e.key === 'Enter' && updateParams('search', searchKeyword)
+						e.key === 'Enter' && updateParams('search', inputValue)
 					}
 				/>
 				<Button
 					className="bg-light-gray rounded-l-none text-white hover:bg-slate-500"
-					onClick={() => updateParams('search', searchKeyword)}
+					onClick={() => updateParams('search', inputValue)}
 				>
 					検索
 				</Button>
@@ -127,7 +102,7 @@ export const SearchControls = () => {
 						currentFavoriteFilter === undefined ? '' : currentFavoriteFilter
 					}
 					onValueChange={(value) => {
-						updateParams('favorite', value as SortBy)
+						updateParams('favorite', value)
 					}}
 				>
 					<SelectTrigger className="bg-white rounded-r-none">
@@ -144,12 +119,12 @@ export const SearchControls = () => {
 					</SelectContent>
 				</Select>
 				<Select
-					value={currentSort === 'default' ? '' : currentSort}
+					value={currentSort === undefined ? '' : currentSort}
 					onValueChange={(value) => {
-						updateParams('sort', value as SortBy)
+						updateParams('sort', value)
 					}}
 				>
-					<SelectTrigger className="bg-white rounded-none">
+					<SelectTrigger className="bg-white rounded-r-none">
 						<SelectValue placeholder="ソート" />
 					</SelectTrigger>
 					<SelectContent>

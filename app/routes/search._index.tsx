@@ -3,7 +3,7 @@ import { useLoaderData } from '@remix-run/react'
 import { SearchCard } from '~/components/card/search-card'
 import { ItemControls } from '~/components/element/item-controls'
 import { Pagination } from '~/components/element/pagination'
-import { RelationControls } from '~/components/element/relation-controls'
+import { SearchControls } from '~/components/element/search-controls'
 import { formatValue } from '~/lib/format'
 import { loadEnvironment } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-component.server'
@@ -71,7 +71,7 @@ export default function Search() {
 	return (
 		<div className="w-full pb-2 px-4">
 			<ItemControls />
-			<RelationControls />
+			<SearchControls />
 			<div className="py-4 text-xl">検索結果（{formatValue(count)}件）</div>
 			{result && result.length > 0 && (
 				<>

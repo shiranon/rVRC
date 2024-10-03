@@ -8,11 +8,11 @@ import type { RankingType } from '~/types/items'
 
 export const meta: MetaFunction = () => {
 	return [
-		{ title: 'rVRc' },
+		{ title: 'rVRC - VRChat用アイテムランキング' },
 		{
 			name: 'description',
 			content:
-				'rVRcはVRChat用アイテムのスキ数を集計してランキング化しているサイトです。',
+				'rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサイトです。',
 		},
 	]
 }

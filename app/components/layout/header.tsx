@@ -1,11 +1,10 @@
-import { Link, useLoaderData } from '@remix-run/react'
-import { FlaskConical } from 'lucide-react'
-import type { rootLoader } from '~/.server/loaders'
+import { Link } from '@remix-run/react'
+import logo from '~/images/rvrc-logo.svg'
 import { HamburgerMenu, RegisterMenu, UserMenu } from '~/components/menu/index'
 import { Separator } from '../ui/separator'
 
 interface User {
-	avatar: string
+	avatar: string | null
 	name: string
 }
 
@@ -24,9 +23,8 @@ export const Header = ({ userData }: HeaderProps) => {
 			<div className="pt-3 px-3 flex justify-between items-center">
 				<div className="flex">
 					<HamburgerMenu />
-					<Link className="flex pl-2 items-center" to={'/'}>
-						<FlaskConical />
-						<div className="pl-4 text-xl">rVRc</div>
+					<Link className="flex items-center pl-1" to={'/'}>
+						<img src={logo} alt="rVRC" width={90} height={30} />
 					</Link>
 				</div>
 				{userData?.isLoggedIn ? (
