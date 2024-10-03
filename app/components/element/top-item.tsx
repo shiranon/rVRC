@@ -1,8 +1,7 @@
 import { Link } from '@remix-run/react'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
-import { buildAvatarImage, buildShopImage, formatValue } from '~/lib/format'
-import { truncateString } from '~/lib/utils'
+import { buildShopImage, buildSmallItemImage, formatValue } from '~/lib/format'
 import type { RankingType } from '~/types/items'
 import { FavoriteTag } from './favorite-tag'
 import { RankingTag } from './ranking-tag'
@@ -29,7 +28,7 @@ export const TopItem = ({
 						</div>
 						<img
 							className="rounded-md pointer-events-none"
-							src={buildAvatarImage(data.item_image)}
+							src={buildSmallItemImage(data.item_image)}
 							loading="lazy"
 							alt={data.item_name}
 						/>
@@ -38,8 +37,8 @@ export const TopItem = ({
 			</Link>
 			<Link to={`/${type}/${data.id}`}>
 				<CardContent className="px-4 pt-0 pb-1">
-					<CardTitle className="leading-relaxed text-lg">
-						{truncateString(data.item_name, 35)}
+					<CardTitle className="leading-relaxed text-lg h-[4rem] overflow-hidden">
+						<div className="line-clamp-2 break-words">{data.item_name}</div>
 					</CardTitle>
 					<div className="text-right font-bold text-lg">
 						￥{formatValue(data.item_price)}

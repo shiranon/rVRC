@@ -26,9 +26,15 @@ const excludeOldDate = (timestamp: string): string => {
 	return formattedDate
 }
 
-const buildAvatarImage = (imageUrl: string | null) => {
+const buildItemImage = (imageUrl: string | null) => {
 	if (imageUrl != null) {
 		return `${URLS.ITEM_IMAGE}${imageUrl}${URLS.BASE_SIZE}`
+	}
+}
+
+const buildSmallItemImage = (imageUrl: string | null) => {
+	if (imageUrl != null) {
+		return `${URLS.TOP_IMAGE}${imageUrl}${URLS.BASE_SIZE}`
 	}
 }
 
@@ -51,8 +57,9 @@ const formatJapaneseDate = (dateString: string | null): string => {
 export {
 	formatTimestamp,
 	excludeOldDate,
-	buildAvatarImage,
+	buildItemImage,
 	buildShopImage,
 	formatValue,
 	formatJapaneseDate,
+	buildSmallItemImage,
 }

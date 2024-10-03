@@ -62,7 +62,16 @@ export const Pagination = ({
 					if (page.type === 'dots') {
 						return (
 							<PaginationItem key={`page-${page.value}`}>
-								<PaginationEllipsis className="text-lg hover:bg-beige" />
+								<PaginationEllipsis className="text-lg" />
+							</PaginationItem>
+						)
+					}
+					if (page.value === currentPage) {
+						return (
+							<PaginationItem key={`page-${page.value}`}>
+								<div className="inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background bg-beige focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground h-10 w-10 m-1 text-lg ">
+									{page.value}
+								</div>
 							</PaginationItem>
 						)
 					}

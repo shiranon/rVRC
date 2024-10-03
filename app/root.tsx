@@ -12,6 +12,7 @@ import {
 import type { rootLoader } from '~/.server/loaders'
 import { Footer, Header } from '~/components/layout/index'
 import './tailwind.css'
+import { Toaster } from '~/components/ui/toaster'
 
 type RootLoaderData = SerializeFrom<typeof rootLoader>
 
@@ -43,6 +44,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 					{children}
 				</div>
 				<Footer />
+				<Toaster />
 				<ScrollRestoration />
 				<Scripts />
 			</body>
