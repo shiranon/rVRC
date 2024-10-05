@@ -42,7 +42,7 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 	if (!data) return [{ title: 'Not found' }]
 	const titleElements = data.avatar.name
 		? [
-				{ title: data.avatar.name },
+				{ title: `${data.avatar.name} - アバター rVRC` },
 				{
 					name: 'twitter:title',
 					content: data.avatar.name,
@@ -57,15 +57,15 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 		? [
 				{
 					name: 'description',
-					content: `価格:${data.avatar.price} ♥スキ${data.avatar.latest_favorite}`,
+					content: `${data.avatar.name} / ${data.avatar.shop_name} / 価格:${data.avatar.price}円 / ♥${data.avatar.latest_favorite}`,
 				},
 				{
 					name: 'twitter:description',
-					content: `価格:${data.avatar.price} ♥スキ${data.avatar.latest_favorite}`,
+					content: `${data.avatar.shop_name} / 価格:${data.avatar.price}円 / ♥${data.avatar.latest_favorite}`,
 				},
 				{
 					property: 'og:description',
-					content: `価格:${data.avatar.price} ♥スキ${data.avatar.latest_favorite}`,
+					content: `${data.avatar.shop_name} / 価格:${data.avatar.price}円 / ♥${data.avatar.latest_favorite}`,
 				},
 			]
 		: []
@@ -80,7 +80,11 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 		},
 		{
 			name: 'twitter:card',
-			content: 'summary_large_image',
+			content: 'summary',
+		},
+		{
+			property: 'og:image:alt',
+			content: data.avatar.name,
 		},
 	]
 	return [
@@ -91,11 +95,21 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 			property: 'og:url',
 			content: `https://r-vrc.net/avatar/${data.avatar.booth_id}`,
 		},
-		{ property: 'og:type', content: 'article' },
+		{ property: 'og:type', content: 'website' },
 		{ property: 'og:site_name', content: 'rVRC' },
 		{ property: 'og:locale', content: ' ja_JP' },
+		{
+			rel: 'canonical',
+			href: `https://r-vrc.net/avatar/${data.avatar.booth_id}`,
+		},
+		{ name: 'author', content: 'rVRC' },
+		{
+			name: 'keywords',
+			content: `VRChat, アバター, 3Dモデル, ランキング, ${data.avatar.name}, ${data.avatar.shop_name}, `,
+		},
 	]
 }
+
 export { avatarPageLoader as loader } from '~/.server/loaders'
 
 export const action = async ({

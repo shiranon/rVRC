@@ -25,7 +25,12 @@ import {
 	PopoverTrigger,
 } from '~/components/ui/popover'
 import { useActionToast } from '~/hooks/use-action-toast'
-import { buildItemImage, buildShopImage, formatValue } from '~/lib/format'
+import {
+	buildItemImage,
+	buildShopImage,
+	buildSmallItemImage,
+	formatValue,
+} from '~/lib/format'
 import { loadEnvironment, truncateString } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-server.server'
 import { FolderManager } from '~/module/supabase/folder-manager'
@@ -119,8 +124,75 @@ export const action = async ({
 }
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-	if (!data) return [{ title: '取得エラー' }]
-	return [{ title: `${data.cloth.name} - 衣装 rVRC` }]
+	if (!data) return [{ title: 'Not found' }]
+	const titleElements = data.cloth.name
+		? [
+				{ title: `${data.cloth.name} - 衣装 rVRC` },
+				{
+					name: 'twitter:title',
+					content: data.cloth.name,
+				},
+				{
+					property: 'og:title',
+					content: data.cloth.name,
+				},
+			]
+		: []
+	const descriptionElements = data.cloth.price
+		? [
+				{
+					name: 'description',
+					content: `${data.cloth.name} / ${data.cloth.shop_name} / 価格:${data.cloth.price}円 / ♥${data.cloth.latest_favorite}`,
+				},
+				{
+					name: 'twitter:description',
+					content: `${data.cloth.shop_name} / 価格:${data.cloth.price}円 / ♥${data.cloth.latest_favorite}`,
+				},
+				{
+					property: 'og:description',
+					content: `${data.cloth.shop_name} / 価格:${data.cloth.price}円 / ♥${data.cloth.latest_favorite}`,
+				},
+			]
+		: []
+	const imageElements = [
+		{
+			name: 'twitter:image',
+			content: `${buildSmallItemImage(data.cloth.image_url)}`,
+		},
+		{
+			property: 'og:image',
+			content: `${buildSmallItemImage(data.cloth.image_url)}`,
+		},
+		{
+			name: 'twitter:card',
+			content: 'summary',
+		},
+		{
+			property: 'og:image:alt',
+			content: data.cloth.name,
+		},
+	]
+	return [
+		...titleElements,
+		...descriptionElements,
+		...imageElements,
+		{
+			property: 'og:url',
+			content: `https://r-vrc.net/avatar/${data.cloth.booth_id}`,
+		},
+		{ property: 'og:type', content: 'website' },
+		{ property: 'og:site_name', content: 'rVRC' },
+		{ property: 'og:locale', content: ' ja_JP' },
+		{
+			rel: 'canonical',
+			href: `https://r-vrc.net/cloth/${data.cloth.booth_id}`,
+		},
+		{ name: 'author', content: 'rVRC' },
+		{
+			name: 'keywords',
+			content: `VRChat, 衣装, 3Dモデル, ランキング, ${data.cloth.name}, ${data.cloth.shop_name}, `,
+		},
+	]
 }
 
 export default function clothPage() {

@@ -2,6 +2,7 @@ import { AvatarImage } from '@radix-ui/react-avatar'
 import {
 	type ActionFunctionArgs,
 	type LoaderFunctionArgs,
+	type MetaFunction,
 	json,
 	redirect,
 } from '@remix-run/cloudflare'
@@ -87,7 +88,6 @@ export const action = async ({
 	const intent = formData.get('intent')
 	const env = loadEnvironment(context)
 	const { supabase } = createClient(request, env)
-	console.log('called', intent)
 	switch (intent) {
 		case 'updateFolder': {
 			const folderManager = new FolderManager(supabase, id)
@@ -120,6 +120,74 @@ export const action = async ({
 			throw new Error('予期しないアクション')
 		}
 	}
+}
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+	if (!data) return [{ title: 'Not found' }]
+	const titleElements = data.folder
+		? [
+				{ title: `${data.folder.name} - フォルダ rVRC` },
+				{
+					name: 'twitter:title',
+					content: `${data.folder.name} - フォルダ`,
+				},
+				{
+					property: 'og:title',
+					content: `${data.folder.name} - フォルダ`,
+				},
+			]
+		: []
+	const descriptionElements = data
+		? [
+				{
+					name: 'description',
+					content: `${data.folder.name} - フォルダ`,
+				},
+				{
+					name: 'twitter:description',
+					content: `${data.folder.name} - フォルダ`,
+				},
+				{
+					property: 'og:description',
+					content: `${data.folder.name} - フォルダ`,
+				},
+			]
+		: []
+	const imageElements = [
+		{
+			name: 'twitter:image',
+			content: 'https://r-vrc.net/og-image.png',
+		},
+		{
+			property: 'og:image',
+			content: 'https://r-vrc.net/og-image.png',
+		},
+		{
+			name: 'twitter:card',
+			content: 'summary',
+		},
+		{
+			property: 'og:image:alt',
+			content: 'rVRC',
+		},
+	]
+	return [
+		...titleElements,
+		...descriptionElements,
+		...imageElements,
+		{
+			property: 'og:url',
+			content: `https://r-vrc.net/folder/${data.folder.id}`,
+		},
+		{ property: 'og:type', content: 'website' },
+		{ property: 'og:site_name', content: 'rVRC' },
+		{ property: 'og:locale', content: ' ja_JP' },
+		{
+			rel: 'canonical',
+			href: `https://r-vrc.net/folder/${data.folder.id}`,
+		},
+		{ name: 'author', content: 'rVRC' },
+	]
 }
 
 export default function Folder() {

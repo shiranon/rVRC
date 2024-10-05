@@ -119,7 +119,6 @@ export class FolderManager {
 				return { success: false, message: 'フォルダの削除に失敗' }
 			}
 			if (data === null) {
-				console.log('フォルダを削除しました')
 				return {
 					success: true,
 					message: 'フォルダを削除しました',
@@ -138,8 +137,6 @@ export class FolderManager {
 
 		const input = Object.fromEntries(formData)
 
-		console.log('フォーム', input)
-
 		// フォルダの確認
 		const { data: folderData, error: folderError } = await this.supabase
 			.from('folders')
@@ -148,7 +145,6 @@ export class FolderManager {
 			.eq('user_id', this.user.id)
 			.single()
 
-		console.log('フォルダ確認', folderData, folderError)
 		if (folderError || !folderData) {
 			console.error('フォルダの確認に失敗しました')
 			return { success: false, message: 'フォームから送信してください' }
@@ -161,7 +157,6 @@ export class FolderManager {
 			.eq('id', id)
 			.single()
 
-		console.log('衣装確認', clothData, clothError)
 		if (clothError || !clothData) {
 			console.error('衣装が存在しません')
 			return { success: false, message: '衣装が存在しません' }
@@ -174,7 +169,6 @@ export class FolderManager {
 			.eq('folder_id', input.folderId)
 			.eq('booth_id', clothData.booth_id)
 
-		console.log('関連確認', relationData, relationError)
 		if (relationError || relationData?.length > 0) {
 			console.error('既に衣装がフォルダに存在しています')
 			return { success: false, message: '既に衣装がフォルダ内にあります' }
@@ -185,7 +179,6 @@ export class FolderManager {
 			.from('folder_cloth')
 			.insert([{ folder_id: input.folderId, booth_id: clothData.booth_id }])
 
-		console.log('衣装追加', addClothError)
 		if (addClothError) {
 			console.error('衣装の追加に失敗しました')
 			return { success: false, message: '衣装の追加に失敗しました' }
@@ -200,8 +193,6 @@ export class FolderManager {
 
 		const input = Object.fromEntries(formData)
 
-		console.log('フォーム', input)
-
 		// フォルダの確認
 		const { data: folderData, error: folderError } = await this.supabase
 			.from('folders')
@@ -210,7 +201,6 @@ export class FolderManager {
 			.eq('user_id', this.user.id)
 			.single()
 
-		console.log('フォルダ確認', folderData, folderError)
 		if (folderError || !folderData) {
 			console.error('フォルダの確認に失敗しました')
 			return { success: false, message: 'フォームから送信してください' }
@@ -223,7 +213,6 @@ export class FolderManager {
 			.eq('booth_id', input.boothId)
 			.single()
 
-		console.log('衣装確認', clothData, clothError)
 		if (clothError || !clothData) {
 			console.error('衣装が存在しません')
 			return { success: false, message: '衣装が存在しません' }
@@ -236,7 +225,6 @@ export class FolderManager {
 			.eq('folder_id', input.folderId)
 			.eq('booth_id', input.boothId)
 
-		console.log('衣装削除', deleteError)
 		if (deleteError) {
 			console.error('衣装の削除に失敗しました')
 			return { success: false, message: '衣装の削除に失敗しました' }
@@ -260,7 +248,6 @@ export class FolderManager {
 			.eq('user_id', this.user.id)
 			.single()
 
-		console.log('フォルダ確認', folderData, folderError)
 		if (folderError || !folderData) {
 			console.error('フォルダの確認に失敗しました')
 			return { success: false, message: 'フォームから送信してください' }
@@ -273,7 +260,6 @@ export class FolderManager {
 			.eq('id', id)
 			.single()
 
-		console.log('アバター確認', avatarData, avatarError)
 		if (avatarError || !avatarData) {
 			console.error('アバターが存在しません')
 			return { success: false, message: 'アバターが存在しません' }
@@ -286,7 +272,6 @@ export class FolderManager {
 			.eq('folder_id', input.folderId)
 			.eq('booth_id', avatarData.booth_id)
 
-		console.log('関連確認', relationData, relationError)
 		if (relationError || relationData?.length > 0) {
 			console.error('既にアバターがフォルダに存在しています')
 			return { success: false, message: '既にアバターがフォルダ内にあります' }
@@ -297,7 +282,6 @@ export class FolderManager {
 			.from('folder_avatar')
 			.insert([{ folder_id: input.folderId, booth_id: avatarData.booth_id }])
 
-		console.log('アバター追加', addAvatarError)
 		if (addAvatarError) {
 			console.error('アバターの追加に失敗しました')
 			return { success: false, message: 'アバターの追加に失敗しました' }
@@ -311,8 +295,6 @@ export class FolderManager {
 
 		const input = Object.fromEntries(formData)
 
-		console.log('フォーム', input)
-
 		// フォルダの確認
 		const { data: folderData, error: folderError } = await this.supabase
 			.from('folders')
@@ -321,7 +303,6 @@ export class FolderManager {
 			.eq('user_id', this.user.id)
 			.single()
 
-		console.log('フォルダ確認', folderData, folderError)
 		if (folderError || !folderData) {
 			console.error('フォルダの確認に失敗しました')
 			return { success: false, message: 'フォームから送信してください' }
@@ -334,7 +315,6 @@ export class FolderManager {
 			.eq('booth_id', input.boothId)
 			.single()
 
-		console.log('アバター確認', avatarData, avatarError)
 		if (avatarError || !avatarData) {
 			console.error('アバターが存在しません')
 			return { success: false, message: 'アバターが存在しません' }
@@ -347,7 +327,6 @@ export class FolderManager {
 			.eq('folder_id', input.folderId)
 			.eq('booth_id', input.boothId)
 
-		console.log('アバター削除', deleteError)
 		if (deleteError) {
 			console.error('アバターの削除に失敗しました')
 			return { success: false, message: 'アバターの削除に失敗しました' }

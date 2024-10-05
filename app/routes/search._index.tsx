@@ -1,4 +1,8 @@
-import { type LoaderFunctionArgs, json } from '@remix-run/cloudflare'
+import {
+	type LoaderFunctionArgs,
+	type MetaFunction,
+	json,
+} from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import { SearchCard } from '~/components/card/search-card'
 import { ItemControls } from '~/components/element/item-controls'
@@ -64,6 +68,74 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 		search_keyword,
 		favorite_filter,
 	})
+}
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+	if (!data) return [{ title: 'Not found' }]
+	const titleElements = data
+		? [
+				{ title: '検索 - rVRC' },
+				{
+					name: 'twitter:title',
+					content: 'rVRC 検索ページ',
+				},
+				{
+					property: 'og:title',
+					content: 'rVRC 検索ページ',
+				},
+			]
+		: []
+	const descriptionElements = data
+		? [
+				{
+					name: 'description',
+					content: 'VRChat用アイテムを検索/絞り込みする事が出来ます。',
+				},
+				{
+					name: 'twitter:description',
+					content: 'VRChat用アイテムを検索/絞り込みする事が出来ます。',
+				},
+				{
+					property: 'og:description',
+					content: 'VRChat用アイテムを検索/絞り込みする事が出来ます。',
+				},
+			]
+		: []
+	const imageElements = [
+		{
+			name: 'twitter:image',
+			content: 'https://r-vrc.net/og-image.png',
+		},
+		{
+			property: 'og:image',
+			content: 'https://r-vrc.net/og-image.png',
+		},
+		{
+			name: 'twitter:card',
+			content: 'summary',
+		},
+		{
+			property: 'og:image:alt',
+			content: 'rVRC',
+		},
+	]
+	return [
+		...titleElements,
+		...descriptionElements,
+		...imageElements,
+		{
+			property: 'og:url',
+			content: 'https://r-vrc.net/search',
+		},
+		{ property: 'og:type', content: 'website' },
+		{ property: 'og:site_name', content: 'rVRC' },
+		{ property: 'og:locale', content: ' ja_JP' },
+		{
+			rel: 'canonical',
+			href: 'https://r-vrc.net/search',
+		},
+		{ name: 'author', content: 'rVRC' },
+	]
 }
 
 export default function Search() {

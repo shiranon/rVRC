@@ -1,3 +1,4 @@
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { useLoaderData, useSearchParams } from '@remix-run/react'
 import type { trendLoader } from '~/.server/loaders'
 import { RankingItemCard } from '~/components/card'
@@ -9,11 +10,88 @@ import type { RankingType } from '~/types/items'
 
 export { trendLoader as loader } from '~/.server/loaders'
 
+export const meta: MetaFunction<typeof trendLoader> = ({ data }) => {
+	if (!data) return [{ title: 'Not found' }]
+	const titleElements = data
+		? [
+				{ title: 'トレンド - rVRC' },
+				{
+					name: 'twitter:title',
+					content: 'rVRC - トレンド',
+				},
+				{
+					property: 'og:title',
+					content: 'rVRC - トレンド',
+				},
+			]
+		: []
+	const descriptionElements = data
+		? [
+				{
+					name: 'description',
+					content:
+						'販売から1週間以内のVRChat用アイテムのスキ数を集計してトレンドを作成しています。',
+				},
+				{
+					name: 'twitter:description',
+					content:
+						'販売から1週間以内のVRChat用アイテムのスキ数を集計してトレンドを作成しています。',
+				},
+				{
+					property: 'og:description',
+					content:
+						'販売から1週間以内のVRChat用アイテムのスキ数を集計してトレンドを作成しています。',
+				},
+			]
+		: []
+	const imageElements = [
+		{
+			name: 'twitter:image',
+			content: 'https://r-vrc.net/og-image.png',
+		},
+		{
+			property: 'og:image',
+			content: 'https://r-vrc.net/og-image.png',
+		},
+		{
+			name: 'twitter:card',
+			content: 'summary',
+		},
+		{
+			property: 'og:image:alt',
+			content: 'rVRC',
+		},
+	]
+	return [
+		...titleElements,
+		...descriptionElements,
+		...imageElements,
+		{
+			property: 'og:url',
+			content: 'https://r-vrc.net/ranking',
+		},
+		{ property: 'og:type', content: 'article' },
+		{ property: 'og:site_name', content: 'rVRC' },
+		{ property: 'og:locale', content: ' ja_JP' },
+		{
+			rel: 'canonical',
+			href: 'https://r-vrc.net/ranking',
+		},
+		{ name: 'author', content: 'rVRC' },
+		{
+			name: 'keywords',
+			content:
+				'VRChat, ランキング, トレンド, アバター, オススメ, 衣装, 3Dモデル',
+		},
+	]
+}
+
 export default function Ranking() {
-	const { trend, type, item } = useLoaderData<trendLoader>()
+	const { trend, item } = useLoaderData<trendLoader>()
 	const [searchParams] = useSearchParams()
 	const dateParam = searchParams.get('date')
 	const rankingDate = formatJapaneseDate(dateParam)
+
 	return (
 		<>
 			{trend && trend.length > 0 ? (

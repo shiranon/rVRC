@@ -8,7 +8,7 @@ export const signInWithDiscord = async (supabase: SupabaseClient, env: Env) => {
 		},
 	})
 	if (error) {
-		console.log(`auth error: ${error}`)
+		console.error(`認証エラー: ${error}`)
 		throw error
 	}
 	return { data, error }

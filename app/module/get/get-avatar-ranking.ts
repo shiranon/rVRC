@@ -16,8 +16,6 @@ export const getAvatarRanking = async (
 			offset_param: offset,
 			limit_param: limit,
 		})
-		// console.log('Fetched data:', data)
-		// console.log('Error:', error)
 		return { data }
 	} catch (error) {
 		console.error('Error fetching avatar_ranking:', error)

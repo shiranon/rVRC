@@ -6,13 +6,77 @@ import { TopRankingCard, TopTrendCard } from '~/components/card'
 import { ItemControls } from '~/components/element/item-controls'
 import type { RankingType } from '~/types/items'
 
-export const meta: MetaFunction = () => {
-	return [
-		{ title: 'rVRC - VRChat用アイテムランキング' },
+export const meta: MetaFunction<typeof indexLoader> = ({ data }) => {
+	if (!data) return [{ title: 'Not found' }]
+	const titleElements = data
+		? [
+				{ title: 'rVRC - VRChat用アイテムランキング' },
+				{
+					name: 'twitter:title',
+					content: 'rVRC - VRChat用アイテムランキング',
+				},
+				{
+					property: 'og:title',
+					content: 'rVRC - VRChat用アイテムランキング',
+				},
+			]
+		: []
+	const descriptionElements = data
+		? [
+				{
+					name: 'description',
+					content:
+						'rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサービスです。',
+				},
+				{
+					name: 'twitter:description',
+					content:
+						'rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサービスです。',
+				},
+				{
+					property: 'og:description',
+					content:
+						'rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサービスです。',
+				},
+			]
+		: []
+	const imageElements = [
 		{
-			name: 'description',
-			content:
-				'rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサービスです。',
+			name: 'twitter:image',
+			content: 'https://r-vrc.net/og-image.png',
+		},
+		{
+			property: 'og:image',
+			content: 'https://r-vrc.net/og-image.png',
+		},
+		{
+			name: 'twitter:card',
+			content: 'summary',
+		},
+		{
+			property: 'og:image:alt',
+			content: 'rVRC',
+		},
+	]
+	return [
+		...titleElements,
+		...descriptionElements,
+		...imageElements,
+		{
+			property: 'og:url',
+			content: 'https://r-vrc.net/',
+		},
+		{ property: 'og:type', content: 'article' },
+		{ property: 'og:site_name', content: 'rVRC' },
+		{ property: 'og:locale', content: ' ja_JP' },
+		{
+			rel: 'canonical',
+			href: 'https://r-vrc.net/',
+		},
+		{ name: 'author', content: 'rVRC' },
+		{
+			name: 'keywords',
+			content: 'VRChat, ランキング, アバター, オススメ, 衣装, 3Dモデル',
 		},
 	]
 }
