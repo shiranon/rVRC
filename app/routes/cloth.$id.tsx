@@ -1,6 +1,7 @@
 import type {
 	ActionFunctionArgs,
 	LoaderFunctionArgs,
+	MetaFunction,
 } from '@remix-run/cloudflare'
 import {
 	Form,
@@ -16,7 +17,7 @@ import { FlexItemCard } from '~/components/card/flex-item-card'
 import { CreateFolder } from '~/components/element/create-folder'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Button } from '~/components/ui/button'
-import { Card, CardContent, } from '~/components/ui/card'
+import { Card, CardContent } from '~/components/ui/card'
 import { HeartIcon, XIcon } from '~/components/ui/icons'
 import {
 	Popover,
@@ -115,6 +116,11 @@ export const action = async ({
 			throw new Error('予期しないアクション')
 		}
 	}
+}
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+	if (!data) return [{ title: '取得エラー' }]
+	return [{ title: `${data.cloth.name} - 衣装 rVRC` }]
 }
 
 export default function clothPage() {

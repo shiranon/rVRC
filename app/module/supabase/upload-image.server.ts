@@ -59,11 +59,7 @@ export const uploadFirstUserAvatar = async (
 		return null
 	}
 
-	updateAvatar(user.id, fileName, supabase)
-		.then((data) => {
-			console.log('avatarのパスがupdateされました:', data)
-		})
-		.catch((err) => {
-			console.error('update時にエラーが発生しました:', err)
-		})
+	updateAvatar(user.id, fileName, supabase).catch((err) => {
+		console.error('update時にエラーが発生しました:', err)
+	})
 }

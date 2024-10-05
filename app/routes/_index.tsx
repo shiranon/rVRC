@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => {
 		{
 			name: 'description',
 			content:
-				'rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサイトです。',
+				'rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサービスです。',
 		},
 	]
 }

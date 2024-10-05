@@ -7,14 +7,6 @@ import { RankingControls } from '~/components/element/ranking-controls'
 import { formatJapaneseDate } from '~/lib/format'
 import type { RankingType } from '~/types/items'
 
-const formatType = (type: string): string => {
-	const typeMap: Record<string, string> = {
-		month: 'マンスリー',
-		day: 'デイリー',
-	}
-	return typeMap[type] || ''
-}
-
 export { trendLoader as loader } from '~/.server/loaders'
 
 export default function Ranking() {
@@ -22,16 +14,13 @@ export default function Ranking() {
 	const [searchParams] = useSearchParams()
 	const dateParam = searchParams.get('date')
 	const rankingDate = formatJapaneseDate(dateParam)
-
 	return (
 		<>
 			{trend && trend.length > 0 ? (
 				<div className="relative">
 					<div className="px-4 flex-1">
 						<ItemControls />
-						<h1 className="text-2xl font-bold p-4">
-							{formatType(type)}トレンド
-						</h1>
+						<h1 className="text-2xl font-bold p-4">デイリートレンド</h1>
 						<div className="pb-4 px-4 text-xl">{rankingDate}</div>
 						{trend.map((trend: RankingType) => (
 							<div key={trend.booth_id} className="mb-4">

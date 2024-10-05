@@ -1,4 +1,8 @@
-import { type ActionFunctionArgs, json, type MetaFunction } from '@remix-run/cloudflare'
+import {
+	type ActionFunctionArgs,
+	type MetaFunction,
+	json,
+} from '@remix-run/cloudflare'
 import {
 	Form,
 	Link,
@@ -24,18 +28,74 @@ import {
 	PopoverTrigger,
 } from '~/components/ui/popover'
 import { useActionToast } from '~/hooks/use-action-toast'
-import { buildItemImage, buildShopImage, formatValue } from '~/lib/format'
+import {
+	buildItemImage,
+	buildShopImage,
+	buildSmallItemImage,
+	formatValue,
+} from '~/lib/format'
 import { loadEnvironment, truncateString } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-server.server'
 import { FolderManager } from '~/module/supabase/folder-manager'
 
-export const meta: MetaFunction<typeof avatarPageLoader> = ({
-  data,
-}) => {
-	if(!data) return [{ title: "取得エラー"}];
-  return [{ title: `${data.avatar.name} - rVRC` }];
-};
-
+export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
+	if (!data) return [{ title: 'Not found' }]
+	const titleElements = data.avatar.name
+		? [
+				{ title: data.avatar.name },
+				{
+					name: 'twitter:title',
+					content: data.avatar.name,
+				},
+				{
+					property: 'og:title',
+					content: data.avatar.name,
+				},
+			]
+		: []
+	const descriptionElements = data.avatar.price
+		? [
+				{
+					name: 'description',
+					content: `価格:${data.avatar.price} ♥スキ${data.avatar.latest_favorite}`,
+				},
+				{
+					name: 'twitter:description',
+					content: `価格:${data.avatar.price} ♥スキ${data.avatar.latest_favorite}`,
+				},
+				{
+					property: 'og:description',
+					content: `価格:${data.avatar.price} ♥スキ${data.avatar.latest_favorite}`,
+				},
+			]
+		: []
+	const imageElements = [
+		{
+			name: 'twitter:image',
+			content: `${buildSmallItemImage(data.avatar.image_url)}`,
+		},
+		{
+			property: 'og:image',
+			content: `${buildSmallItemImage(data.avatar.image_url)}`,
+		},
+		{
+			name: 'twitter:card',
+			content: 'summary_large_image',
+		},
+	]
+	return [
+		...titleElements,
+		...descriptionElements,
+		...imageElements,
+		{
+			property: 'og:url',
+			content: `https://r-vrc.net/avatar/${data.avatar.booth_id}`,
+		},
+		{ property: 'og:type', content: 'article' },
+		{ property: 'og:site_name', content: 'rVRC' },
+		{ property: 'og:locale', content: ' ja_JP' },
+	]
+}
 export { avatarPageLoader as loader } from '~/.server/loaders'
 
 export const action = async ({

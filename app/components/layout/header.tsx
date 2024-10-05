@@ -1,6 +1,6 @@
 import { Link } from '@remix-run/react'
-import logo from '~/images/rvrc-logo.svg'
 import { HamburgerMenu, RegisterMenu, UserMenu } from '~/components/menu/index'
+import logo from '~/images/rvrc-logo.svg'
 import { Separator } from '../ui/separator'
 
 interface User {
