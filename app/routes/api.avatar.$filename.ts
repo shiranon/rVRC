@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
-import { loadEnvironment } from '~/lib/utils'
+import { loadEnvironment } from '~/lib/utils.server'
 import { createClient } from '~/module/supabase/create-client.server'
 
 export const loader = async ({

@@ -1,5 +1,5 @@
 import { type ActionFunctionArgs, redirect } from '@remix-run/cloudflare'
-import { loadEnvironment } from '~/lib/utils'
+import { loadEnvironment } from '~/lib/utils.server'
 import { createClient } from '~/module/supabase/create-client.server'
 import { signInWithDiscord } from '~/module/supabase/discord-auth.server'
 

@@ -1,5 +1,5 @@
 import type { SupabaseClient, User } from '@supabase/supabase-js'
-import { generateUniqueFileName } from '~/lib/utils'
+import { generateUniqueFileName } from '~/lib/utils.server'
 
 type AllowedImageType = 'png' | 'jpeg' | 'webp'
 

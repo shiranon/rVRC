@@ -1,5 +1,5 @@
 import { type LoaderFunctionArgs, redirect } from '@remix-run/cloudflare'
-import { loadEnvironment } from '~/lib/utils'
+import { loadEnvironment } from '~/lib/utils.server'
 import { createClient } from '~/module/supabase/create-client.server'
 import { uploadFirstUserAvatar } from '~/module/supabase/upload-image.server'
 

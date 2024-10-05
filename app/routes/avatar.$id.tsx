@@ -29,7 +29,7 @@ import {
 	buildSmallItemImage,
 	formatValue,
 } from '~/lib/format'
-import { truncateString } from '~/lib/utils'
+import { truncateString } from '~/lib/format'
 
 export { avatarPageAction as action } from '~/.server/actions'
 export { avatarPageLoader as loader } from '~/.server/loaders'

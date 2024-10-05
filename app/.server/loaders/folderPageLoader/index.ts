@@ -1,5 +1,5 @@
 import { type LoaderFunctionArgs, json, redirect } from '@remix-run/cloudflare'
-import { loadEnvironment } from '~/lib/utils'
+import { loadEnvironment } from '~/lib/utils.server'
 import { createClient } from '~/module/supabase/create-client.server'
 import type { FolderItem } from '~/types/items'
 

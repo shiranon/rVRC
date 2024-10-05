@@ -1,5 +1,5 @@
-import { type ActionFunctionArgs, json, redirect } from '@remix-run/cloudflare'
-import { loadEnvironment } from '~/lib/utils'
+import { type ActionFunctionArgs, json } from '@remix-run/cloudflare'
+import { loadEnvironment } from '~/lib/utils.server'
 import { createClient } from '~/module/supabase/create-client.server'
 import { FolderManager } from '~/module/supabase/folder-manager'
 

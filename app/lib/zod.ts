@@ -1,5 +1,9 @@
 import { z } from 'zod'
 
+/**
+ * フォルダ用バリデーション
+ * フォルダ名は必須で25文字以内、公開/非公開の値が無い場合はエラー
+ */
 export const folderCreateSchema = z.object({
 	foldername: z
 		.string()

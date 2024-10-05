@@ -20,8 +20,8 @@ import {
 	buildShopImage,
 	buildSmallItemImage,
 	formatValue,
+	truncateString,
 } from '~/lib/format'
-import { truncateString } from '~/lib/utils'
 
 export { clothPageAction as action } from '~/.server/actions'
 export { clothPageLoader as loader } from '~/.server/loaders'
