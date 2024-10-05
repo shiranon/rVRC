@@ -1,47 +1,61 @@
-# Welcome to Remix + Cloudflare!
+<div align="center">
+  <img src="./app/images/rvrc-logo.svg" alt="rVRC" />
+  <h3><a href="https://r-vrc.net/">rVRC</a></h3>
+  <p>rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサービスです。</p>
 
-- 📖 [Remix docs](https://remix.run/docs)
-- 📖 [Remix Cloudflare docs](https://remix.run/guides/vite#cloudflare)
+  <img src="https://img.shields.io/badge/Remix-black?logo=remix" alt="Remix" />
+  <img src="https://img.shields.io/badge/Cloudflare_Pages-black?logo=cloudflarepages" alt="Cloudflare Pages" />
+  <img src="https://img.shields.io/badge/Supabase-black?logo=supabase" alt="Supabase" />
+  <a href="https://x.com/rvrc_v"><img src="https://img.shields.io/badge/rVRC-black?logo=x" alt="rVRC" /></a>
+</div>
 
-## Development
+## 概要
 
-Run the dev server:
+rVRCは[BOOTH](https://booth.pm/ja)で販売されている3Dアイテムの人気ランキング表示、  
+検索機能を強化したサービスです。  
+Discordでログインをすれば気に入ったアイテムをフォルダ分けする事が出来ます。
 
-```sh
-npm run dev
-```
+## 使用技術
 
-To run Wrangler:
+- フレームワーク: [Remix](https://remix.run/)
+- データベース: [Supabase](https://supabase.com/)
+- デプロイ: [Cloudflare Pages](https://www.cloudflare.com/developer-platform/pages/)
+- スタイリング: [TailwindCSS](https://tailwindcss.com/)
 
-```sh
-npm run build
-npm run start
-```
+## 機能
 
-## Typegen
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <a href="https://r-vrc.net/ranking">👑ランキング</a>
+      </td>
+      <td>
+        <a href="https://r-vrc.net/trend">🔥トレンド</a>
+      </td>
+    </tr>
+    <tr>
+      <td>前日比で増加したスキ数が多い順でアイテムを表示しています。過去のランキングを見る事も出来ます。</td>
+      <td>7日以内にBOOTHで公開されたアイテムをスキ数順で表示しています。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://r-vrc.net/folder">📁フォルダ</a>
+      </td>
+      <td>
+        <a href="https://r-vrc.net/search">🔍️検索</a>
+      </td>
+    </tr>
+    <tr>
+      <td>ユーザーが公開設定したフォルダを表示しています。</td>
+      <td>スキ数でフィルタリングしたり、様々な条件でソート出来ます。</td>
+    </tr>
+  </tbody>
+</table>
 
-Generate types for your Cloudflare bindings in `wrangler.toml`:
+## 連絡先
+https://x.com/shirano_v
 
-```sh
-npm run typegen
-```
+## License
 
-You will need to rerun typegen whenever you make changes to `wrangler.toml`.
-
-## Deployment
-
-First, build your app for production:
-
-```sh
-npm run build
-```
-
-Then, deploy your app to Cloudflare Pages:
-
-```sh
-npm run deploy
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+[MIT](LICENSE)

@@ -1,41 +1,118 @@
-import type { MetaFunction } from "@remix-run/cloudflare";
+import type { MetaFunction } from '@remix-run/cloudflare'
+import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
+import { useEffect, useRef } from 'react'
+import type { indexLoader } from '~/.server/loaders'
+import { TopRankingCard, TopTrendCard } from '~/components/card'
+import { ItemControls } from '~/components/element/item-controls'
+import type { RankingType } from '~/types/items'
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    {
-      name: "description",
-      content: "Welcome to Remix on Cloudflare!",
-    },
-  ];
-};
+export { indexLoader as loader } from '~/.server/loaders'
 
+export const meta: MetaFunction<typeof indexLoader> = ({ data }) => {
+	if (!data) return [{ title: 'Not found' }]
+	const titleElements = data
+		? [
+				{ title: 'rVRC - VRChat用アイテムランキング' },
+				{
+					name: 'twitter:title',
+					content: 'rVRC - VRChat用アイテムランキング',
+				},
+				{
+					property: 'og:title',
+					content: 'rVRC - VRChat用アイテムランキング',
+				},
+			]
+		: []
+	const descriptionElements = data
+		? [
+				{
+					name: 'description',
+					content:
+						'rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサービスです。',
+				},
+				{
+					name: 'twitter:description',
+					content:
+						'rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサービスです。',
+				},
+				{
+					property: 'og:description',
+					content:
+						'rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサービスです。',
+				},
+			]
+		: []
+	const imageElements = [
+		{
+			name: 'twitter:image',
+			content: 'https://r-vrc.net/og-image.png',
+		},
+		{
+			property: 'og:image',
+			content: 'https://r-vrc.net/og-image.png',
+		},
+		{
+			name: 'twitter:card',
+			content: 'summary_large_image',
+		},
+		{
+			property: 'og:image:alt',
+			content: 'rVRC',
+		},
+	]
+	return [
+		...titleElements,
+		...descriptionElements,
+		...imageElements,
+		{
+			property: 'og:url',
+			content: 'https://r-vrc.net/',
+		},
+		{ property: 'og:type', content: 'article' },
+		{ property: 'og:site_name', content: 'rVRC' },
+		{ property: 'og:locale', content: ' ja_JP' },
+		{
+			rel: 'canonical',
+			href: 'https://r-vrc.net/',
+		},
+		{ name: 'author', content: 'rVRC' },
+		{
+			name: 'keywords',
+			content: 'VRChat, ランキング, アバター, オススメ, 衣装, 3Dモデル',
+		},
+	]
+}
 export default function Index() {
-  return (
-    <div className="font-sans p-4">
-      <h1 className="text-3xl">Welcome to Remix on Cloudflare</h1>
-      <ul className="list-disc mt-4 pl-6 space-y-2">
-        <li>
-          <a
-            className="text-blue-700 underline visited:text-purple-900"
-            target="_blank"
-            href="https://remix.run/docs"
-            rel="noreferrer"
-          >
-            Remix Docs
-          </a>
-        </li>
-        <li>
-          <a
-            className="text-blue-700 underline visited:text-purple-900"
-            target="_blank"
-            href="https://developers.cloudflare.com/pages/framework-guides/deploy-a-remix-site/"
-            rel="noreferrer"
-          >
-            Cloudflare Pages Docs - Remix guide
-          </a>
-        </li>
-      </ul>
-    </div>
-  );
+	const initialData = useLoaderData<indexLoader>()
+	const fetcher = useFetcher<indexLoader>()
+
+	const [searchParams] = useSearchParams()
+	const prevSearchParamsRef = useRef(searchParams.toString())
+
+	useEffect(() => {
+		const currentSearchParams = searchParams.toString()
+		if (currentSearchParams !== prevSearchParamsRef.current) {
+			fetcher.load(`/?${currentSearchParams}`)
+			prevSearchParamsRef.current = currentSearchParams
+		}
+	}, [searchParams, fetcher])
+
+	const ranking =
+		fetcher.data?.ranking?.data || initialData?.ranking?.data || []
+	const trend = fetcher.data?.trend?.data || initialData?.trend?.data || []
+	const item = fetcher.data?.item || initialData?.item
+
+	return (
+		<div className="px-2 flex-1">
+			<ItemControls />
+			<h1 className="text-3xl py-4 pl-4">デイリーランキング</h1>
+			{ranking && ranking.length > 0 && (
+				<TopRankingCard ranking={ranking as RankingType[]} item={item} />
+			)}
+			<h1 className="text-3xl py-4 pl-4">デイリートレンド</h1>
+			{trend && trend.length > 0 && (
+				<TopTrendCard ranking={trend as RankingType[]} item={item} />
+			)}
+		</div>
+	)
 }
