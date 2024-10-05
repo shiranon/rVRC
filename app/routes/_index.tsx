@@ -6,6 +6,8 @@ import { TopRankingCard, TopTrendCard } from '~/components/card'
 import { ItemControls } from '~/components/element/item-controls'
 import type { RankingType } from '~/types/items'
 
+export { indexLoader as loader } from '~/.server/loaders'
+
 export const meta: MetaFunction<typeof indexLoader> = ({ data }) => {
 	if (!data) return [{ title: 'Not found' }]
 	const titleElements = data
@@ -51,7 +53,7 @@ export const meta: MetaFunction<typeof indexLoader> = ({ data }) => {
 		},
 		{
 			name: 'twitter:card',
-			content: 'summary',
+			content: 'summary_large_image',
 		},
 		{
 			property: 'og:image:alt',
@@ -80,9 +82,6 @@ export const meta: MetaFunction<typeof indexLoader> = ({ data }) => {
 		},
 	]
 }
-
-export { indexLoader as loader } from '~/.server/loaders'
-
 export default function Index() {
 	const initialData = useLoaderData<indexLoader>()
 	const fetcher = useFetcher<indexLoader>()

@@ -38,6 +38,7 @@ import { loadEnvironment, truncateString } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-server.server'
 import { FolderManager } from '~/module/supabase/folder-manager'
 
+export { avatarPageLoader as loader } from '~/.server/loaders'
 export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 	if (!data) return [{ title: 'Not found' }]
 	const titleElements = data.avatar.name
@@ -80,7 +81,7 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 		},
 		{
 			name: 'twitter:card',
-			content: 'summary',
+			content: 'summary_large_image',
 		},
 		{
 			property: 'og:image:alt',
@@ -109,8 +110,6 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 		},
 	]
 }
-
-export { avatarPageLoader as loader } from '~/.server/loaders'
 
 export const action = async ({
 	request,

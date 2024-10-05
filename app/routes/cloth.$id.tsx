@@ -87,6 +87,7 @@ export const loader = async ({
 		cloth: clothData.data,
 		relationAvatar: relationAvatar.data,
 		foldersData,
+		isLoggedIn: !!user,
 	})
 }
 
@@ -165,7 +166,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 		},
 		{
 			name: 'twitter:card',
-			content: 'summary',
+			content: 'summary_large_image',
 		},
 		{
 			property: 'og:image:alt',
@@ -196,7 +197,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 }
 
 export default function clothPage() {
-	const { cloth, relationAvatar, foldersData } = useLoaderData<
+	const { cloth, relationAvatar, foldersData, isLoggedIn } = useLoaderData<
 		typeof loader
 	>() || {
 		cloth: null,
@@ -248,44 +249,53 @@ export default function clothPage() {
 							BOOTHで購入する
 						</Link>
 					</Button>
-					<Popover open={isOpen} onOpenChange={setIsOpen}>
-						<PopoverTrigger className="ml-4">
-							<FolderPlus className="size-10" />
-						</PopoverTrigger>
-						<PopoverContent className="p-0 space-y-1 z-[1000]">
-							{foldersData &&
-								foldersData.length > 0 &&
-								foldersData.map((folder) => (
-									<Form method="post" key={folder.id}>
-										<div>
-											<input type="hidden" name="folderId" value={folder.id} />
-											<Button
-												className="p-2 flex justify-start bg-white hover:bg-slate-200 w-full"
-												type="submit"
-												name="intent"
-												value="addFolder"
-												onClick={() => setIsOpen(false)}
-											>
-												<Folder />
-												<div className="pl-2">
-													{truncateString(folder.name, 15)}
+					<div className="flex items-center pl-2">
+						{isLoggedIn && (
+							<Popover open={isOpen} onOpenChange={setIsOpen}>
+								<PopoverTrigger className="px-2">
+									<FolderPlus className="size-10" />
+								</PopoverTrigger>
+								<PopoverContent className="p-0 space-y-1 z-[1000]">
+									{foldersData &&
+										foldersData.length > 0 &&
+										foldersData.map((folder) => (
+											<Form method="post" key={folder.id}>
+												<div>
+													<input
+														type="hidden"
+														name="folderId"
+														value={folder.id}
+													/>
+													<Button
+														className="p-2 flex justify-start bg-white hover:bg-slate-200 w-full"
+														type="submit"
+														name="intent"
+														value="addFolder"
+														onClick={() => setIsOpen(false)}
+													>
+														<Folder />
+														<div className="pl-2">
+															{truncateString(folder.name, 15)}
+														</div>
+													</Button>
 												</div>
+											</Form>
+										))}
+
+									<CreateFolder actionPath={`/avatar/${id}`}>
+										<div>
+											<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
+												<Plus />
+												<div>新規作成</div>
 											</Button>
 										</div>
-									</Form>
-								))}
-							<CreateFolder actionPath={`/cloth/${id}`}>
-								<div>
-									<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
-										<Plus />
-										<div>新規作成</div>
-									</Button>
-								</div>
-							</CreateFolder>
-						</PopoverContent>
-					</Popover>
-					<div className="size-8">
-						<XIcon />
+									</CreateFolder>
+								</PopoverContent>
+							</Popover>
+						)}
+						<div className="size-8">
+							<XIcon />
+						</div>
 					</div>
 				</div>
 				{relationAvatar && relationAvatar.length > 0 ? (
