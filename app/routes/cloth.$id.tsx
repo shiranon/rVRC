@@ -1,24 +1,23 @@
 import type {
 	ActionFunctionArgs,
 	LoaderFunctionArgs,
+	MetaFunction,
 } from '@remix-run/cloudflare'
 import {
 	Form,
 	Link,
 	json,
 	redirect,
-	useActionData,
 	useLoaderData,
 	useParams,
 } from '@remix-run/react'
 import { Folder, FolderPlus, Plus } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { FlexItemCard } from '~/components/card/flex-item-card'
 import { CreateFolder } from '~/components/element/create-folder'
-import { FavoriteTag } from '~/components/element/favorite-tag'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Button } from '~/components/ui/button'
-import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
+import { Card, CardContent } from '~/components/ui/card'
 import { HeartIcon, XIcon } from '~/components/ui/icons'
 import {
 	Popover,
@@ -26,15 +25,15 @@ import {
 	PopoverTrigger,
 } from '~/components/ui/popover'
 import { useActionToast } from '~/hooks/use-action-toast'
-import { useToast } from '~/hooks/use-toast'
-import { buildItemImage, buildShopImage, formatValue } from '~/lib/format'
+import {
+	buildItemImage,
+	buildShopImage,
+	buildSmallItemImage,
+	formatValue,
+} from '~/lib/format'
 import { loadEnvironment, truncateString } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-server.server'
 import { FolderManager } from '~/module/supabase/folder-manager'
-
-type ActionData =
-	| { success: true; message: string }
-	| { success: false; message: string }
 
 export const loader = async ({
 	request,
@@ -88,6 +87,7 @@ export const loader = async ({
 		cloth: clothData.data,
 		relationAvatar: relationAvatar.data,
 		foldersData,
+		isLoggedIn: !!user,
 	})
 }
 
@@ -124,8 +124,80 @@ export const action = async ({
 	}
 }
 
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+	if (!data) return [{ title: 'Not found' }]
+	const titleElements = data.cloth.name
+		? [
+				{ title: `${data.cloth.name} - 衣装 rVRC` },
+				{
+					name: 'twitter:title',
+					content: data.cloth.name,
+				},
+				{
+					property: 'og:title',
+					content: data.cloth.name,
+				},
+			]
+		: []
+	const descriptionElements = data.cloth.price
+		? [
+				{
+					name: 'description',
+					content: `${data.cloth.name} / ${data.cloth.shop_name} / 価格:${data.cloth.price}円 / ♥${data.cloth.latest_favorite}`,
+				},
+				{
+					name: 'twitter:description',
+					content: `${data.cloth.shop_name} / 価格:${data.cloth.price}円 / ♥${data.cloth.latest_favorite}`,
+				},
+				{
+					property: 'og:description',
+					content: `${data.cloth.shop_name} / 価格:${data.cloth.price}円 / ♥${data.cloth.latest_favorite}`,
+				},
+			]
+		: []
+	const imageElements = [
+		{
+			name: 'twitter:image',
+			content: `${buildSmallItemImage(data.cloth.image_url)}`,
+		},
+		{
+			property: 'og:image',
+			content: `${buildSmallItemImage(data.cloth.image_url)}`,
+		},
+		{
+			name: 'twitter:card',
+			content: 'summary_large_image',
+		},
+		{
+			property: 'og:image:alt',
+			content: data.cloth.name,
+		},
+	]
+	return [
+		...titleElements,
+		...descriptionElements,
+		...imageElements,
+		{
+			property: 'og:url',
+			content: `https://r-vrc.net/avatar/${data.cloth.booth_id}`,
+		},
+		{ property: 'og:type', content: 'website' },
+		{ property: 'og:site_name', content: 'rVRC' },
+		{ property: 'og:locale', content: ' ja_JP' },
+		{
+			rel: 'canonical',
+			href: `https://r-vrc.net/cloth/${data.cloth.booth_id}`,
+		},
+		{ name: 'author', content: 'rVRC' },
+		{
+			name: 'keywords',
+			content: `VRChat, 衣装, 3Dモデル, ランキング, ${data.cloth.name}, ${data.cloth.shop_name}, `,
+		},
+	]
+}
+
 export default function clothPage() {
-	const { cloth, relationAvatar, foldersData } = useLoaderData<
+	const { cloth, relationAvatar, foldersData, isLoggedIn } = useLoaderData<
 		typeof loader
 	>() || {
 		cloth: null,
@@ -177,44 +249,53 @@ export default function clothPage() {
 							BOOTHで購入する
 						</Link>
 					</Button>
-					<Popover open={isOpen} onOpenChange={setIsOpen}>
-						<PopoverTrigger className="ml-4">
-							<FolderPlus className="size-10" />
-						</PopoverTrigger>
-						<PopoverContent className="p-0 space-y-1 z-[1000]">
-							{foldersData &&
-								foldersData.length > 0 &&
-								foldersData.map((folder) => (
-									<Form method="post" key={folder.id}>
-										<div>
-											<input type="hidden" name="folderId" value={folder.id} />
-											<Button
-												className="p-2 flex justify-start bg-white hover:bg-slate-200 w-full"
-												type="submit"
-												name="intent"
-												value="addFolder"
-												onClick={() => setIsOpen(false)}
-											>
-												<Folder />
-												<div className="pl-2">
-													{truncateString(folder.name, 15)}
+					<div className="flex items-center pl-2">
+						{isLoggedIn && (
+							<Popover open={isOpen} onOpenChange={setIsOpen}>
+								<PopoverTrigger className="px-2">
+									<FolderPlus className="size-10" />
+								</PopoverTrigger>
+								<PopoverContent className="p-0 space-y-1 z-[1000]">
+									{foldersData &&
+										foldersData.length > 0 &&
+										foldersData.map((folder) => (
+											<Form method="post" key={folder.id}>
+												<div>
+													<input
+														type="hidden"
+														name="folderId"
+														value={folder.id}
+													/>
+													<Button
+														className="p-2 flex justify-start bg-white hover:bg-slate-200 w-full"
+														type="submit"
+														name="intent"
+														value="addFolder"
+														onClick={() => setIsOpen(false)}
+													>
+														<Folder />
+														<div className="pl-2">
+															{truncateString(folder.name, 15)}
+														</div>
+													</Button>
 												</div>
+											</Form>
+										))}
+
+									<CreateFolder actionPath={`/avatar/${id}`}>
+										<div>
+											<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
+												<Plus />
+												<div>新規作成</div>
 											</Button>
 										</div>
-									</Form>
-								))}
-							<CreateFolder actionPath={`/cloth/${id}`}>
-								<div>
-									<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
-										<Plus />
-										<div>新規作成</div>
-									</Button>
-								</div>
-							</CreateFolder>
-						</PopoverContent>
-					</Popover>
-					<div className="size-8">
-						<XIcon />
+									</CreateFolder>
+								</PopoverContent>
+							</Popover>
+						)}
+						<div className="size-8">
+							<XIcon />
+						</div>
 					</div>
 				</div>
 				{relationAvatar && relationAvatar.length > 0 ? (

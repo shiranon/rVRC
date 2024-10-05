@@ -1,4 +1,8 @@
-import { type ActionFunctionArgs, json } from '@remix-run/cloudflare'
+import {
+	type ActionFunctionArgs,
+	type MetaFunction,
+	json,
+} from '@remix-run/cloudflare'
 import {
 	Form,
 	Link,
@@ -13,7 +17,7 @@ import type { avatarPageLoader } from '~/.server/loaders'
 import { FlexItemCard } from '~/components/card/flex-item-card'
 import { CreateFolder } from '~/components/element/create-folder'
 import { Pagination } from '~/components/element/pagination'
-import { RelationControls } from '~/components/element/relation-controls'
+import { SearchControls } from '~/components/element/search-controls'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent } from '~/components/ui/card'
@@ -24,12 +28,88 @@ import {
 	PopoverTrigger,
 } from '~/components/ui/popover'
 import { useActionToast } from '~/hooks/use-action-toast'
-import { buildItemImage, buildShopImage, formatValue } from '~/lib/format'
+import {
+	buildItemImage,
+	buildShopImage,
+	buildSmallItemImage,
+	formatValue,
+} from '~/lib/format'
 import { loadEnvironment, truncateString } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-server.server'
 import { FolderManager } from '~/module/supabase/folder-manager'
 
 export { avatarPageLoader as loader } from '~/.server/loaders'
+export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
+	if (!data) return [{ title: 'Not found' }]
+	const titleElements = data.avatar.name
+		? [
+				{ title: `${data.avatar.name} - アバター rVRC` },
+				{
+					name: 'twitter:title',
+					content: data.avatar.name,
+				},
+				{
+					property: 'og:title',
+					content: data.avatar.name,
+				},
+			]
+		: []
+	const descriptionElements = data.avatar.price
+		? [
+				{
+					name: 'description',
+					content: `${data.avatar.name} / ${data.avatar.shop_name} / 価格:${data.avatar.price}円 / ♥${data.avatar.latest_favorite}`,
+				},
+				{
+					name: 'twitter:description',
+					content: `${data.avatar.shop_name} / 価格:${data.avatar.price}円 / ♥${data.avatar.latest_favorite}`,
+				},
+				{
+					property: 'og:description',
+					content: `${data.avatar.shop_name} / 価格:${data.avatar.price}円 / ♥${data.avatar.latest_favorite}`,
+				},
+			]
+		: []
+	const imageElements = [
+		{
+			name: 'twitter:image',
+			content: `${buildSmallItemImage(data.avatar.image_url)}`,
+		},
+		{
+			property: 'og:image',
+			content: `${buildSmallItemImage(data.avatar.image_url)}`,
+		},
+		{
+			name: 'twitter:card',
+			content: 'summary_large_image',
+		},
+		{
+			property: 'og:image:alt',
+			content: data.avatar.name,
+		},
+	]
+	return [
+		...titleElements,
+		...descriptionElements,
+		...imageElements,
+		{
+			property: 'og:url',
+			content: `https://r-vrc.net/avatar/${data.avatar.booth_id}`,
+		},
+		{ property: 'og:type', content: 'website' },
+		{ property: 'og:site_name', content: 'rVRC' },
+		{ property: 'og:locale', content: ' ja_JP' },
+		{
+			rel: 'canonical',
+			href: `https://r-vrc.net/avatar/${data.avatar.booth_id}`,
+		},
+		{ name: 'author', content: 'rVRC' },
+		{
+			name: 'keywords',
+			content: `VRChat, アバター, 3Dモデル, ランキング, ${data.avatar.name}, ${data.avatar.shop_name}, `,
+		},
+	]
+}
 
 export const action = async ({
 	request,
@@ -186,7 +266,7 @@ export default function avatarPage() {
 				<div ref={relatedClothRef} className="text-2xl pt-4">
 					関連衣装
 				</div>
-				<RelationControls />
+				<SearchControls />
 				<div className="py-4 text-lg">
 					対応衣装（{formatValue(totalClothCount)}件）
 				</div>

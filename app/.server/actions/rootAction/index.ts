@@ -9,7 +9,7 @@ export const rootAction = async ({ request, context }: ActionFunctionArgs) => {
 	const { data, error } = await signInWithDiscord(supabase, env)
 
 	if (error) {
-		console.log('Discordログインエラー:', error)
+		console.error('Discordログインエラー:', error)
 	}
 
 	if (data.url) {

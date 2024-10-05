@@ -1,6 +1,7 @@
 import {
 	type ActionFunctionArgs,
 	type LoaderFunctionArgs,
+	type MetaFunction,
 	json,
 	redirect,
 } from '@remix-run/cloudflare'
@@ -16,6 +17,74 @@ import { buildSmallItemImage } from '~/lib/format'
 import { loadEnvironment } from '~/lib/utils'
 import { createClient } from '~/module/supabase/create-client-server.server'
 import { FolderManager } from '~/module/supabase/folder-manager'
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+	if (!data) return [{ title: 'Not found' }]
+	const titleElements = data.profile
+		? [
+				{ title: 'マイプロフィール | rVRC' },
+				{
+					name: 'twitter:title',
+					content: 'マイプロフィール | rVRC',
+				},
+				{
+					property: 'og:title',
+					content: 'マイプロフィール | rVRC',
+				},
+			]
+		: []
+	const descriptionElements = data.profile
+		? [
+				{
+					name: 'description',
+					content: 'あなたのプロフィールとフォルダを管理するマイページです。',
+				},
+				{
+					name: 'twitter:description',
+					content: 'あなたのプロフィールとフォルダを管理するマイページです。',
+				},
+				{
+					property: 'og:description',
+					content: 'あなたのプロフィールとフォルダを管理するマイページです。',
+				},
+			]
+		: []
+	const imageElements = [
+		{
+			name: 'twitter:image',
+			content: 'https://r-vrc.net/og-image.png',
+		},
+		{
+			property: 'og:image',
+			content: 'https://r-vrc.net/og-image.png',
+		},
+		{
+			name: 'twitter:card',
+			content: 'summary',
+		},
+		{
+			property: 'og:image:alt',
+			content: 'rVRC',
+		},
+	]
+	return [
+		...titleElements,
+		...descriptionElements,
+		...imageElements,
+		{
+			property: 'og:url',
+			content: 'https://r-vrc.net/profile',
+		},
+		{ property: 'og:type', content: 'website' },
+		{ property: 'og:site_name', content: 'rVRC' },
+		{ property: 'og:locale', content: ' ja_JP' },
+		{
+			rel: 'canonical',
+			href: 'https://r-vrc.net/profile',
+		},
+		{ name: 'author', content: 'rVRC' },
+	]
+}
 
 export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 	const env = loadEnvironment(context)

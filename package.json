@@ -21,6 +21,7 @@
 		"biome": "biome check --write"
 	},
 	"dependencies": {
+		"@nasa-gcn/remix-seo": "^2.0.1",
 		"@radix-ui/react-alert-dialog": "^1.1.1",
 		"@radix-ui/react-avatar": "^1.1.0",
 		"@radix-ui/react-dialog": "^1.1.1",
@@ -30,9 +31,9 @@
 		"@radix-ui/react-separator": "^1.1.0",
 		"@radix-ui/react-slot": "^1.1.0",
 		"@radix-ui/react-toast": "^1.2.1",
-		"@remix-run/cloudflare": "^2.10.3",
-		"@remix-run/cloudflare-pages": "^2.10.3",
-		"@remix-run/react": "^2.10.3",
+		"@remix-run/cloudflare": "2.12.0",
+		"@remix-run/cloudflare-pages": "2.12.0",
+		"@remix-run/react": "2.12.0",
 		"@supabase/ssr": "^0.5.1",
 		"@supabase/supabase-js": "^2.45.2",
 		"class-variance-authority": "^0.7.0",
@@ -49,10 +50,10 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.8.3",
 		"@chromatic-com/storybook": "^1.7.0",
-		"@cloudflare/workers-types": "^4.20240725.0",
+		"@cloudflare/workers-types": "^4.20240925.0",
 		"@commitlint/cli": "^19.4.0",
 		"@commitlint/config-conventional": "^19.2.2",
-		"@remix-run/dev": "^2.10.3",
+		"@remix-run/dev": "2.12.0",
 		"@storybook/addon-essentials": "^8.2.9",
 		"@storybook/addon-interactions": "^8.2.9",
 		"@storybook/addon-links": "^8.2.9",
@@ -67,13 +68,14 @@
 		"husky": "^9.1.5",
 		"lint-staged": "^15.2.9",
 		"postcss": "^8.4.38",
+		"remix-development-tools": "^4.7.1",
 		"storybook": "^8.2.9",
 		"tailwindcss": "^3.4.10",
 		"typescript": "^5.1.6",
-		"vite": "^5.1.0",
+		"vite": "^5.4.8",
 		"vite-tsconfig-paths": "^4.2.1",
 		"vitest": "^2.0.5",
-		"wrangler": "3.57.1"
+		"wrangler": "3.78.10"
 	},
 	"engines": {
 		"node": ">=20.0.0"

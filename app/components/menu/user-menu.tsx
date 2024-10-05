@@ -9,7 +9,7 @@ import {
 } from '~/components/ui/popover'
 
 interface User {
-	avatar: string
+	avatar: string | null
 	name: string
 }
 
