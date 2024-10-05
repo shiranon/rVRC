@@ -16,9 +16,13 @@ export const getClothRanking = async (
 			offset_param: offset,
 			limit_param: limit,
 		})
+		if (error) {
+			console.error('衣装ランキングデータの取得時にエラー', error)
+			return { data: null }
+		}
 		return { data }
 	} catch (error) {
-		console.error('Error fetching avatar_ranking:', error)
+		console.error('予期せぬエラー', error)
 		return { data: null }
 	}
 }

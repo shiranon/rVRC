@@ -1,34 +1,16 @@
-import {
-	type LoaderFunctionArgs,
-	type MetaFunction,
-	json,
-	redirect,
-} from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { Link, useLoaderData } from '@remix-run/react'
 import { Shirt, VenetianMask } from 'lucide-react'
+import type { folderLoader } from '~/.server/loaders'
+import { Pagination } from '~/components/element/pagination'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent } from '~/components/ui/card'
 import avatar_holder from '~/images/avatar.png'
 import { buildSmallItemImage } from '~/lib/format'
-import { loadEnvironment } from '~/lib/utils'
-import { createClient } from '~/module/supabase/create-client-server.server'
 
-export const loader = async ({ request, context }: LoaderFunctionArgs) => {
-	const env = loadEnvironment(context)
-	const { supabase } = createClient(request, env)
+export { folderLoader as loader } from '~/.server/loaders'
 
-	const { data: folders, error: foldersError } =
-		await supabase.rpc('get_folders')
-
-	if (foldersError) {
-		console.error('フォルダ取得に失敗しました', foldersError)
-		return redirect('/')
-	}
-
-	return json({ folders })
-}
-
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof folderLoader> = ({ data }) => {
 	if (!data) return [{ title: 'Not found' }]
 	const titleElements = data
 		? [
@@ -70,7 +52,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 		},
 		{
 			name: 'twitter:card',
-			content: 'summary',
+			content: 'summary_large_image',
 		},
 		{
 			property: 'og:image:alt',
@@ -97,7 +79,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 }
 
 export default function Folder() {
-	const { folders } = useLoaderData<typeof loader>()
+	const { folders, folderCount } = useLoaderData<typeof folderLoader>()
 	return (
 		<>
 			<div className="w-full p-6">
@@ -105,58 +87,63 @@ export default function Folder() {
 					<div className="grid gap-2 pt-4">
 						<h1 className="text-xl font-bold">公開フォルダ一覧</h1>
 						{folders && folders.length > 0 ? (
-							folders.map((folder) => (
-								<Card key={folder.id}>
-									<Link to={`/folder/${folder.id}`}>
-										<CardContent className="p-0 bg-white rounded-lg">
-											<div className="relative max-w-full flex flex-row justify-between">
-												<div className="flex aspect-square">
-													<img
-														src={
-															folder.image
-																? buildSmallItemImage(folder.image)
-																: avatar_holder
-														}
-														alt={folder.name}
-														className="size-32 rounded-l-lg"
-													/>
-												</div>
-												<div className="grow grid place-items-center">
-													<div className="p-3 w-full flex flex-col gap-1">
-														<div className="text-lg font-bold">
-															{folder.name}
-														</div>
-														<div className="text-sm text-gray-500">
-															{folder.description}
-														</div>
-													</div>
-												</div>
-												<div className="p-2">
-													<div className="flex items-center">
-														<Shirt />
-														<span>{folder.avatar_count}</span>
-													</div>
-													<div className="flex items-center">
-														<VenetianMask />
-														<span>{folder.cloth_count}</span>
-													</div>
-												</div>
-												<div className="absolute flex items-center bottom-2 right-2">
-													<Avatar className="size-8">
-														<AvatarImage
-															src={`/api/avatar/${folder.user_avatar}`}
-															loading="lazy"
-															alt={folder.user_name}
+							<>
+								{folders.map((folder) => (
+									<Card key={folder.id}>
+										<Link to={`/folder/${folder.id}`}>
+											<CardContent className="p-0 bg-white rounded-lg">
+												<div className="relative max-w-full flex flex-row justify-between">
+													<div className="flex aspect-square">
+														<img
+															src={
+																folder.image
+																	? buildSmallItemImage(folder.image)
+																	: avatar_holder
+															}
+															alt={folder.name}
+															className="size-32 rounded-l-lg"
 														/>
-														<AvatarFallback />
-													</Avatar>
-													<div className="pl-1 text-sm">{folder.user_name}</div>
+													</div>
+													<div className="grow grid place-items-center">
+														<div className="p-3 w-full flex flex-col gap-1">
+															<div className="text-lg font-bold">
+																{folder.name}
+															</div>
+															<div className="text-sm text-gray-500">
+																{folder.description}
+															</div>
+														</div>
+													</div>
+													<div className="p-2">
+														<div className="flex items-center">
+															<Shirt />
+															<span>{folder.avatar_count}</span>
+														</div>
+														<div className="flex items-center">
+															<VenetianMask />
+															<span>{folder.cloth_count}</span>
+														</div>
+													</div>
+													<div className="absolute flex items-center bottom-2 right-2">
+														<Avatar className="size-8">
+															<AvatarImage
+																src={`/api/avatar/${folder.user_avatar}`}
+																loading="lazy"
+																alt={folder.user_name}
+															/>
+															<AvatarFallback />
+														</Avatar>
+														<div className="pl-1 text-sm">
+															{folder.user_name}
+														</div>
+													</div>
 												</div>
-											</div>
-										</CardContent>
-									</Link>
-								</Card>
-							))
+											</CardContent>
+										</Link>
+									</Card>
+								))}
+								{folderCount && <Pagination totalItems={folderCount} />}
+							</>
 						) : (
 							<div className="text-lg">フォルダはありません。</div>
 						)}

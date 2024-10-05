@@ -20,7 +20,7 @@ export const RegisterMenu = () => {
 					<DialogHeader>
 						<DialogTitle className="sr-only">ログイン</DialogTitle>
 						<img src={logo} alt="rVRC" width={150} height={50} />
-						<div>ログインする事で、アイテムをフォルダ分けできます。</div>
+						<div>ログインする事でアイテムをフォルダ分けできます。</div>
 					</DialogHeader>
 					<Form method="post">
 						<div className="flex items-center justify-center">

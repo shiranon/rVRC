@@ -82,6 +82,7 @@ export const meta: MetaFunction<typeof indexLoader> = ({ data }) => {
 		},
 	]
 }
+
 export default function Index() {
 	const initialData = useLoaderData<indexLoader>()
 	const fetcher = useFetcher<indexLoader>()

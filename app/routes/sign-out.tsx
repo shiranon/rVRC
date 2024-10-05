@@ -1,6 +1,6 @@
 import { type ActionFunctionArgs, redirect } from '@remix-run/cloudflare'
 import { loadEnvironment } from '~/lib/utils'
-import { createClient } from '~/module/supabase/create-client-server.server'
+import { createClient } from '~/module/supabase/create-client.server'
 
 export const action = async ({ context, request }: ActionFunctionArgs) => {
 	const env = loadEnvironment(context)

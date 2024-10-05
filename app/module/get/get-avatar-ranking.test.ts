@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest'
-import { createClient } from '../supabase/create-client-component.server'
+import { describe, expect, it, vi } from 'vitest'
+import { createClient } from '../supabase/create-client.server'
 import { getAvatarRanking } from './get-avatar-ranking'
 
 const env: Env = {
@@ -9,7 +9,13 @@ const env: Env = {
 	SITE_URL: '',
 }
 
-const supabase = createClient(env)
+const mockRequest = {
+	headers: {
+		get: vi.fn().mockReturnValue('http://localhost:3000'),
+	},
+} as unknown as Request
+
+const { supabase } = createClient(mockRequest, env)
 
 describe('getAvatarRanking関数のテスト', () => {
 	it('ランキングが取得できるかテスト', async () => {
@@ -24,7 +30,43 @@ describe('getAvatarRanking関数のテスト', () => {
 			expect(Array.isArray(result.data)).toBe(true)
 			expect(result.data.length).toBeGreaterThan(0)
 			expect(result.data[0]).toHaveProperty('booth_id')
-			expect(result.data[0]).toHaveProperty('avatar_name')
+			expect(result.data[0]).toHaveProperty('item_name')
+		} else {
+			fail('result.data is null')
+		}
+	})
+
+	it('月間ランキングが取得できるかテスト', async () => {
+		const type = 'month'
+		const page = 1
+		const date = '2024-09-30'
+
+		const result = await getAvatarRanking(type, page, supabase, date)
+
+		expect(result.data).toBeDefined()
+		if (result.data) {
+			expect(Array.isArray(result.data)).toBe(true)
+			expect(result.data.length).toBeGreaterThan(0)
+			expect(result.data[0]).toHaveProperty('booth_id')
+			expect(result.data[0]).toHaveProperty('item_name')
+		} else {
+			fail('result.data is null')
+		}
+	})
+
+	it('トレンドが取得できるかテスト', async () => {
+		const type = 'trend'
+		const page = 1
+		const date = '2024-09-30'
+
+		const result = await getAvatarRanking(type, page, supabase, date)
+
+		expect(result.data).toBeDefined()
+		if (result.data) {
+			expect(Array.isArray(result.data)).toBe(true)
+			expect(result.data.length).toBeGreaterThan(0)
+			expect(result.data[0]).toHaveProperty('booth_id')
+			expect(result.data[0]).toHaveProperty('item_name')
 		} else {
 			fail('result.data is null')
 		}

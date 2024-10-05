@@ -3,17 +3,31 @@ import type { SupabaseClient, User } from '@supabase/supabase-js'
 import { z } from 'zod'
 import { folderCreateSchema } from '~/lib/zod'
 
+/**
+ * フォルダ管理クラス
+ * ユーザーのフォルダ操作（作成、更新、削除）や、
+ * フォルダへのアイテム（衣装、アバター）の追加・削除を管理します。
+ */
 export class FolderManager {
 	private supabase
 	private user: User | null
 	private id: string | null = null
 
+	/**
+	 * フォルダマネージャーを初期化するコンストラクタ
+	 * @param supabase Supabaseクライアントインスタンス
+	 * @param id ページID（オプション）
+	 */
 	constructor(supabase: SupabaseClient, id: string | null = null) {
 		this.supabase = supabase
 		this.user = null
 		this.id = id
 	}
 
+	/**
+	 * ユーザー認証、ユーザー情報を初期化
+	 * @throws {Response} 認証エラーの場合
+	 */
 	async initialize() {
 		const {
 			data: { user },
@@ -26,6 +40,11 @@ export class FolderManager {
 		this.user = user
 	}
 
+	/**
+	 * 新しいフォルダを作成するメソッド
+	 * @param formData フォルダ作成に必要なデータを含むFormData
+	 * @returns 作成結果を含むオブジェクト
+	 */
 	async createFolder(formData: FormData) {
 		if (!this.user) {
 			throw new Error('ユーザーが初期化されていません')
@@ -62,6 +81,11 @@ export class FolderManager {
 		}
 	}
 
+	/**
+	 * 既存のフォルダを更新するメソッド
+	 * @param formData フォルダ更新に必要なデータを含むFormData
+	 * @returns 更新結果を含むオブジェクト
+	 */
 	async updateFolder(formData: FormData) {
 		if (!this.user) {
 			throw new Error('ユーザーが初期化されていません')
@@ -100,6 +124,11 @@ export class FolderManager {
 		}
 	}
 
+	/**
+	 * フォルダを削除するメソッド
+	 * @param formData 削除するフォルダのIDを含むFormData
+	 * @returns 削除結果を含むオブジェクト
+	 */
 	async deleteFolder(formData: FormData) {
 		if (!this.user) {
 			throw new Error('ユーザーが初期化されていません')
@@ -130,6 +159,12 @@ export class FolderManager {
 		}
 	}
 
+	/**
+	 * フォルダに衣装を追加するメソッド
+	 * @param formData フォルダIDを含むFormData
+	 * @param id 追加する衣装のID
+	 * @returns 追加結果を含むオブジェクト
+	 */
 	async addCloth(formData: FormData, id: string) {
 		if (!this.user) {
 			throw new Error('ユーザーが初期化されていません')
@@ -186,6 +221,11 @@ export class FolderManager {
 		return { success: true, message: '衣装をフォルダに追加しました' }
 	}
 
+	/**
+	 * フォルダから衣装を削除するメソッド
+	 * @param formData フォルダIDと衣装のbooth_idを含むFormData
+	 * @returns 削除結果を含むオブジェクト
+	 */
 	async deleteCloth(formData: FormData) {
 		if (!this.user) {
 			throw new Error('ユーザーが初期化されていません')
@@ -233,6 +273,12 @@ export class FolderManager {
 		return { success: true, message: '衣装をフォルダから削除しました' }
 	}
 
+	/**
+	 * フォルダにアバターを追加するメソッド
+	 * @param formData フォルダIDを含むFormData
+	 * @param id 追加するアバターのID
+	 * @returns 追加結果を含むオブジェクト
+	 */
 	async addAvatar(formData: FormData, id: string) {
 		if (!this.user) {
 			throw new Error('ユーザーが初期化されていません')
@@ -288,6 +334,12 @@ export class FolderManager {
 		}
 		return { success: true, message: 'アバターをフォルダに追加しました' }
 	}
+
+	/**
+	 * フォルダからアバターを削除するメソッド
+	 * @param formData フォルダIDとアバターのbooth_idを含むFormData
+	 * @returns 削除結果を含むオブジェクト
+	 */
 	async deleteAvatar(formData: FormData) {
 		if (!this.user) {
 			throw new Error('ユーザーが初期化されていません')

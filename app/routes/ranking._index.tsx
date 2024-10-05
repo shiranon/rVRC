@@ -63,7 +63,7 @@ export const meta: MetaFunction<typeof rankingLoader> = ({ data }) => {
 		},
 		{
 			name: 'twitter:card',
-			content: 'summary',
+			content: 'summary_large_image',
 		},
 		{
 			property: 'og:image:alt',

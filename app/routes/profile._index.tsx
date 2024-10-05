@@ -1,12 +1,7 @@
-import {
-	type ActionFunctionArgs,
-	type LoaderFunctionArgs,
-	type MetaFunction,
-	json,
-	redirect,
-} from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { Link, useLoaderData } from '@remix-run/react'
 import { Shirt, VenetianMask } from 'lucide-react'
+import type { profileLoader } from '~/.server/loaders'
 import { CreateFolder } from '~/components/element/create-folder'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent } from '~/components/ui/card'
@@ -14,11 +9,11 @@ import { Separator } from '~/components/ui/separator'
 import { useActionToast } from '~/hooks/use-action-toast'
 import avatar_holder from '~/images/avatar.png'
 import { buildSmallItemImage } from '~/lib/format'
-import { loadEnvironment } from '~/lib/utils'
-import { createClient } from '~/module/supabase/create-client-server.server'
-import { FolderManager } from '~/module/supabase/folder-manager'
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export { profileAction as action } from '~/.server/actions'
+export { profileLoader as loader } from '~/.server/loaders'
+
+export const meta: MetaFunction<typeof profileLoader> = ({ data }) => {
 	if (!data) return [{ title: 'Not found' }]
 	const titleElements = data.profile
 		? [
@@ -60,7 +55,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 		},
 		{
 			name: 'twitter:card',
-			content: 'summary',
+			content: 'summary_large_image',
 		},
 		{
 			property: 'og:image:alt',
@@ -86,69 +81,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	]
 }
 
-export const loader = async ({ request, context }: LoaderFunctionArgs) => {
-	const env = loadEnvironment(context)
-	const { supabase } = createClient(request, env)
-
-	const {
-		data: { user },
-		error: authError,
-	} = await supabase.auth.getUser()
-
-	if (authError || !user) {
-		return redirect('/')
-	}
-
-	const { data: userProfile, error: profileError } = await supabase
-		.from('users')
-		.select('name, avatar')
-		.eq('id', user.id)
-		.single()
-
-	if (profileError) {
-		console.error('ユーザープロフィル取得エラー:', profileError)
-		throw new Response('プロフィル取得エラー', { status: 500 })
-	}
-
-	if (!userProfile) {
-		throw new Response('ユーザーが見つかりません', { status: 404 })
-	}
-
-	const { data: userFolders, error: foldersError } = await supabase.rpc(
-		'get_user_folder',
-		{
-			user_profile_id: user.id,
-		},
-	)
-
-	if (!userFolders) {
-		console.error('ユーザーフォルダー取得エラー:', foldersError)
-		throw new Response('フォルダー取得エラー', { status: 500 })
-	}
-
-	return json({ profile: userProfile, folders: userFolders })
-}
-
-export const action = async ({ request, context }: ActionFunctionArgs) => {
-	const env = loadEnvironment(context)
-	const formData = await request.formData()
-	const { supabase } = createClient(request, env)
-	const intent = formData.get('intent')
-	switch (intent) {
-		case 'createFolder': {
-			const folderManager = new FolderManager(supabase)
-			await folderManager.initialize()
-			const result = await folderManager.createFolder(formData)
-			return json(result)
-		}
-		default: {
-			throw new Error('予期しないアクション')
-		}
-	}
-}
-
 export default function Profile() {
-	const { profile, folders } = useLoaderData<typeof loader>()
+	const { profile, folders } = useLoaderData<typeof profileLoader>()
 	useActionToast()
 	return (
 		<div className="w-full p-6">

@@ -1,18 +1,8 @@
-import type {
-	ActionFunctionArgs,
-	LoaderFunctionArgs,
-	MetaFunction,
-} from '@remix-run/cloudflare'
-import {
-	Form,
-	Link,
-	json,
-	redirect,
-	useLoaderData,
-	useParams,
-} from '@remix-run/react'
+import type { MetaFunction } from '@remix-run/cloudflare'
+import { Form, Link, useLoaderData, useParams } from '@remix-run/react'
 import { Folder, FolderPlus, Plus } from 'lucide-react'
 import { useState } from 'react'
+import type { clothPageLoader } from '~/.server/loaders'
 import { FlexItemCard } from '~/components/card/flex-item-card'
 import { CreateFolder } from '~/components/element/create-folder'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
@@ -31,100 +21,12 @@ import {
 	buildSmallItemImage,
 	formatValue,
 } from '~/lib/format'
-import { loadEnvironment, truncateString } from '~/lib/utils'
-import { createClient } from '~/module/supabase/create-client-server.server'
-import { FolderManager } from '~/module/supabase/folder-manager'
+import { truncateString } from '~/lib/utils'
 
-export const loader = async ({
-	request,
-	context,
-	params,
-}: LoaderFunctionArgs) => {
-	const env = loadEnvironment(context)
-	const { supabase } = createClient(request, env)
+export { clothPageAction as action } from '~/.server/actions'
+export { clothPageLoader as loader } from '~/.server/loaders'
 
-	const { id } = params
-	if (!id) {
-		return null
-	}
-
-	const clothData = await supabase
-		.rpc('get_cloth_with_favorite', {
-			page_id: Number.parseInt(id),
-		})
-		.single()
-
-	if (!clothData.data) {
-		return redirect('/')
-	}
-
-	const relationAvatar = await supabase.rpc('get_relation_avatar_data', {
-		cloth_booth_id: clothData.data.booth_id,
-	})
-
-	// ログインしている場合は、フォルダーデータを取得
-	const {
-		data: { user },
-	} = await supabase.auth.getUser()
-
-	interface Folder {
-		id: string
-		name: string
-	}
-
-	let folders: { data: Folder[] | null } | null = null
-
-	if (user) {
-		folders = await supabase
-			.from('folders')
-			.select('id,name')
-			.eq('user_id', user.id)
-	}
-
-	const foldersData = folders?.data || null
-
-	return json({
-		cloth: clothData.data,
-		relationAvatar: relationAvatar.data,
-		foldersData,
-		isLoggedIn: !!user,
-	})
-}
-
-export const action = async ({
-	request,
-	context,
-	params,
-}: ActionFunctionArgs) => {
-	const { id } = params
-	if (!id || !/^\d+$/.test(id)) {
-		return redirect('/')
-	}
-
-	const formData = await request.formData()
-	const intent = formData.get('intent')
-	const env = loadEnvironment(context)
-	const { supabase } = createClient(request, env)
-	switch (intent) {
-		case 'createFolder': {
-			const folderManager = new FolderManager(supabase)
-			await folderManager.initialize()
-			const result = await folderManager.createFolder(formData)
-			return json(result)
-		}
-		case 'addFolder': {
-			const folderManager = new FolderManager(supabase)
-			await folderManager.initialize()
-			const result = await folderManager.addCloth(formData, id)
-			return json(result)
-		}
-		default: {
-			throw new Error('予期しないアクション')
-		}
-	}
-}
-
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof clothPageLoader> = ({ data }) => {
 	if (!data) return [{ title: 'Not found' }]
 	const titleElements = data.cloth.name
 		? [
@@ -198,7 +100,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function clothPage() {
 	const { cloth, relationAvatar, foldersData, isLoggedIn } = useLoaderData<
-		typeof loader
+		typeof clothPageLoader
 	>() || {
 		cloth: null,
 		relationAvatar: null,
