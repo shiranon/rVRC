@@ -1,13 +1,8 @@
 import { AvatarImage } from '@radix-ui/react-avatar'
-import {
-	type ActionFunctionArgs,
-	type LoaderFunctionArgs,
-	type MetaFunction,
-	json,
-	redirect,
-} from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import { useLoaderData, useParams } from '@remix-run/react'
 import { useState } from 'react'
+import type { folderPageLoader } from '~/.server/loaders'
 import { FolderItemCard } from '~/components/card/folder-item-card'
 import { DeleteOrderDialog } from '~/components/element/delete-order-dialog'
 import { EditFolder } from '~/components/element/edit-folder'
@@ -16,113 +11,11 @@ import { Button } from '~/components/ui/button'
 import { Card, CardContent } from '~/components/ui/card'
 import { Separator } from '~/components/ui/separator'
 import { useActionToast } from '~/hooks/use-action-toast'
-import { loadEnvironment } from '~/lib/utils'
-import { createClient } from '~/module/supabase/create-client-server.server'
-import { FolderManager } from '~/module/supabase/folder-manager'
-import type { FolderItem } from '~/types/items'
 
-export const loader = async ({
-	request,
-	context,
-	params,
-}: LoaderFunctionArgs) => {
-	const { id } = params
-	if (!id) {
-		return redirect('/')
-	}
+export { folderPageAction as action } from '~/.server/actions'
+export { folderPageLoader as loader } from '~/.server/loaders'
 
-	const env = loadEnvironment(context)
-	const { supabase } = createClient(request, env)
-
-	const { data: folder, error: folderError } = await supabase
-		.rpc('get_folder_data', {
-			page_folder_id: id,
-		})
-		.single()
-
-	if (!folder) {
-		console.error('フォルダ取得に失敗しました', folderError)
-		return redirect('/')
-	}
-	const {
-		data: { user },
-	} = await supabase.auth.getUser()
-
-	if (folder.is_private && (!user || user.id !== folder.user_id)) {
-		console.error('アクセス権がありません', folderError)
-		return redirect('/')
-	}
-
-	const isOwner = user && folder.user_id === user.id
-
-	const { data: items, error: itemsError } = await supabase.rpc(
-		'get_folder_items',
-		{
-			page_folder_id: id,
-		},
-	)
-
-	if (itemsError) {
-		console.error('フォルダアイテムの取得に失敗しました', itemsError)
-		return redirect('/')
-	}
-
-	const avatars = items.filter(
-		(item: FolderItem) => item.item_type === 'avatar',
-	)
-	const cloths = items.filter((item: FolderItem) => item.item_type === 'cloth')
-
-	return json({ folder, avatars, cloths, isOwner })
-}
-
-export const action = async ({
-	request,
-	context,
-	params,
-}: ActionFunctionArgs) => {
-	const { id } = params
-	if (!id) {
-		return json({ success: false, message: 'ページエラー' })
-	}
-	const formData = await request.formData()
-	const intent = formData.get('intent')
-	const env = loadEnvironment(context)
-	const { supabase } = createClient(request, env)
-	switch (intent) {
-		case 'updateFolder': {
-			const folderManager = new FolderManager(supabase, id)
-			await folderManager.initialize()
-			const result = await folderManager.updateFolder(formData)
-			return json(result)
-		}
-		case 'deleteFolder': {
-			const folderManager = new FolderManager(supabase, id)
-			await folderManager.initialize()
-			const result = await folderManager.deleteFolder(formData)
-			if (result?.redirect) {
-				return redirect(result.redirect)
-			}
-			return json(result)
-		}
-		case 'deleteAvatar': {
-			const folderManager = new FolderManager(supabase, id)
-			await folderManager.initialize()
-			const result = await folderManager.deleteAvatar(formData)
-			return json(result)
-		}
-		case 'deleteCloth': {
-			const folderManager = new FolderManager(supabase, id)
-			await folderManager.initialize()
-			const result = await folderManager.deleteCloth(formData)
-			return json(result)
-		}
-		default: {
-			throw new Error('予期しないアクション')
-		}
-	}
-}
-
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof folderPageLoader> = ({ data }) => {
 	if (!data) return [{ title: 'Not found' }]
 	const titleElements = data.folder
 		? [
@@ -164,7 +57,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 		},
 		{
 			name: 'twitter:card',
-			content: 'summary',
+			content: 'summary_large_image',
 		},
 		{
 			property: 'og:image:alt',
@@ -191,7 +84,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 }
 
 export default function Folder() {
-	const { folder, avatars, cloths, isOwner } = useLoaderData<typeof loader>()
+	const { folder, avatars, cloths, isOwner } =
+		useLoaderData<typeof folderPageLoader>()
 	const { id } = useParams()
 	const [isEdit, setIsEdit] = useState<boolean>(false)
 	useActionToast()
@@ -201,7 +95,7 @@ export default function Folder() {
 			<div className="max-w-full flex flex-row justify-between">
 				<div className="grow grid px-3">
 					<div className="text-sm text-gray-500 ">
-						フォルダー
+						フォルダ
 						{folder.is_private && (
 							<span className="bg-black text-white rounded-lg text-xs p-0.5 ml-2">
 								非公開

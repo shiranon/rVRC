@@ -1,12 +1,7 @@
-import {
-	type ActionFunctionArgs,
-	type MetaFunction,
-	json,
-} from '@remix-run/cloudflare'
+import type { MetaFunction } from '@remix-run/cloudflare'
 import {
 	Form,
 	Link,
-	redirect,
 	useLoaderData,
 	useParams,
 	useSearchParams,
@@ -15,9 +10,9 @@ import { Folder, FolderPlus, Plus } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { avatarPageLoader } from '~/.server/loaders'
 import { FlexItemCard } from '~/components/card/flex-item-card'
+import { SearchControls } from '~/components/controls/search-controls'
 import { CreateFolder } from '~/components/element/create-folder'
 import { Pagination } from '~/components/element/pagination'
-import { SearchControls } from '~/components/element/search-controls'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent } from '~/components/ui/card'
@@ -33,12 +28,12 @@ import {
 	buildShopImage,
 	buildSmallItemImage,
 	formatValue,
+	truncateString,
 } from '~/lib/format'
-import { loadEnvironment, truncateString } from '~/lib/utils'
-import { createClient } from '~/module/supabase/create-client-server.server'
-import { FolderManager } from '~/module/supabase/folder-manager'
 
+export { avatarPageAction as action } from '~/.server/actions'
 export { avatarPageLoader as loader } from '~/.server/loaders'
+
 export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 	if (!data) return [{ title: 'Not found' }]
 	const titleElements = data.avatar.name
@@ -109,39 +104,6 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 			content: `VRChat, アバター, 3Dモデル, ランキング, ${data.avatar.name}, ${data.avatar.shop_name}, `,
 		},
 	]
-}
-
-export const action = async ({
-	request,
-	context,
-	params,
-}: ActionFunctionArgs) => {
-	const { id } = params
-	if (!id || !/^\d+$/.test(id)) {
-		return redirect('/')
-	}
-
-	const formData = await request.formData()
-	const intent = formData.get('intent')
-	const env = loadEnvironment(context)
-	const { supabase } = createClient(request, env)
-	switch (intent) {
-		case 'createFolder': {
-			const folderManager = new FolderManager(supabase, id)
-			await folderManager.initialize()
-			const result = await folderManager.createFolder(formData)
-			return json(result)
-		}
-		case 'addFolder': {
-			const folderManager = new FolderManager(supabase, id)
-			await folderManager.initialize()
-			const result = await folderManager.addAvatar(formData, id)
-			return json(result)
-		}
-		default: {
-			throw new Error('予期しないアクション')
-		}
-	}
 }
 
 export default function avatarPage() {
@@ -245,15 +207,16 @@ export default function avatarPage() {
 													</div>
 												</Form>
 											))}
-
-										<CreateFolder actionPath={`/avatar/${id}`}>
-											<div>
-												<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
-													<Plus />
-													<div>新規作成</div>
-												</Button>
-											</div>
-										</CreateFolder>
+										{foldersData && foldersData.length < 10 && (
+											<CreateFolder actionPath={`/avatar/${id}`}>
+												<div>
+													<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
+														<Plus />
+														<div>新規作成</div>
+													</Button>
+												</div>
+											</CreateFolder>
+										)}
 									</PopoverContent>
 								</Popover>
 							)}
@@ -268,7 +231,7 @@ export default function avatarPage() {
 				</div>
 				<SearchControls />
 				<div className="py-4 text-lg">
-					対応衣装（{formatValue(totalClothCount)}件）
+					対応衣装（{formatValue(totalClothCount.total_count)}件）
 				</div>
 				{relationCloth && relationCloth.length > 0 ? (
 					<>
@@ -283,7 +246,9 @@ export default function avatarPage() {
 								))}
 							</CardContent>
 						</Card>
-						{totalClothCount && <Pagination totalItems={totalClothCount} />}
+						{totalClothCount && (
+							<Pagination totalItems={totalClothCount.total_count} />
+						)}
 					</>
 				) : (
 					<div className="text-xl pt-4">関連衣装はありません</div>

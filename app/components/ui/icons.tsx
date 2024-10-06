@@ -88,4 +88,4 @@ const HeartIcon = iconWrapper(({ className, pathProps, ...props }) => {
 	)
 })
 
-export { GithubIcon, XIcon, DiscordIcon, HeartIcon }
+export { DiscordIcon, GithubIcon, HeartIcon, XIcon }

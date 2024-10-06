@@ -5,7 +5,7 @@ import type { LoaderFunctionArgs } from '@remix-run/cloudflare'
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	return generateSitemap(request, routes, {
-		siteUrl: 'https://r-vrc.net/',
+		siteUrl: 'https://r-vrc.net',
 		headers: {
 			'Cache-Control': `public, max-age=${60 * 5}`,
 		},
