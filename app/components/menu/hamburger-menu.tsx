@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Button } from '~/components/ui/button'
-import { Separator } from '~/components/ui/separator'
 import {
 	Sheet,
 	SheetContent,
@@ -12,7 +11,6 @@ import {
 
 import { Link } from '@remix-run/react'
 import {
-	CircleHelp,
 	Crown,
 	Flame,
 	FolderSearch,
@@ -71,7 +69,6 @@ export const HamburgerMenu = () => {
 							</Link>
 						</div>
 					</div>
-					<Separator />
 					<div className="flex flex-col mt-2 space-y-1">
 						<div className="hover:bg-beige">
 							<Link
@@ -101,23 +98,12 @@ export const HamburgerMenu = () => {
 							onClick={() => setIsOpen(false)}
 						>
 							<FolderSearch className="pr-2" />
-							<div>フォルダー</div>
-						</Link>
-					</div>
-					<Separator />
-					<div className="hover:bg-beige">
-						<Link
-							to={'#'}
-							className="pl-3 py-2 flex items-center"
-							onClick={() => setIsOpen(false)}
-						>
-							<CircleHelp className="pr-2" />
-							<div>FAQ</div>
+							<div>フォルダ</div>
 						</Link>
 					</div>
 					<div className="hover:bg-beige">
 						<Link
-							to={'#'}
+							to={'about'}
 							className="pl-3 py-2 flex items-center"
 							onClick={() => setIsOpen(false)}
 						>

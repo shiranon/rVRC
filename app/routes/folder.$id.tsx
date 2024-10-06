@@ -95,7 +95,7 @@ export default function Folder() {
 			<div className="max-w-full flex flex-row justify-between">
 				<div className="grow grid px-3">
 					<div className="text-sm text-gray-500 ">
-						フォルダー
+						フォルダ
 						{folder.is_private && (
 							<span className="bg-black text-white rounded-lg text-xs p-0.5 ml-2">
 								非公開
