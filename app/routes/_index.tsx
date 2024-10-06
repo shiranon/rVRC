@@ -3,7 +3,7 @@ import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react'
 import { useEffect, useRef } from 'react'
 import type { indexLoader } from '~/.server/loaders'
 import { TopRankingCard, TopTrendCard } from '~/components/card'
-import { ItemControls } from '~/components/element/item-controls'
+import { ItemControls } from '~/components/controls/item-controls'
 import type { RankingType } from '~/types/items'
 
 export { indexLoader as loader } from '~/.server/loaders'
@@ -82,6 +82,7 @@ export const meta: MetaFunction<typeof indexLoader> = ({ data }) => {
 		},
 	]
 }
+
 export default function Index() {
 	const initialData = useLoaderData<indexLoader>()
 	const fetcher = useFetcher<indexLoader>()

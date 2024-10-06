@@ -1,6 +1,6 @@
 import { type LoaderFunctionArgs, redirect } from '@remix-run/cloudflare'
-import { loadEnvironment } from '~/lib/utils'
-import { createClient } from '~/module/supabase/create-client-server.server'
+import { loadEnvironment } from '~/lib/utils.server'
+import { createClient } from '~/module/supabase/create-client.server'
 import { uploadFirstUserAvatar } from '~/module/supabase/upload-image.server'
 
 export async function loader({ request, context }: LoaderFunctionArgs) {

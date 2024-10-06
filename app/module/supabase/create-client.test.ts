@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest'
-import { createClient } from './create-client-component.server'
+import { describe, expect, it, vi } from 'vitest'
+import { createClient } from './create-client.server'
 
 const env: Env = {
 	SUPABASE_URL: process.env.SUPABASE_URL ?? '',
@@ -7,9 +7,15 @@ const env: Env = {
 	VITE_LOCAL_DATE: '',
 	SITE_URL: '',
 }
+const mockRequest = {
+	headers: {
+		get: vi.fn().mockReturnValue('http://localhost:3000'),
+	},
+} as unknown as Request
 
-describe('supabaseClient', () => {
-	const supabase = createClient(env)
+const { supabase } = createClient(mockRequest, env)
+
+describe('supabaseClientのテスト(開発環境DBにアクセス)', () => {
 	it('Supabaseが定義されているかを確認', () => {
 		expect(supabase).toBeDefined()
 	})
@@ -29,6 +35,4 @@ describe('supabaseClient', () => {
 		expect(error).toBeDefined()
 		expect(data).toBeNull()
 	})
-
-	// ユーザー認証の時にRLSが適切に機能しているかのテストを書く
 })

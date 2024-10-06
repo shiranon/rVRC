@@ -78,7 +78,7 @@ export const EditFolder = ({
 							id="foldername"
 							name="foldername"
 							autoComplete="off"
-							value={folder.name}
+							value={folderName}
 							onChange={(e) => setFolderName(e.target.value)}
 							className="bg-white rounded-none border-x-0 border-t-0 border-b-2 border-gray-200 focus:border-blue-500"
 						/>
@@ -94,7 +94,7 @@ export const EditFolder = ({
 							id="folderDescription"
 							name="folderDescription"
 							placeholder="フォルダの説明"
-							value={folder.description}
+							value={folderDescription}
 							autoComplete="off"
 							onChange={(e) => setFolderDescription(e.target.value)}
 							className="bg-white rounded-none border-x-0 border-t-0 border-b-2 border-gray-200 focus:border-blue-500"
@@ -102,7 +102,7 @@ export const EditFolder = ({
 						<div
 							className={`text-right ${folderDescription.length > 100 ? 'text-red-500' : 'text-gray-500'}`}
 						>
-							{folderDescription.length}/100
+							{folderDescription.length}/40
 						</div>
 						<RadioGroup
 							required
@@ -124,7 +124,9 @@ export const EditFolder = ({
 						{errorMessages.length > 0 && (
 							<ul className="text-red-500">
 								{errorMessages.map((error) => (
-									<li key={error}>{error}</li>
+									<li key={error} className="text-sm">
+										{error}
+									</li>
 								))}
 							</ul>
 						)}

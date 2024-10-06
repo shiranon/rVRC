@@ -1,8 +1,8 @@
 import { type LoaderFunctionArgs, json } from '@remix-run/cloudflare'
 import { formatMonth, getTodayDate } from '~/lib/date.server'
-import { loadEnvironment } from '~/lib/utils'
+import { loadEnvironment } from '~/lib/utils.server'
 import { getAvatarRanking, getClothRanking } from '~/module/get/get-ranking'
-import { createClient } from '~/module/supabase/create-client-server.server'
+import { createClient } from '~/module/supabase/create-client.server'
 
 export const trendLoader = async ({ request, context }: LoaderFunctionArgs) => {
 	const env = loadEnvironment(context)
