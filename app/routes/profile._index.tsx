@@ -19,14 +19,14 @@ export const meta: MetaFunction<typeof profileLoader> = ({ data }) => {
 	if (!data) return [{ title: 'Not found' }]
 	const titleElements = data.profile
 		? [
-				{ title: 'マイプロフィール | rVRC' },
+				{ title: 'プロフィール | rVRC' },
 				{
 					name: 'twitter:title',
-					content: 'マイプロフィール | rVRC',
+					content: 'プロフィール | rVRC',
 				},
 				{
 					property: 'og:title',
-					content: 'マイプロフィール | rVRC',
+					content: 'プロフィール | rVRC',
 				},
 			]
 		: []
@@ -101,8 +101,8 @@ export default function Profile() {
 					</div>
 				</div>
 				<EditProfile actionPath={'/profile'} profile={profile}>
-					<Button className="right-0" disabled={folders.length >= 10}>
-						新規作成
+					<Button className="bg-black hover:bg-slate-700 text-white h-8">
+						プロフィール編集
 					</Button>
 				</EditProfile>
 			</div>
