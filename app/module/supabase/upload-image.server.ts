@@ -38,6 +38,7 @@ export const uploadFirstUserAvatar = async (
 	user: User,
 	supabase: SupabaseClient,
 ) => {
+	console.log('image upload called')
 	const responseAvatar = await fetch(user.user_metadata.avatar_url)
 	const blob = await responseAvatar.blob()
 	const contentType = responseAvatar.headers.get('Content-Type')
