@@ -1,11 +1,10 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 
 export const signInWithDiscord = async (supabase: SupabaseClient, env: Env) => {
-	console.log('called signIn', `${env.SITE_URL}/auth/callback`)
 	const { data, error } = await supabase.auth.signInWithOAuth({
 		provider: 'discord',
 		options: {
-			redirectTo: `${env.SITE_URL}/auth/callback`,
+			redirectTo: 'https://r-vrc.net/auth/callback',
 		},
 	})
 	if (error) {
