@@ -49,10 +49,11 @@ export const uploadFirstUserAvatar = async (
 	const uniqueFileName = await generateUniqueFileName()
 	const fileName = `${uniqueFileName}.${extension}`
 
-	const { error } = await supabase.storage
+	const { data, error } = await supabase.storage
 		.from('avatar')
 		.upload(fileName, blob, {
 			contentType: contentType,
+			upsert: true,
 		})
 
 	if (error) {
@@ -60,7 +61,13 @@ export const uploadFirstUserAvatar = async (
 		return null
 	}
 
-	updateAvatar(user.id, fileName, supabase).catch((err) => {
-		console.error('update時にエラーが発生しました:', err)
-	})
+	// アップロードが成功したらパスを取得
+	const {
+		data: { publicUrl },
+	} = supabase.storage.from('avatar').getPublicUrl(fileName)
+
+	// ユーザーのアバターを更新
+	await updateAvatar(user.id, publicUrl, supabase)
+
+	return publicUrl
 }
