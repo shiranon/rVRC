@@ -1,4 +1,4 @@
-import avatar_holder from '~/images/avatar.png'
+import avatar_holder from '~/images/avatar.svg'
 import { URLS } from '~/lib/constants/urls'
 
 /**

@@ -24,7 +24,7 @@ export const folderPageAction = async ({
 
 	// フォームデータの取得
 	const formData = await request.formData()
-	if (!formData) {
+	if (formData.entries().next().done) {
 		return json({ success: false, message: 'フォームに値がありません。' })
 	}
 

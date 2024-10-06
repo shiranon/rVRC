@@ -1,4 +1,3 @@
-import { redirect } from '@remix-run/react'
 import type { SupabaseClient, User } from '@supabase/supabase-js'
 import { z } from 'zod'
 import { folderCreateSchema } from '~/lib/zod'
@@ -52,6 +51,15 @@ export class FolderManager {
 
 		const rawInput = Object.fromEntries(formData)
 
+		const { count: folderCount } = await this.supabase
+			.from('folders')
+			.select('*', { count: 'exact', head: true })
+			.eq('user_id', this.user.id)
+
+		if (folderCount && folderCount > 9) {
+			return { success: false, message: 'フォルダは10個以上作成できません' }
+		}
+
 		try {
 			const validatedData = folderCreateSchema.parse(rawInput)
 
@@ -75,6 +83,7 @@ export class FolderManager {
 			return { success: true, message: 'フォルダを作成しました' }
 		} catch (error) {
 			if (error instanceof z.ZodError) {
+				console.error('フォルダ作成バリデーションエラー:', error)
 				return { folderErrors: error.errors }
 			}
 			return { folderError: '予期せぬエラー' }
@@ -118,6 +127,7 @@ export class FolderManager {
 			return { success: true, message: 'フォルダを編集しました' }
 		} catch (error) {
 			if (error instanceof z.ZodError) {
+				console.error('フォルダ編集バリデーションエラー:', error)
 				return { folderErrors: error.errors }
 			}
 			return { folderError: '予期せぬエラー' }

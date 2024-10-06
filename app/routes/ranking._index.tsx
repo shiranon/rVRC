@@ -2,9 +2,9 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 import { useLoaderData, useSearchParams } from '@remix-run/react'
 import type { rankingLoader } from '~/.server/loaders'
 import { RankingItemCard } from '~/components/card/ranking-item-card'
-import { ItemControls } from '~/components/element/item-controls'
+import { ItemControls } from '~/components/controls/item-controls'
+import { RankingControls } from '~/components/controls/ranking-controls'
 import { Pagination } from '~/components/element/pagination'
-import { RankingControls } from '~/components/element/ranking-controls'
 import { formatJapaneseDate } from '~/lib/format'
 import type { RankingType } from '~/types/items'
 
@@ -95,6 +95,7 @@ export const meta: MetaFunction<typeof rankingLoader> = ({ data }) => {
 
 export default function Ranking() {
 	const { ranking, type, item } = useLoaderData<rankingLoader>()
+	console.log(ranking)
 	const [searchParams] = useSearchParams()
 	const dateParam = searchParams.get('date')
 	const rankingDate = formatJapaneseDate(dateParam)
@@ -121,7 +122,7 @@ export default function Ranking() {
 					<Pagination totalItems={item === 'avatar' ? 50 : 100} />
 				</div>
 			) : (
-				<div>No data</div>
+				<div className="text-xl pt-8">指定のデータは存在しません</div>
 			)}
 		</>
 	)

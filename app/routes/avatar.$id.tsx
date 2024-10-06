@@ -10,9 +10,9 @@ import { Folder, FolderPlus, Plus } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { avatarPageLoader } from '~/.server/loaders'
 import { FlexItemCard } from '~/components/card/flex-item-card'
+import { SearchControls } from '~/components/controls/search-controls'
 import { CreateFolder } from '~/components/element/create-folder'
 import { Pagination } from '~/components/element/pagination'
-import { SearchControls } from '~/components/element/search-controls'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent } from '~/components/ui/card'
@@ -28,8 +28,8 @@ import {
 	buildShopImage,
 	buildSmallItemImage,
 	formatValue,
+	truncateString,
 } from '~/lib/format'
-import { truncateString } from '~/lib/format'
 
 export { avatarPageAction as action } from '~/.server/actions'
 export { avatarPageLoader as loader } from '~/.server/loaders'
@@ -207,15 +207,16 @@ export default function avatarPage() {
 													</div>
 												</Form>
 											))}
-
-										<CreateFolder actionPath={`/avatar/${id}`}>
-											<div>
-												<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
-													<Plus />
-													<div>新規作成</div>
-												</Button>
-											</div>
-										</CreateFolder>
+										{foldersData && foldersData.length < 10 && (
+											<CreateFolder actionPath={`/avatar/${id}`}>
+												<div>
+													<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
+														<Plus />
+														<div>新規作成</div>
+													</Button>
+												</div>
+											</CreateFolder>
+										)}
 									</PopoverContent>
 								</Popover>
 							)}

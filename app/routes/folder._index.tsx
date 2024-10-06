@@ -1,11 +1,12 @@
 import type { MetaFunction } from '@remix-run/cloudflare'
 import { Link, useLoaderData } from '@remix-run/react'
-import { Shirt, VenetianMask } from 'lucide-react'
 import type { folderLoader } from '~/.server/loaders'
 import { Pagination } from '~/components/element/pagination'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent } from '~/components/ui/card'
-import avatar_holder from '~/images/avatar.png'
+import avatar_svg from '~/images/avatar.svg'
+import cloth_svg from '~/images/cloth.svg'
+import folder_holder from '~/images/folder.svg'
 import { buildSmallItemImage } from '~/lib/format'
 
 export { folderLoader as loader } from '~/.server/loaders'
@@ -98,7 +99,7 @@ export default function Folder() {
 															src={
 																folder.image
 																	? buildSmallItemImage(folder.image)
-																	: avatar_holder
+																	: folder_holder
 															}
 															alt={folder.name}
 															className="size-32 rounded-l-lg"
@@ -116,11 +117,19 @@ export default function Folder() {
 													</div>
 													<div className="p-2">
 														<div className="flex items-center">
-															<Shirt />
+															<img
+																src={avatar_svg}
+																alt="avatar"
+																className="size-5"
+															/>
 															<span>{folder.avatar_count}</span>
 														</div>
 														<div className="flex items-center">
-															<VenetianMask />
+															<img
+																src={cloth_svg}
+																alt="cloth"
+																className="size-5"
+															/>
 															<span>{folder.cloth_count}</span>
 														</div>
 													</div>

@@ -38,7 +38,7 @@ export const folderPageLoader = async ({
 	}
 
 	if (folderError) {
-		console.error('フォルダ取得に失敗しました', folderError)
+		console.error('フォルダ取得時にエラーが発生しました', folderError)
 		return redirect('/')
 	}
 

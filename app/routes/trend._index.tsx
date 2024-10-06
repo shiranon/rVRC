@@ -2,9 +2,9 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 import { useLoaderData, useSearchParams } from '@remix-run/react'
 import type { trendLoader } from '~/.server/loaders'
 import { RankingItemCard } from '~/components/card'
-import { ItemControls } from '~/components/element/item-controls'
+import { ItemControls } from '~/components/controls/item-controls'
+import { RankingControls } from '~/components/controls/ranking-controls'
 import { Pagination } from '~/components/element/pagination'
-import { RankingControls } from '~/components/element/ranking-controls'
 import { formatJapaneseDate } from '~/lib/format'
 import type { RankingType } from '~/types/items'
 
@@ -112,7 +112,7 @@ export default function Ranking() {
 					<Pagination totalItems={item === 'avatar' ? 50 : 100} />
 				</div>
 			) : (
-				<div>No data</div>
+				<div>指定のデータは存在しません</div>
 			)}
 		</>
 	)

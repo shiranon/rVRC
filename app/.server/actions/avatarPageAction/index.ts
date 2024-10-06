@@ -24,7 +24,7 @@ export const avatarPageAction = async ({
 
 	// フォームデータの取得
 	const formData = await request.formData()
-	if (!formData) {
+	if (formData.entries().next().done) {
 		return json({ success: false, message: 'フォームに値がありません。' })
 	}
 
@@ -35,7 +35,7 @@ export const avatarPageAction = async ({
 	const intent = formData.get('intent')
 	switch (intent) {
 		case 'createFolder': {
-			const folderManager = new FolderManager(supabase, id)
+			const folderManager = new FolderManager(supabase)
 			await folderManager.initialize()
 			const result = await folderManager.createFolder(formData)
 			return json(result)
@@ -48,7 +48,7 @@ export const avatarPageAction = async ({
 		}
 		default: {
 			// 未知のintentの場合はエラーをスロー
-			throw new Error('予期しないアクション')
+			throw new Error('予期せぬアクション')
 		}
 	}
 }

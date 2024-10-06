@@ -15,7 +15,7 @@ const mockRequest = {
 
 const { supabase } = createClient(mockRequest, env)
 
-describe('supabaseClient', () => {
+describe('supabaseClientのテスト(開発環境DBにアクセス)', () => {
 	it('Supabaseが定義されているかを確認', () => {
 		expect(supabase).toBeDefined()
 	})

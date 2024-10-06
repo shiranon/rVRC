@@ -17,8 +17,8 @@ const mockRequest = {
 
 const { supabase } = createClient(mockRequest, env)
 
-describe('getAvatarRanking関数のテスト', () => {
-	it('ランキングが取得できるかテスト', async () => {
+describe('getAvatarRanking関数のテスト(開発環境DBにアクセス)', () => {
+	it('ランキングが取得できる', async () => {
 		const type = 'day'
 		const page = 1
 		const date = '2024-08-20'
@@ -32,11 +32,11 @@ describe('getAvatarRanking関数のテスト', () => {
 			expect(result.data[0]).toHaveProperty('booth_id')
 			expect(result.data[0]).toHaveProperty('item_name')
 		} else {
-			fail('result.data is null')
+			fail('result.dataがnull')
 		}
 	})
 
-	it('月間ランキングが取得できるかテスト', async () => {
+	it('月間ランキングが取得できる', async () => {
 		const type = 'month'
 		const page = 1
 		const date = '2024-09-30'
@@ -50,11 +50,11 @@ describe('getAvatarRanking関数のテスト', () => {
 			expect(result.data[0]).toHaveProperty('booth_id')
 			expect(result.data[0]).toHaveProperty('item_name')
 		} else {
-			fail('result.data is null')
+			fail('result.dataがnull')
 		}
 	})
 
-	it('トレンドが取得できるかテスト', async () => {
+	it('トレンドが取得できる', async () => {
 		const type = 'trend'
 		const page = 1
 		const date = '2024-09-30'
@@ -68,11 +68,11 @@ describe('getAvatarRanking関数のテスト', () => {
 			expect(result.data[0]).toHaveProperty('booth_id')
 			expect(result.data[0]).toHaveProperty('item_name')
 		} else {
-			fail('result.data is null')
+			fail('result.dataがnull')
 		}
 	})
 
-	it('データが存在しない日付を指定した場合のテスト', async () => {
+	it('データが存在しない日付を指定した場合はエラーになる', async () => {
 		const type = 'day'
 		const page = 1
 		const date = '2023-08-26'
@@ -84,11 +84,11 @@ describe('getAvatarRanking関数のテスト', () => {
 			expect(Array.isArray(result.data)).toBe(true)
 			expect(result.data.length).toBe(0)
 		} else {
-			fail('result.data is null')
+			fail('result.dataがnull')
 		}
 	})
 
-	it('不正なタイプでエラーが返るかテスト', async () => {
+	it('不正なタイプを指定した場合エラーになる', async () => {
 		const type = 'invalid_type'
 		const page = 1
 		const date = '2023-08-20'

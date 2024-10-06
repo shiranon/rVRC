@@ -183,15 +183,16 @@ export default function clothPage() {
 												</div>
 											</Form>
 										))}
-
-									<CreateFolder actionPath={`/avatar/${id}`}>
-										<div>
-											<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
-												<Plus />
-												<div>新規作成</div>
-											</Button>
-										</div>
-									</CreateFolder>
+									{foldersData && foldersData.length < 10 && (
+										<CreateFolder actionPath={`/cloth/${id}`}>
+											<div>
+												<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
+													<Plus />
+													<div>新規作成</div>
+												</Button>
+											</div>
+										</CreateFolder>
+									)}
 								</PopoverContent>
 							</Popover>
 						)}

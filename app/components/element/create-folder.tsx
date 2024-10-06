@@ -89,7 +89,7 @@ export const CreateFolder = ({ actionPath, children }: CreateFolderProps) => {
 						<div
 							className={`text-right ${folderDescription.length > 100 ? 'text-red-500' : 'text-gray-500'}`}
 						>
-							{folderDescription.length}/100
+							{folderDescription.length}/40
 						</div>
 						<RadioGroup
 							required
@@ -111,7 +111,9 @@ export const CreateFolder = ({ actionPath, children }: CreateFolderProps) => {
 						{errorMessages.length > 0 && (
 							<ul className="text-red-500">
 								{errorMessages.map((error) => (
-									<li key={error}>{error}</li>
+									<li key={error} className="text-sm">
+										{error}
+									</li>
 								))}
 							</ul>
 						)}

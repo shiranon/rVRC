@@ -32,7 +32,7 @@ describe('getClothRanking関数のテスト', () => {
 			expect(result.data[0]).toHaveProperty('booth_id')
 			expect(result.data[0]).toHaveProperty('item_name')
 		} else {
-			fail('result.data is null')
+			fail('result.dataがnull')
 		}
 	})
 
@@ -50,7 +50,7 @@ describe('getClothRanking関数のテスト', () => {
 			expect(result.data[0]).toHaveProperty('booth_id')
 			expect(result.data[0]).toHaveProperty('item_name')
 		} else {
-			fail('result.data is null')
+			fail('result.dataがnull')
 		}
 	})
 
@@ -68,7 +68,7 @@ describe('getClothRanking関数のテスト', () => {
 			expect(result.data[0]).toHaveProperty('booth_id')
 			expect(result.data[0]).toHaveProperty('item_name')
 		} else {
-			fail('result.data is null')
+			fail('result.dataがnull')
 		}
 	})
 
@@ -84,7 +84,7 @@ describe('getClothRanking関数のテスト', () => {
 			expect(Array.isArray(result.data)).toBe(true)
 			expect(result.data.length).toBe(0)
 		} else {
-			fail('result.data is null')
+			fail('result.dataがnull')
 		}
 	})
 

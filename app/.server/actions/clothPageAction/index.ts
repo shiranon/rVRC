@@ -16,15 +16,15 @@ export const clothPageAction = async ({
 	context,
 	params,
 }: ActionFunctionArgs) => {
-	const { id } = params
 	// 衣装IDの検証
+	const { id } = params
 	if (!id || !/^\d+$/.test(id)) {
 		return json({ success: false, message: '不正なアイテムIDです。' })
 	}
 
 	// フォームデータの取得
 	const formData = await request.formData()
-	if (!formData) {
+	if (formData.entries().next().done) {
 		return json({ success: false, message: 'フォームに値がありません。' })
 	}
 
@@ -41,14 +41,14 @@ export const clothPageAction = async ({
 			return json(result)
 		}
 		case 'addFolder': {
-			const folderManager = new FolderManager(supabase)
+			const folderManager = new FolderManager(supabase, id)
 			await folderManager.initialize()
 			const result = await folderManager.addCloth(formData, id)
 			return json(result)
 		}
 		default: {
 			// 未知のintentの場合はエラーをスロー
-			throw new Error('予期しないアクション')
+			throw new Error('予期せぬアクション')
 		}
 	}
 }
