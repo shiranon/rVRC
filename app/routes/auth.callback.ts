@@ -6,7 +6,9 @@ import { uploadFirstUserAvatar } from '~/module/supabase/upload-image.server'
 export async function loader({ request, context }: LoaderFunctionArgs) {
 	const requestUrl = new URL(request.url)
 	const code = requestUrl.searchParams.get('code')
+	console.log('code', code)
 	const next = requestUrl.searchParams.get('next') || '/'
+	console.log('code', code)
 	const env = loadEnvironment(context)
 
 	if (code) {
@@ -18,8 +20,8 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
 			const now = new Date()
 			const timeDifference = (now.getTime() - createdAt.getTime()) / 5
 
-			// 5秒以内に作成されたユーザーを新規ユーザーとしてアバターを登録する
-			if (timeDifference < 5) {
+			// 15秒以内に作成されたユーザーを新規ユーザーとしてアバターを登録する
+			if (timeDifference < 15) {
 				uploadFirstUserAvatar(data.user, supabase)
 			}
 			return redirect(next, { headers })
