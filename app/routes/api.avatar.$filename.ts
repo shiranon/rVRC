@@ -23,7 +23,6 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
 	try {
 		const key = `avatar/${filename}`
 
-		console.log(key)
 		const s3 = new S3Client({
 			region: 'auto',
 			endpoint: env.R2_ENDPOINT,
