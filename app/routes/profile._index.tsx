@@ -132,7 +132,9 @@ export default function Profile() {
 								<CardContent
 									className={`p-0 ${folder.is_private ? 'bg-gray-100' : ''}`}
 								>
-									<div className="w-full flex items-center p-2 bg-white rounded-lg shadow-sm">
+									<div
+										className={`w-full flex items-center p-2 rounded-lg shadow-sm ${folder.is_private ? 'bg-gray-200' : ''}`}
+									>
 										<div className="flex-shrink-0 size-32 mr-3">
 											<img
 												src={
