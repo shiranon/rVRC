@@ -1,13 +1,9 @@
 import { describe, expect, it, vi } from 'vitest'
+import { localEnv } from '~/lib/test/localEnv'
 import { createClient } from '../supabase/create-client.server'
 import { getAvatarRanking } from './get-avatar-ranking'
 
-const env: Env = {
-	SUPABASE_URL: process.env.SUPABASE_URL ?? '',
-	SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ?? '',
-	VITE_LOCAL_DATE: '',
-	SITE_URL: '',
-}
+const env = localEnv
 
 const mockRequest = {
 	headers: {

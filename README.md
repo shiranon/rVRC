@@ -5,6 +5,7 @@
 
   <img src="https://img.shields.io/badge/Remix-black?logo=remix" alt="Remix" />
   <img src="https://img.shields.io/badge/Cloudflare_Pages-black?logo=cloudflarepages" alt="Cloudflare Pages" />
+  <img src="https://img.shields.io/badge/Cloudflare_R2-black?logo=cloudflare" alt="Cloudflare R2" />
   <img src="https://img.shields.io/badge/Supabase-black?logo=supabase" alt="Supabase" />
   <a href="https://x.com/rvrc_v"><img src="https://img.shields.io/badge/rVRC-black?logo=x" alt="rVRC" /></a>
 </div>
@@ -18,8 +19,9 @@ Discordでログインをすれば気に入ったアイテムをフォルダ分�
 ## 使用技術
 
 - フレームワーク: [Remix](https://remix.run/)
-- データベース: [Supabase](https://supabase.com/)
 - デプロイ: [Cloudflare Pages](https://www.cloudflare.com/developer-platform/pages/)
+- ストレージ: [Cloudflare R2](https://www.cloudflare.com/developer-platform/r2/)
+- データベース: [Supabase](https://supabase.com/)
 - スタイリング: [TailwindCSS](https://tailwindcss.com/)
 
 ## 機能
@@ -28,10 +30,10 @@ Discordでログインをすれば気に入ったアイテムをフォルダ分�
   <tbody>
     <tr>
       <td>
-        <a href="https://r-vrc.net/ranking">👑ランキング</a>
+        <a href="https://r-vrc.net/ranking" target="_blank" rel="noopener noreferrer">👑ランキング</a>
       </td>
       <td>
-        <a href="https://r-vrc.net/trend">🔥トレンド</a>
+        <a href="https://r-vrc.net/trend" target="_blank" rel="noopener noreferrer">🔥トレンド</a>
       </td>
     </tr>
     <tr>
@@ -40,10 +42,10 @@ Discordでログインをすれば気に入ったアイテムをフォルダ分�
     </tr>
     <tr>
       <td>
-        <a href="https://r-vrc.net/folder">📁フォルダ</a>
+        <a href="https://r-vrc.net/folder" target="_blank" rel="noopener noreferrer">📁フォルダ</a>
       </td>
       <td>
-        <a href="https://r-vrc.net/search">🔍️検索</a>
+        <a href="https://r-vrc.net/search" target="_blank" rel="noopener noreferrer">🔍️検索</a>
       </td>
     </tr>
     <tr>
@@ -54,7 +56,7 @@ Discordでログインをすれば気に入ったアイテムをフォルダ分�
 </table>
 
 ## 連絡先
-https://x.com/shirano_v
+<a href="https://x.com/shirano_no" target="_blank" rel="noopener noreferrer">Xアカウント</a>
 
 ## License
 

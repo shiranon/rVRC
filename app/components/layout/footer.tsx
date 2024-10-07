@@ -6,14 +6,22 @@ export const Footer = () => {
 	return (
 		<footer className="px-6 pt-9 pb-6">
 			<div className="flex items-center justify-between">
-				<Link to={'https://x.com/shirano_v'}>
+				<Link to={'/'}>
 					<img src={logo} alt="rVRC" width={90} height={30} />
 				</Link>
 				<div className="flex gap-4">
-					<Link to={'#'}>
+					<Link
+						to={'https://x.com/rvrc_v'}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						<XIcon className="size-8" />
 					</Link>
-					<Link to={'https://github.com/shiranon/rVRC'}>
+					<Link
+						to={'https://github.com/shiranon/rVRC'}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						<GithubIcon className="size-8" />
 					</Link>
 				</div>

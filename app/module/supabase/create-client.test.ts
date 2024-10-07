@@ -1,12 +1,9 @@
 import { describe, expect, it, vi } from 'vitest'
+import { localEnv } from '~/lib/test/localEnv'
 import { createClient } from './create-client.server'
 
-const env: Env = {
-	SUPABASE_URL: process.env.SUPABASE_URL ?? '',
-	SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ?? '',
-	VITE_LOCAL_DATE: '',
-	SITE_URL: '',
-}
+const env = localEnv
+
 const mockRequest = {
 	headers: {
 		get: vi.fn().mockReturnValue('http://localhost:3000'),

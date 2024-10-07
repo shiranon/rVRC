@@ -6,13 +6,15 @@ import {
 	Scripts,
 	ScrollRestoration,
 	isRouteErrorResponse,
+	useRevalidator,
 	useRouteError,
 	useRouteLoaderData,
 } from '@remix-run/react'
+import { useEffect } from 'react'
 import type { rootLoader } from '~/.server/loaders'
 import { Footer, Header } from '~/components/layout/index'
-import './tailwind.css'
 import { Toaster } from '~/components/ui/toaster'
+import './tailwind.css'
 
 type RootLoaderData = SerializeFrom<typeof rootLoader>
 
@@ -29,7 +31,17 @@ export { rootLoader as loader } from '~/.server/loaders'
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
 	const userData = useRouteLoaderData<RootLoaderDataWithError>('root')
+	const revalidator = useRevalidator()
 
+	useEffect(() => {
+		if (userData?.needsAvatarCheck) {
+			const timer = setTimeout(() => {
+				revalidator.revalidate()
+			}, 500)
+
+			return () => clearTimeout(timer)
+		}
+	}, [userData?.needsAvatarCheck, revalidator])
 	return (
 		<html lang="ja">
 			<head>

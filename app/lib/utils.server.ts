@@ -8,18 +8,27 @@ import type { AppLoadContext } from '@remix-run/cloudflare'
  * @throws Error - 環境設定が取得できない場合
  */
 const loadEnvironment = (context: AppLoadContext): Env => {
-	// まず、Cloudflare Pagesのコンテキストをチェック
-	if (context?.cloudflare?.env) {
-		return context.cloudflare.env as Env
+	// Cloudflare環境変数を取得できなかった場合、Local環境変数を取得
+	let env: Env
+	try {
+		env = context.cloudflare.env as Env
+	} catch {
+		env = process.env as unknown as Env
 	}
 
-	// コンテキストが利用できない場合、process.envを試す
-	if (typeof process !== 'undefined' && process.env) {
-		return process.env as unknown as Env
+	// 環境変数が正しく設定されていなかった場合エラーをスロー
+	if (!(env.SUPABASE_URL && env.SUPABASE_ANON_KEY)) {
+		throw new Error('SUPABASE_URL or SUPABASE_ANON_KEY is not defined')
 	}
-
-	// どちらの方法でも環境設定が取得できない場合はエラーをスロー
-	throw new Error('Unable to load environment variables')
+	if (!(env.R2_ACCESS_KEY && env.R2_SECRET_KEY && env.R2_ENDPOINT)) {
+		throw new Error(
+			'R2_ACCESS_KEY or R2_SECRET_KEY or R2_ENDPOINT is not defined',
+		)
+	}
+	if (!env.SITE_URL) {
+		throw new Error('SITE_URL is not defined')
+	}
+	return env
 }
 
 /**

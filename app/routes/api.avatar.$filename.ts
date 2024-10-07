@@ -1,15 +1,10 @@
+import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import type { LoaderFunctionArgs } from '@remix-run/cloudflare'
 import { json } from '@remix-run/cloudflare'
 import { loadEnvironment } from '~/lib/utils.server'
-import { createClient } from '~/module/supabase/create-client.server'
 
-export const loader = async ({
-	params,
-	request,
-	context,
-}: LoaderFunctionArgs) => {
+export const loader = async ({ params, context }: LoaderFunctionArgs) => {
 	const env = loadEnvironment(context)
-	const { supabase } = createClient(request, env)
 
 	const filename = params.filename
 
@@ -26,12 +21,27 @@ export const loader = async ({
 	}
 
 	try {
-		const { data, error } = await supabase.storage
-			.from('avatar')
-			.download(filename)
+		const key = `avatar/${filename}`
 
-		if (error) {
-			console.error('アバター取得エラー:', error)
+		console.log(key)
+		const s3 = new S3Client({
+			region: 'auto',
+			endpoint: env.R2_ENDPOINT,
+			credentials: {
+				accessKeyId: env.R2_ACCESS_KEY,
+				secretAccessKey: env.R2_SECRET_KEY,
+			},
+		})
+
+		const getAvatarResponse = await s3.send(
+			new GetObjectCommand({
+				Bucket: 'avatar',
+				Key: key,
+			}),
+		)
+
+		if (!getAvatarResponse.Body) {
+			console.error('アバター取得エラー')
 			return json(
 				{
 					statusCode: 404,
@@ -43,21 +53,12 @@ export const loader = async ({
 			)
 		}
 
-		if (!data) {
-			return json(
-				{
-					statusCode: 404,
-					code: '404',
-					error: 'Not Found',
-					message: 'アバターが見つかりません',
-				},
-				{ status: 404 },
-			)
-		}
+		const stream = getAvatarResponse.Body as ReadableStream
 
-		return new Response(data, {
+		return new Response(stream, {
 			headers: {
-				'Content-Type': data.type || 'application/octet-stream',
+				'Content-Type':
+					getAvatarResponse.ContentType || 'application/octet-stream',
 				'Cache-Control': 'public, max-age=3600',
 			},
 		})
