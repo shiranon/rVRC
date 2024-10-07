@@ -1,6 +1,7 @@
 import { useLocation, useSearchParams } from '@remix-run/react'
 import { ja } from 'date-fns/locale'
 import { useEffect, useState } from 'react'
+import { formatDateForParam } from '~/lib/format'
 import { Button } from '../ui/button'
 import { Calendar } from '../ui/calendar'
 import {
@@ -29,7 +30,7 @@ export function RankingControls() {
 
 	useEffect(() => {
 		if (date) {
-			const localDate = date.toLocaleDateString('ja-JP').replace(/\//g, '-')
+			const localDate = formatDateForParam(date)
 			setSearchParams((prev) => {
 				prev.set('date', localDate)
 				return prev

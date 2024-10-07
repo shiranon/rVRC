@@ -13,14 +13,13 @@
 		"preview": "npm run build && wrangler pages dev",
 		"cf-typegen": "wrangler types",
 		"prepare": "husky",
-		"storybook": "storybook dev -p 6006 --no-open",
-		"build-storybook": "storybook build",
 		"test": "vitest",
 		"spec": "vitest",
 		"check": "biome check",
 		"biome": "biome check --write"
 	},
 	"dependencies": {
+		"@aws-sdk/client-s3": "^3.665.0",
 		"@nasa-gcn/remix-seo": "^2.0.1",
 		"@radix-ui/react-alert-dialog": "^1.1.1",
 		"@radix-ui/react-avatar": "^1.1.0",
@@ -66,6 +65,9 @@
 		"vite-tsconfig-paths": "^4.2.1",
 		"vitest": "^2.0.5",
 		"wrangler": "3.78.10"
+	},
+	"overrides": {
+		"cookie": "0.7.2"
 	},
 	"engines": {
 		"node": ">=20.0.0"

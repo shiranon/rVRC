@@ -1,15 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { localEnv } from '~/lib/test/localEnv'
 import { createTestContext } from '~/lib/test/mockCloudflareContext'
 import { avatarPageLoader } from '.'
 
-const env: Env = {
-	SUPABASE_URL: process.env.SUPABASE_URL ?? '',
-	SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ?? '',
-	VITE_LOCAL_DATE: '',
-	SITE_URL: '',
-}
-
-const context = createTestContext(env)
+const context = createTestContext(localEnv)
 
 describe('avatarPageLoaderのテスト(開発環境DBにアクセス)', () => {
 	describe('URLのテスト', () => {

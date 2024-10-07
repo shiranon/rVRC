@@ -11,22 +11,23 @@ export const rootLoader = async ({ request, context }: LoaderFunctionArgs) => {
 	} = await supabase.auth.getUser()
 
 	if (!user) {
-		return json({ isLoggedIn: false, user: null })
+		return json({ isLoggedIn: false, user: null, needsAvatarCheck: false })
 	}
 
-	const { data: users } = await supabase
+	const { data: userData } = await supabase
 		.from('users')
 		.select('avatar,name')
 		.eq('id', user.id)
 		.single()
 
-	if (!users) {
-		return json({ isLoggedIn: false, user: null })
+	if (!userData) {
+		return json({ isLoggedIn: false, user: null, needsAvatarCheck: false })
 	}
 
 	return json({
-		isLoggedIn: !!user,
-		user: users,
+		isLoggedIn: true,
+		user: userData,
+		needsAvatarCheck: !userData.avatar,
 	})
 }
 

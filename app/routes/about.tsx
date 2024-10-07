@@ -84,7 +84,7 @@ export default function About() {
 						to={'https://booth.pm/'}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="bg-red-400 hover:bg-red-300 text-white font-bold px-2 py-1 rounded-md transition-colors duration-300"
+						className="bg-red-400 hover:bg-red-300 text-white font-bold px-2 py-1 transition-colors duration-300"
 					>
 						BOOTH
 					</Link>
@@ -97,9 +97,12 @@ export default function About() {
 					計測は日本時間の21時前後に行われるため、最新の情報と完全に一致しない場合があります。
 				</p>
 				<p className="mb-4">
+					また現在、上記カテゴリのみを対象に集計をしているので、全てのアイテムはカバーしきれていません。
+				</p>
+				<p>
 					ご要望・お問い合わせは、お手数ですが
 					<Link
-						to={'https://x.com/shirano_v'}
+						to={'https://x.com/shirano_no'}
 						target="_blank"
 						rel="noopener noreferrer"
 						className="rounded-md bg-slate-700 hover:bg-slate-600 text-white font-bold px-2 py-1 ml-1 transition-colors duration-300"
@@ -135,10 +138,19 @@ export default function About() {
 					通常の文字検索に加え、スキ数による絞り込み機能や、各種条件でのソート機能をご利用いただけます。
 				</p>
 			</div>
+			<h3 className="pt-2 text-xl font-bold">🌱アイテム詳細ページ</h3>
+			<div className="p-4">
+				<p>アイテムの詳細情報に加え、関連アイテムをご覧いただけます。</p>
+				<p>アバター詳細ページでは、関連衣装の検索・絞り込みができます。</p>
+			</div>
 			<h3 className="pt-2 text-xl font-bold">📁フォルダ</h3>
 			<div className="p-4">
 				<p>お気に入りのアイテムをフォルダに保存し、管理することができます。</p>
-				<p>作成したフォルダは公開する事が出来ます。</p>
+				<p>公開設定したフォルダは外部でも公開する事ができます。</p>
+				<p>現在、1人あたり10個までフォルダを作成できます。</p>
+				<p>
+					不適切なフォルダ名が使用されている事を確認した場合は、こちらの判断で削除をする場合がございます。
+				</p>
 			</div>
 			<div className="flex justify-center">
 				<Separator className="h-[1px] w-[90%] bg-slate-400" />
@@ -156,19 +168,22 @@ export default function About() {
 			<h3 className="pt-4 text-xl font-bold">☕サポート</h3>
 			<div className="p-4">
 				<p>
-					当サービスは現在、ドメイン取得・維持費用のみで運営しておりますが、継続的な改善や機能追加のために
+					当サービスは現在、ドメイン取得・維持費用のみで運営できておりますが、継続的な改善や機能追加のために
 					<Link
 						to={'https://shirano.fanbox.cc/'}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="bg-red-400 hover:bg-red-300 text-white px-1"
+						className="rounded-md bg-orange-400 hover:bg-orange-300 text-white px-1.5"
 					>
 						ご支援
 					</Link>
 					いただけると大変助かります。
 				</p>
 				<p className="pt-4">
-					また、
+					ご支援が多くなればデータベースの容量が増やせるので、他のカテゴリも集計対象にしたり、もっと色んな情報を表示する事ができます。
+				</p>
+				<p className="pt-4">
+					また、rVRCは
 					<Link
 						to={'https://github.com/shiranon/rVRC'}
 						target="_blank"
@@ -177,7 +192,7 @@ export default function About() {
 					>
 						Github
 					</Link>
-					にてソースコードを公開しています。お気づきの点がありましたら、プルリクエストやイシューでご連絡ください。
+					にてソースコードを公開しています。お気づきの点がありましたら、プルリクエストやイシューにてご連絡ください。
 				</p>
 			</div>
 		</div>

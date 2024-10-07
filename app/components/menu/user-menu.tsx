@@ -1,7 +1,7 @@
 import { Form, Link } from '@remix-run/react'
-import { Folder, LogOut, UserIcon } from 'lucide-react'
+import { LogOut, UserIcon } from 'lucide-react'
 import { useState } from 'react'
-import { Avatar, AvatarImage } from '~/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import {
 	Popover,
 	PopoverContent,
@@ -31,6 +31,7 @@ export const UserMenu = ({ user }: UserData) => {
 									alt={user.name}
 								/>
 							)}
+							<AvatarFallback />
 						</Avatar>
 					</div>
 				</PopoverTrigger>

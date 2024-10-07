@@ -4,7 +4,7 @@ import { z } from 'zod'
  * フォルダ用バリデーション
  * フォルダ名は必須で25文字以内、公開/非公開の値が無い場合はエラー
  */
-export const folderCreateSchema = z.object({
+const folderCreateSchema = z.object({
 	foldername: z
 		.string()
 		.min(1, 'フォルダ名は必須です')
@@ -21,9 +21,11 @@ export const folderCreateSchema = z.object({
  * プロフィール用バリデーション
  * フォルダ名は必須で25文字以内、公開/非公開の値が無い場合はエラー
  */
-export const profileUpdateSchema = z.object({
+const profileUpdateSchema = z.object({
 	username: z
 		.string()
 		.min(1, 'ユーザー名は必須です')
 		.max(25, 'ユーザー名は25文字以内で入力してください'),
 })
+
+export { folderCreateSchema, profileUpdateSchema }

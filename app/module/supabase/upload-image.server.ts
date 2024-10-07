@@ -1,3 +1,5 @@
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import { json } from '@remix-run/cloudflare'
 import type { SupabaseClient, User } from '@supabase/supabase-js'
 import { generateUniqueFileName } from '~/lib/utils.server'
 
@@ -28,7 +30,7 @@ const updateAvatar = async (
 		.select()
 	if (error) {
 		console.error('update時にエラーが発生しました:', error)
-		return null
+		throw new Error('update時にエラーが発生しました')
 	}
 
 	return data
@@ -37,37 +39,58 @@ const updateAvatar = async (
 export const uploadFirstUserAvatar = async (
 	user: User,
 	supabase: SupabaseClient,
+	env: Env,
 ) => {
-	console.log('image upload called')
 	const responseAvatar = await fetch(user.user_metadata.avatar_url)
-	const blob = await responseAvatar.blob()
+	const arrayBuffer = await responseAvatar.arrayBuffer()
 	const contentType = responseAvatar.headers.get('Content-Type')
+
 	if (!contentType) {
 		throw new Error('Content-Typeが取得できませんでした')
 	}
+
 	const extension = getImageExtension(contentType)
+
 	const uniqueFileName = await generateUniqueFileName()
 	const fileName = `${uniqueFileName}.${extension}`
 
-	const { data, error } = await supabase.storage
-		.from('avatar')
-		.upload(fileName, blob, {
-			contentType: contentType,
-			upsert: true,
+	try {
+		const s3 = new S3Client({
+			region: 'auto',
+			endpoint: env.R2_ENDPOINT,
+			credentials: {
+				accessKeyId: env.R2_ACCESS_KEY,
+				secretAccessKey: env.R2_SECRET_KEY,
+			},
 		})
 
-	if (error) {
+		const key = `avatar/${fileName}`
+
+		await s3.send(
+			new PutObjectCommand({
+				Bucket: 'avatar',
+				Key: key,
+				ContentType: contentType,
+				Body: new Uint8Array(arrayBuffer),
+				ACL: 'public-read',
+			}),
+		)
+	} catch (error) {
 		console.error('画像のアップロードに失敗しました:', error)
-		return null
+		throw new Error('画像のアップロードに失敗しました')
 	}
-
-	// アップロードが成功したらパスを取得
-	const {
-		data: { publicUrl },
-	} = supabase.storage.from('avatar').getPublicUrl(fileName)
-
-	// ユーザーのアバターを更新
-	await updateAvatar(user.id, publicUrl, supabase)
-
-	return publicUrl
+	try {
+		const { data, error } = await supabase
+			.from('users')
+			.update([{ avatar: fileName }])
+			.eq('id', user.id)
+			.select()
+		if (error) {
+			console.error('update時にエラーが発生しました:', error)
+			throw new Error('update時にエラーが発生しました')
+		}
+		return { success: true, fileName, data }
+	} catch (error) {
+		return { success: false, error }
+	}
 }

@@ -142,15 +142,16 @@ export default function clothPage() {
 					<div className="pl-1 text-sm">{cloth.shop_name}</div>
 				</div>
 				<div className="flex justify-center items-center space-x-2 py-4">
-					<Button className="rounded-2xl text-lg w-[65%] h-12 text-white font-bold border-[1px] bg-red-400  hover:bg-red-300">
-						<Link
-							to={`https://booth.pm/ja/items/${cloth.booth_id}`}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
+					<Link
+						to={`https://booth.pm/ja/items/${cloth.booth_id}`}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="w-[60%]"
+					>
+						<Button className="rounded-2xl text-lg w-full h-12 text-white font-bold border-[1px] bg-red-400  hover:bg-red-300">
 							BOOTHで購入する
-						</Link>
-					</Button>
+						</Button>
+					</Link>
 					<div className="flex items-center pl-2">
 						{isLoggedIn && (
 							<Popover open={isOpen} onOpenChange={setIsOpen}>
