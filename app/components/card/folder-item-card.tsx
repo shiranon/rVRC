@@ -1,12 +1,11 @@
 import { Form, Link } from '@remix-run/react'
 import { X } from 'lucide-react'
-import { buildShopImage, buildSmallItemImage, formatValue } from '~/lib/format'
+import { buildShopImage, buildSmallItemImage } from '~/lib/format'
 import type { FolderItem } from '~/types/items'
 import { FavoriteTag } from '../element/favorite-tag'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Button } from '../ui/button'
 import { CardContent, CardFooter, CardTitle } from '../ui/card'
-import { HeartIcon } from '../ui/icons'
 
 interface FlexItemCardProp {
 	item: FolderItem
@@ -33,7 +32,7 @@ const ConditionalLink: React.FC<{
 export const FolderItemCard = ({ item, id, isEdit }: FlexItemCardProp) => {
 	return (
 		<>
-			<ConditionalLink isDisabled={isEdit} to={`/avatar/${item.id}`}>
+			<ConditionalLink isDisabled={isEdit} to={`/${item.item_type}/${item.id}`}>
 				<CardContent className="p-4 relative">
 					{isEdit ? (
 						<div className="z-10 font-bold">
