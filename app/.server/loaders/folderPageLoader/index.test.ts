@@ -61,8 +61,6 @@ describe('ログイン状態時のテスト(mock)', () => {
 			params: { id: 'test-id' },
 		})
 
-		console.log(result)
-
 		expect(result.status).toBe(200)
 	})
 })

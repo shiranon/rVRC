@@ -95,7 +95,6 @@ export const meta: MetaFunction<typeof rankingLoader> = ({ data }) => {
 
 export default function Ranking() {
 	const { ranking, type, item } = useLoaderData<rankingLoader>()
-	console.log(ranking)
 	const [searchParams] = useSearchParams()
 	const dateParam = searchParams.get('date')
 	const rankingDate = formatJapaneseDate(dateParam)
