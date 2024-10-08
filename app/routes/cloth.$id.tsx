@@ -108,6 +108,11 @@ export default function clothPage() {
 	const [isOpen, setIsOpen] = useState(false)
 	const { id } = useParams()
 
+	const hashtags = ['VRChat']
+	const encodedHashtags = encodeURIComponent(hashtags.join(','))
+
+	const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${cloth.name} ♥${formatValue(cloth.latest_favorite)}`)}&url=${encodeURIComponent(`https://r-vrc/cloth/${id}`)}&hashtags=${encodedHashtags}`
+
 	useActionToast()
 
 	if (!cloth) return null
@@ -198,7 +203,14 @@ export default function clothPage() {
 							</Popover>
 						)}
 						<div className="size-8">
-							<XIcon />
+							<Link
+								to={twitterShareUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="twitter-share-button"
+							>
+								<XIcon />
+							</Link>
 						</div>
 					</div>
 				</div>
