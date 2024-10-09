@@ -55,9 +55,5 @@ Discordでログインをすれば気に入ったアイテムをフォルダ分�
   </tbody>
 </table>
 
-## 連絡先
+## 作者
 <a href="https://x.com/shirano_no" target="_blank" rel="noopener noreferrer">Xアカウント</a>
-
-## License
-
-[MIT](LICENSE)
