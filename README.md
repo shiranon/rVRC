@@ -23,6 +23,7 @@ Discordでログインをすれば気に入ったアイテムをフォルダ分�
 - ストレージ: [Cloudflare R2](https://www.cloudflare.com/developer-platform/r2/)
 - データベース: [Supabase](https://supabase.com/)
 - スタイリング: [TailwindCSS](https://tailwindcss.com/)
+- 開発環境 [Docker](https://www.docker.com/)
 
 ## 機能
 
