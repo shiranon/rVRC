@@ -26,17 +26,17 @@ export const Footer = () => {
 							</Link>
 						</li>
 						<li>
-							<Link to={'/search'} className="text-xs sm:text-sm text-slate-500 hover:underline">
+							<Link to={'/trend'} className="text-xs sm:text-sm text-slate-500 hover:underline">
 								トレンド
 							</Link>
 						</li>
 						<li>
-							<Link to={'/search'} className="text-xs sm:text-sm text-slate-500 hover:underline">
+							<Link to={'/folder'} className="text-xs sm:text-sm text-slate-500 hover:underline">
 								フォルダ
 							</Link>
 						</li>
 						<li>
-							<Link to={'/search'} className="text-xs sm:text-sm text-slate-500 hover:underline">
+							<Link to={'/about'} className="text-xs sm:text-sm text-slate-500 hover:underline">
 								About
 							</Link>
 						</li>
