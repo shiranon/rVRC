@@ -30,7 +30,7 @@ export const meta: MetaFunction<typeof trendLoader> = ({ data }) => {
 				{
 					name: 'description',
 					content:
-						'販売から1週間以内のVRChat用アイテムのスキ数を集計してトレンドを作成しています。',
+						'VRChat用新作アイテムのトレンドページ。指定日から1週間以内にBOOTHで公開されたアバターと衣装を対象に、スキ数でランキング化。最新の人気アイテムをいち早くチェック。新しいトレンドの発見に最適です。',
 				},
 				{
 					name: 'twitter:description',

@@ -25,6 +25,7 @@ const GithubIcon = iconWrapper(({ className, pathProps, ...props }) => (
 		viewBox="0 0 24 24"
 		xmlns="http://www.w3.org/2000/svg"
 		className={cn('inline-flex items-center', className)}
+		aria-label="Github"
 		{...props}
 	>
 		<path
@@ -41,6 +42,7 @@ const XIcon = iconWrapper(({ className, pathProps, ...props }) => {
 			viewBox="0 0 24 24"
 			xmlns="http://www.w3.org/2000/svg"
 			className={cn('inline-flex items-center', className)}
+			aria-label="X"
 			{...props}
 		>
 			<path

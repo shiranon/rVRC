@@ -6,9 +6,43 @@ export const Footer = () => {
 	return (
 		<footer className="px-6 pt-9 pb-6">
 			<div className="flex items-center justify-between">
-				<Link to={'/'}>
-					<img src={logo} alt="rVRC" width={90} height={30} />
-				</Link>
+				<nav aria-label="フッターナビゲーション" className="flex items-end space-x-4">
+					<Link to={'/'} className="inline-block">
+						<img src={logo} alt="rVRC ホーム"
+							width={90}
+							height={30}
+							className="w-[90px] h-[30px] object-cover"
+						/>
+					</Link>
+					<ul className="flex space-x-2 flex-wrap">
+						<li>
+							<Link to={'/ranking'} className="text-xs sm:text-sm text-slate-500 hover:underline">
+								ランキング
+							</Link>
+						</li>
+						<li>
+							<Link to={'/search'} className="text-xs sm:text-sm text-slate-500 hover:underline">
+								検索
+							</Link>
+						</li>
+						<li>
+							<Link to={'/search'} className="text-xs sm:text-sm text-slate-500 hover:underline">
+								トレンド
+							</Link>
+						</li>
+						<li>
+							<Link to={'/search'} className="text-xs sm:text-sm text-slate-500 hover:underline">
+								フォルダ
+							</Link>
+						</li>
+						<li>
+							<Link to={'/search'} className="text-xs sm:text-sm text-slate-500 hover:underline">
+								About
+							</Link>
+						</li>
+					</ul>
+				</nav>
+
 				<div className="flex gap-4">
 					<Link
 						to={'https://x.com/rvrc_v'}

@@ -19,17 +19,17 @@ export const meta: MetaFunction = () => {
 		{
 			name: 'description',
 			content:
-				'rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサービスです。',
+				'VRChat用アイテムのランキングサイト「rVRC」の詳細説明ページ。BOOTHのスキ数を基にしたランキング・トレンド分析、詳細検索機能、フォルダ機能の使い方を解説。開発中の機能や今後の展望、サポート方法も紹介しています。',
 		},
 		{
 			name: 'twitter:description',
 			content:
-				'rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサービスです。',
+				'VRChat用アイテムのランキングサイト「rVRC」の詳細説明ページ。BOOTHのスキ数を基にしたランキング・トレンド分析、詳細検索機能、フォルダ機能の使い方を解説。開発中の機能や今後の展望、サポート方法も紹介しています。',
 		},
 		{
 			property: 'og:description',
 			content:
-				'rVRCはVRChat用アイテムのスキ数を集計してランキング化しているサービスです。',
+				'VRChat用アイテムのランキングサイト「rVRC」の詳細説明ページ。BOOTHのスキ数を基にしたランキング・トレンド分析、詳細検索機能、フォルダ機能の使い方を解説。開発中の機能や今後の展望、サポート方法も紹介しています。',
 		},
 	]
 	const imageElements = [

@@ -38,17 +38,17 @@ export const meta: MetaFunction<typeof rankingLoader> = ({ data }) => {
 				{
 					name: 'description',
 					content:
-						'スキ数の前日比でVRChat用アイテムのランキングを作成しています。',
+						'VRChat用アイテムの最新人気ランキング。Boothで販売中のアバターと衣装を前日比スキ数増加順で表示。カレンダー機能で過去のランキングも閲覧可能。トレンドの変化を簡単にチェックできます。',
 				},
 				{
 					name: 'twitter:description',
 					content:
-						'スキ数の前日比でVRChat用アイテムのランキングを作成しています。',
+						'VRChat用アイテムの最新人気ランキング。Boothで販売中のアバターと衣装を前日比スキ数増加順で表示。カレンダー機能で過去のランキングも閲覧可能。トレンドの変化を簡単にチェックできます。',
 				},
 				{
 					property: 'og:description',
 					content:
-						'スキ数の前日比でVRChat用アイテムのランキングを作成しています。',
+						'VRChat用アイテムの最新人気ランキング。Boothで販売中のアバターと衣装を前日比スキ数増加順で表示。カレンダー機能で過去のランキングも閲覧可能。トレンドの変化を簡単にチェックできます。',
 				},
 			]
 		: []
