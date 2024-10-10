@@ -25,8 +25,8 @@ export const TopRankingCard = ({
 						/>
 					))}
 			</CardContent>
-			<CardFooter className="flex pb-4 justify-center">
-				<Button className="rounded-3xl text-lg text-light-gray border-[1px] border-beige hover:bg-white">
+			<CardFooter className="flex pt-2 pb-6 justify-center">
+				<Button className="rounded-3xl h-12 p-2 px-10 text-lg text-light-gray border-[1px] border-beige hover:bg-white">
 					{item === 'avatar' ? (
 						<Link to={'/ranking'}>もっと見る</Link>
 					) : (

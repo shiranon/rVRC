@@ -30,7 +30,7 @@ export const meta: MetaFunction<typeof folderLoader> = ({ data }) => {
 		? [
 				{
 					name: 'description',
-					content: '公開フォルダを一覧で表示しています。',
+					content: 'VRChat用アイテムを整理・共有できるフォルダ機能ページ。お気に入りのアバターや衣装を自由にカテゴリ分け。公開設定で他のユーザーとフォルダを共有可能。みんなのおすすめアイテムをチェックしよう。',
 				},
 				{
 					name: 'twitter:description',
