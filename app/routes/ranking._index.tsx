@@ -3,7 +3,7 @@ import { useLoaderData, useSearchParams } from '@remix-run/react'
 import type { rankingLoader } from '~/.server/loaders'
 import { RankingItemCard } from '~/components/card/ranking-item-card'
 import { ItemControls } from '~/components/controls/item-controls'
-import { RankingControls } from '~/components/controls/ranking-controls'
+import { OptionControls } from '~/components/controls/option-controls'
 import { Pagination } from '~/components/element/pagination'
 import { formatJapaneseDate } from '~/lib/format'
 import type { RankingType } from '~/types/items'
@@ -116,7 +116,7 @@ export default function Ranking() {
 						))}
 					</div>
 					<div className="flex items-center justify-center sticky bottom-6 z-50">
-						<RankingControls />
+						<OptionControls />
 					</div>
 					<Pagination totalItems={item === 'avatar' ? 50 : 100} />
 				</div>

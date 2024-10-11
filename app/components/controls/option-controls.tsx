@@ -13,7 +13,7 @@ import {
 	DialogTrigger,
 } from '../ui/dialog'
 
-export function RankingControls() {
+export function OptionControls() {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const [open, setOpen] = useState(false)
 

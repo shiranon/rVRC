@@ -33,23 +33,25 @@ const excludeOldDate = (timestamp: string): string => {
 /**
  * アイテム画像のURLを構築
  * @param {string | null} imageUrl - 画像のパス
- * @returns {string | undefined} 完全な画像URL
+ * @returns {string } 完全な画像URL
  */
 const buildItemImage = (imageUrl: string | null) => {
 	if (imageUrl != null) {
 		return `${URLS.ITEM_IMAGE}${imageUrl}${URLS.BASE_SIZE}`
 	}
+	return ''
 }
 
 /**
  * 小さいアイテム画像のURLを構築
  * @param {string | null} imageUrl - 画像のパス
- * @returns {string | undefined} 完全な画像URL
+ * @returns {string } 完全な画像URL
  */
 const buildSmallItemImage = (imageUrl: string | null) => {
 	if (imageUrl != null) {
 		return `${URLS.TOP_IMAGE}${imageUrl}${URLS.BASE_SIZE}`
 	}
+	return ''
 }
 
 /**

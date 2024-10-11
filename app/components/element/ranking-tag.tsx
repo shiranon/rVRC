@@ -15,7 +15,7 @@ export const RankingTag = ({ rank, className }: Props) => {
 	return (
 		<div className="z-10 font-bold">
 			<div
-				className={`absolute top-0 left-0 w-1/4 h-1/4 ${colorClass} clip-triangle bg-opacity-95`}
+				className={`absolute top-0 left-0 size-1/4 ${colorClass} clip-triangle bg-opacity-95`}
 			>
 				<span
 					className={cn(

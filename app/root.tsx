@@ -15,6 +15,7 @@ import type { rootLoader } from '~/.server/loaders'
 import { Footer, Header } from '~/components/layout/index'
 import { Toaster } from '~/components/ui/toaster'
 import './tailwind.css'
+import { SideMenu } from './components/menu/side-menu'
 
 type RootLoaderData = SerializeFrom<typeof rootLoader>
 
@@ -52,8 +53,11 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 			</head>
 			<body className="min-w-96 mx-auto font-noto antialiased">
 				<Header userData={userData} />
-				<div className="flex max-w-[640px] items-center justify-center m-auto">
-					{children}
+				<SideMenu />
+				<div className="max-w-[640px] m-auto">
+					<div className="flex flex-col justify-center max-w-[640px] mx-auto">
+						{children}
+					</div>
 				</div>
 				<Footer />
 				<Toaster />
