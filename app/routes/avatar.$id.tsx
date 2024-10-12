@@ -119,8 +119,6 @@ export default function avatarPage() {
 
 	const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${avatar.name} ♥${formatValue(avatar.latest_favorite)}`)}&url=${encodeURIComponent(`https://r-vrc/avatar/${id}`)}&hashtags=${encodedHashtags}`
 
-	console.log(buildShopImage(avatar.shop_image))
-
 	const scrollToRelatedCloth = useCallback(() => {
 		if (relatedClothRef.current) {
 			const offset = 50
