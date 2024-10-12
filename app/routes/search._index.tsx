@@ -90,7 +90,7 @@ export default function Search() {
 			{result && result.length > 0 && (
 				<>
 					<SearchCard search={result} item={item} />
-					<Pagination totalItems={count} />
+					<Pagination totalItems={count} itemsPerPage={12} />
 				</>
 			)}
 		</div>

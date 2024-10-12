@@ -87,7 +87,7 @@ export default function Profile() {
 	const { profile, folders } = useLoaderData<typeof profileLoader>()
 	useActionToast()
 	return (
-		<div className="w-full p-6">
+		<div className="w-full p-6 max-w-[640px] mx-auto">
 			<div className="flex justify-between">
 				<div className="flex justify-start items-center">
 					<img

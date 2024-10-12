@@ -10,7 +10,7 @@ import {
 
 export const SideMenu = () => {
 	return (
-		<div className="fixed pt-5 w-[18%] transition-opacity duration-200 opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto">
+		<div className="fixed pt-5 w-[18%] xl:w-[14%] transition-opacity duration-200 opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto">
 			<nav
 				className="flex flex-col text-lg space-y-1"
 				aria-label="メニューナビゲーション"
@@ -31,7 +31,13 @@ export const SideMenu = () => {
 				</div>
 				<div className="flex flex-col mt-2 space-y-1">
 					<div className="hover:bg-beige">
-						<Link to={'/ranking'} className="pl-6 py-2 flex">
+						<Link
+							to={{
+								pathname: '/ranking',
+								search: '',
+							}}
+							className="pl-6 py-2 flex"
+						>
 							<Crown className="pr-2" />
 							<div>ランキング</div>
 						</Link>

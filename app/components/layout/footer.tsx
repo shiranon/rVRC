@@ -4,7 +4,7 @@ import { GithubIcon, XIcon } from '../ui/icons'
 
 export const Footer = () => {
 	return (
-		<footer className="px-6 pt-9 pb-6">
+		<footer className="w-full mt-auto px-6 pt-9 pb-6">
 			<div className="flex items-center justify-between">
 				<nav
 					aria-label="フッターナビゲーション"
@@ -23,7 +23,7 @@ export const Footer = () => {
 						<li>
 							<Link
 								to={'/ranking'}
-								className="text-xs sm:text-sm text-slate-500 hover:underline"
+								className="text-xs sm:text-sm text-slate-600 hover:underline"
 							>
 								ランキング
 							</Link>
@@ -31,7 +31,7 @@ export const Footer = () => {
 						<li>
 							<Link
 								to={'/search'}
-								className="text-xs sm:text-sm text-slate-500 hover:underline"
+								className="text-xs sm:text-sm text-slate-600 hover:underline"
 							>
 								検索
 							</Link>
@@ -39,7 +39,7 @@ export const Footer = () => {
 						<li>
 							<Link
 								to={'/trend'}
-								className="text-xs sm:text-sm text-slate-500 hover:underline"
+								className="text-xs sm:text-sm text-slate-600 hover:underline"
 							>
 								トレンド
 							</Link>
@@ -47,7 +47,7 @@ export const Footer = () => {
 						<li>
 							<Link
 								to={'/folder'}
-								className="text-xs sm:text-sm text-slate-500 hover:underline"
+								className="text-xs sm:text-sm text-slate-600 hover:underline"
 							>
 								フォルダ
 							</Link>
@@ -55,7 +55,7 @@ export const Footer = () => {
 						<li>
 							<Link
 								to={'/about'}
-								className="text-xs sm:text-sm text-slate-500 hover:underline"
+								className="text-xs sm:text-sm text-slate-600 hover:underline"
 							>
 								About
 							</Link>

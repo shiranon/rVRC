@@ -45,7 +45,7 @@ export const meta: MetaFunction<typeof clothPageLoader> = ({ data }) => {
 		? [
 				{
 					name: 'description',
-					content: `${data.cloth.name} / ${data.cloth.shop_name} / 価格:${data.cloth.price}円 / ♥${data.cloth.latest_favorite}`,
+					content: `${data.cloth.name} / ${data.cloth.shop_name} / 価格:${data.cloth.price}円 / ♥${data.cloth.latest_favorite}スキ / / 対応アイテム数 ${formatValue(data.relationAvatar.length)} 対応アバターの詳細はこちらから。`,
 				},
 				{
 					name: 'twitter:description',
@@ -132,10 +132,12 @@ export default function clothPage() {
 						</div>
 						<div className="flex items-center justify-end text-xl font-bold">
 							<HeartIcon
-								className="w-4 h-4 mr-1"
-								pathProps={{ fill: '#111111' }}
+								className="size-4 sm:size-5 mr-1"
+								pathProps={{ fill: '#FF1111' }}
 							/>
-							<div>{formatValue(cloth.latest_favorite)}</div>
+							<div className="text-base sm:text-lg">
+								{formatValue(cloth.latest_favorite)}
+							</div>
 						</div>
 						<div className="text-2xl sm:text-3xl font-semibold tracking-tight leading-relaxed text-right">
 							{`￥${formatValue(cloth.price)}`}
@@ -212,7 +214,6 @@ export default function clothPage() {
 										to={twitterShareUrl}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="twitter-share-button"
 									>
 										<XIcon />
 									</Link>
@@ -226,7 +227,7 @@ export default function clothPage() {
 						<>
 							<div className="text-2xl pt-2 pl-2">関連アバター</div>
 							<Card className="bg-light-beige mt-4">
-								<CardContent className="grid grid-cols-2 md:grid-cols-3 gap-2 p-1 sm:p-2">
+								<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-1 sm:p-2">
 									{relationAvatar.map((avatar) => (
 										<Card key={avatar.booth_id}>
 											<Link to={`/avatar/${avatar.id}`}>

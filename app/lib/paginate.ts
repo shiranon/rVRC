@@ -15,7 +15,7 @@ type PageItem =
 	  }
 	| {
 			type: 'dots'
-			value?: undefined
+			value: number
 	  }
 
 interface PaginationResult {
@@ -39,7 +39,7 @@ export const paginate = (options: PaginationOptions): PaginationResult => {
 
 	// 現在のページの前に省略記号を追加
 	if (currentPage - delta > 2) {
-		pages.push({ type: 'dots' })
+		pages.push({ type: 'dots', value: 0 })
 	}
 
 	// ページ番号を追加
@@ -49,7 +49,7 @@ export const paginate = (options: PaginationOptions): PaginationResult => {
 
 	// 現在のページの後に省略記号を追加
 	if (currentPage + delta < pageCount - 1) {
-		pages.push({ type: 'dots' })
+		pages.push({ type: 'dots', value: -1 })
 	}
 
 	// 最初と最後のページを追加

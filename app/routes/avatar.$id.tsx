@@ -53,7 +53,7 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 		? [
 				{
 					name: 'description',
-					content: `${data.avatar.name} / ${data.avatar.shop_name} / 価格:${data.avatar.price}円 / ♥${data.avatar.latest_favorite}`,
+					content: `${data.avatar.name} / ${data.avatar.shop_name} / 価格:${formatValue(data.avatar.price)}円 / ♥${data.avatar.latest_favorite}スキ / 対応アイテム数 ${formatValue(data.relationCloth.length)} 対応アイテムの検索はこちらから！`,
 				},
 				{
 					name: 'twitter:description',
@@ -119,6 +119,8 @@ export default function avatarPage() {
 
 	const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${avatar.name} ♥${formatValue(avatar.latest_favorite)}`)}&url=${encodeURIComponent(`https://r-vrc/avatar/${id}`)}&hashtags=${encodedHashtags}`
 
+	console.log(buildShopImage(avatar.shop_image))
+
 	const scrollToRelatedCloth = useCallback(() => {
 		if (relatedClothRef.current) {
 			const offset = 50
@@ -152,10 +154,12 @@ export default function avatarPage() {
 						</div>
 						<div className="flex items-center justify-end text-xl font-bold">
 							<HeartIcon
-								className="w-4 h-4 mr-1"
-								pathProps={{ fill: '#111111' }}
+								className="size-4 sm:size-5 mr-1"
+								pathProps={{ fill: '#FF1111' }}
 							/>
-							<div>{formatValue(avatar.latest_favorite)}</div>
+							<div className="text-base sm:text-lg">
+								{formatValue(avatar.latest_favorite)}
+							</div>
 						</div>
 						<div className="text-2xl sm:text-3xl font-semibold tracking-tight leading-relaxed text-right">
 							{`￥${formatValue(avatar.price)}`}
@@ -234,7 +238,6 @@ export default function avatarPage() {
 										to={twitterShareUrl}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="twitter-share-button"
 									>
 										<XIcon />
 									</Link>
@@ -243,17 +246,19 @@ export default function avatarPage() {
 						</div>
 					</div>
 				</div>
-				<div ref={relatedClothRef} className="text-2xl pt-4 pl-2">
-					関連衣装
+				<div className="max-w-[640px] m-auto">
+					<div ref={relatedClothRef} className="text-2xl pt-4 pl-2">
+						関連衣装
+					</div>
+					<SearchControls />
 				</div>
-				<SearchControls />
 				<div className="py-4 text-lg">
 					対応衣装（{formatValue(totalClothCount.total_count)}件）
 				</div>
 				{relationCloth && relationCloth.length > 0 ? (
 					<>
 						<Card className="bg-light-beige mt-4">
-							<CardContent className="grid grid-cols-2 gap-2 p-1 sm:p-2">
+							<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-1 sm:p-2">
 								{relationCloth.map((cloth) => (
 									<Card key={cloth.booth_id}>
 										<Link to={`/cloth/${cloth.id}`}>
