@@ -30,10 +30,10 @@ export function SideControls({ type }: Props) {
 
 	return (
 		<>
-			<div className="text-lg pb-4 font-semibold leading-none tracking-tight">
+			<div className="text-lg pl-4 pb-4 font-semibold leading-none tracking-tight">
 				過去の{type === 'ranking' ? 'ランキング' : 'トレンド'}を見る
 			</div>
-			<div>
+			<div className="p-1">
 				<Calendar
 					mode="single"
 					locale={ja}

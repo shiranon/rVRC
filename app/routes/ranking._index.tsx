@@ -101,7 +101,7 @@ export default function Ranking() {
 					<div>
 						{width > 1200 && (
 							<div
-								className="fixed bottom-5"
+								className="fixed bottom-28"
 								style={{ left: `calc(50% + ${width / 4}px + 20px)` }}
 							>
 								<SideControls type="ranking" />
