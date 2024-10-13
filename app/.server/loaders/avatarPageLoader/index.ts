@@ -35,7 +35,7 @@ export const avatarPageLoader = async ({
 	const favorite_filter: FavoriteFilter =
 		favorite_filter_param as FavoriteFilter
 	const page = Number.parseInt(url.searchParams.get('page') || '1', 10)
-	const limit = 10
+	const limit = 12
 
 	// アバターデータの取得
 	const { data: avatarData, error: avatarDataError } = await supabase

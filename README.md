@@ -30,22 +30,22 @@ Discordでログインをすれば気に入ったアイテムをフォルダ分�
 <table>
   <tbody>
     <tr>
-      <td>
+      <td width="50%">
         <a href="https://r-vrc.net/ranking" target="_blank" rel="noopener noreferrer">👑ランキング</a>
       </td>
-      <td>
+      <td width="50%">
         <a href="https://r-vrc.net/trend" target="_blank" rel="noopener noreferrer">🔥トレンド</a>
       </td>
     </tr>
     <tr>
-      <td>前日比で増加したスキ数が多い順でアイテムを表示しています。過去のランキングを見る事も出来ます。</td>
+      <td width="50%">前日比で増加したスキ数が多い順でアイテムを表示しています。過去のランキングを見る事も出来ます。</td>
       <td>7日以内にBOOTHで公開されたアイテムをスキ数順で表示しています。</td>
     </tr>
     <tr>
-      <td>
+      <td width="50%">
         <a href="https://r-vrc.net/folder" target="_blank" rel="noopener noreferrer">📁フォルダ</a>
       </td>
-      <td>
+      <td width="50%">
         <a href="https://r-vrc.net/search" target="_blank" rel="noopener noreferrer">🔍️検索</a>
       </td>
     </tr>

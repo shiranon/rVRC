@@ -26,18 +26,18 @@ export const HamburgerMenu = () => {
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>
 			<SheetTrigger asChild>
 				<Button
-					className="relative bg-light-beige"
+					className="relative bg-light-beige lg:pointer-events-none"
 					size="icon"
 					aria-label="Menu"
 				>
 					<span
-						className={`absolute w-2 top-3 left-3 h-[3px] bg-slate-800 transition-transform ${isOpen ? 'rotate-45 translate-y-1.5' : ''}`}
+						className={`absolute w-2 top-3 left-3 h-[3px] bg-slate-800 transition-transform lg:rotate-45 lg:translate-y-1.5 ${isOpen ? 'rotate-45 translate-y-1.5' : ''}`}
 					/>
 					<span
-						className={`absolute w-4 top-5 left-3 h-[3px] bg-slate-800 transition-opacity ${isOpen ? 'opacity-0' : 'opacity-100'}`}
+						className={`absolute w-4 top-5 left-3 h-[3px] bg-slate-800 transition-opacity lg:opacity-0 ${isOpen ? 'opacity-0' : 'opacity-100'}`}
 					/>
 					<span
-						className={`absolute w-5 top-7 left-3 h-[3px] bg-slate-800 transition-transform ${isOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+						className={`absolute w-5 top-7 left-3 h-[3px] bg-slate-800 transition-transform lg:-rotate-45 lg:-translate-y-1.5 ${isOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
 					/>
 				</Button>
 			</SheetTrigger>

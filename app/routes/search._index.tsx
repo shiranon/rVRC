@@ -28,15 +28,18 @@ export const meta: MetaFunction<typeof searchLoader> = ({ data }) => {
 		? [
 				{
 					name: 'description',
-					content: 'VRChat用アイテムの高度な検索ページ。BOOTHで販売中のアバターや衣装をキーワード、スキ数で絞り込み可能。多彩なソート機能で理想のアイテムを効率的に探せます。最新トレンドの発見にも最適。',
+					content:
+						'VRChat用アイテムの高度な検索ページ。BOOTHで販売中のアバターや衣装をキーワード、スキ数で絞り込み可能。多彩なソート機能で理想のアイテムを効率的に探せます。最新トレンドの発見にも最適。',
 				},
 				{
 					name: 'twitter:description',
-					content: 'VRChat用アバター・衣装を検索、スキ数で絞り込みする事が出来ます。',
+					content:
+						'VRChat用アバター・衣装を検索、スキ数で絞り込みする事が出来ます。',
 				},
 				{
 					property: 'og:description',
-					content: 'VRChat用アバター・衣装を検索、スキ数で絞り込みする事が出来ます。',
+					content:
+						'VRChat用アバター・衣装を検索、スキ数で絞り込みする事が出来ます。',
 				},
 			]
 		: []
@@ -87,7 +90,7 @@ export default function Search() {
 			{result && result.length > 0 && (
 				<>
 					<SearchCard search={result} item={item} />
-					<Pagination totalItems={count} />
+					<Pagination totalItems={count} itemsPerPage={12} />
 				</>
 			)}
 		</div>

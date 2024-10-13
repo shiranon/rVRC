@@ -14,6 +14,7 @@ import { useEffect } from 'react'
 import type { rootLoader } from '~/.server/loaders'
 import { Footer, Header } from '~/components/layout/index'
 import { Toaster } from '~/components/ui/toaster'
+import { SideMenu } from './components/menu/side-menu'
 import './tailwind.css'
 
 type RootLoaderData = SerializeFrom<typeof rootLoader>
@@ -50,10 +51,15 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 				<Meta />
 				<Links />
 			</head>
-			<body className="min-w-96 mx-auto font-noto antialiased">
+			<body className="flex flex-col min-h-screen min-w-96 mx-auto font-noto antialiased">
 				<Header userData={userData} />
-				<div className="flex max-w-[640px] items-center justify-center m-auto">
-					{children}
+				<div className="flex flex-grow">
+					<SideMenu />
+					<main className="flex-grow max-w-[640px] xl:max-w-[960px] w-full mx-auto">
+						<div className="flex flex-col justify-center mx-auto">
+							{children}
+						</div>
+					</main>
 				</div>
 				<Footer />
 				<Toaster />

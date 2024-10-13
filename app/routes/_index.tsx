@@ -78,7 +78,7 @@ export const meta: MetaFunction<typeof indexLoader> = ({ data }) => {
 		{ name: 'author', content: 'rVRC' },
 		{
 			name: 'keywords',
-			content: 'VRChat, ランキング, アバター, オススメ, 衣装, 3Dモデル',
+			content: 'VRChat, ランキング, アバター, 衣装 , オススメ, 3Dモデル',
 		},
 	]
 }
@@ -104,7 +104,7 @@ export default function Index() {
 	const item = fetcher.data?.item || initialData?.item
 
 	return (
-		<div className="px-2 flex-1">
+		<>
 			<ItemControls />
 			<h1 className="text-3xl py-4 pl-4">デイリーランキング</h1>
 			{ranking && ranking.length > 0 && (
@@ -114,6 +114,6 @@ export default function Index() {
 			{trend && trend.length > 0 && (
 				<TopTrendCard ranking={trend as RankingType[]} item={item} />
 			)}
-		</div>
+		</>
 	)
 }

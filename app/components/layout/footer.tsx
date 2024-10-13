@@ -4,11 +4,16 @@ import { GithubIcon, XIcon } from '../ui/icons'
 
 export const Footer = () => {
 	return (
-		<footer className="px-6 pt-9 pb-6">
+		<footer className="w-full mt-auto px-6 pt-9 pb-6">
 			<div className="flex items-center justify-between">
-				<nav aria-label="フッターナビゲーション" className="flex items-end space-x-4">
+				<nav
+					aria-label="フッターナビゲーション"
+					className="flex items-end space-x-4"
+				>
 					<Link to={'/'} className="inline-block">
-						<img src={logo} alt="rVRC ホーム"
+						<img
+							src={logo}
+							alt="rVRC ホーム"
 							width={90}
 							height={30}
 							className="w-[90px] h-[30px] object-cover"
@@ -16,27 +21,42 @@ export const Footer = () => {
 					</Link>
 					<ul className="flex space-x-2 flex-wrap">
 						<li>
-							<Link to={'/ranking'} className="text-xs sm:text-sm text-slate-500 hover:underline">
+							<Link
+								to={'/ranking'}
+								className="text-xs sm:text-sm text-slate-600 hover:underline"
+							>
 								ランキング
 							</Link>
 						</li>
 						<li>
-							<Link to={'/search'} className="text-xs sm:text-sm text-slate-500 hover:underline">
+							<Link
+								to={'/search'}
+								className="text-xs sm:text-sm text-slate-600 hover:underline"
+							>
 								検索
 							</Link>
 						</li>
 						<li>
-							<Link to={'/trend'} className="text-xs sm:text-sm text-slate-500 hover:underline">
+							<Link
+								to={'/trend'}
+								className="text-xs sm:text-sm text-slate-600 hover:underline"
+							>
 								トレンド
 							</Link>
 						</li>
 						<li>
-							<Link to={'/folder'} className="text-xs sm:text-sm text-slate-500 hover:underline">
+							<Link
+								to={'/folder'}
+								className="text-xs sm:text-sm text-slate-600 hover:underline"
+							>
 								フォルダ
 							</Link>
 						</li>
 						<li>
-							<Link to={'/about'} className="text-xs sm:text-sm text-slate-500 hover:underline">
+							<Link
+								to={'/about'}
+								className="text-xs sm:text-sm text-slate-600 hover:underline"
+							>
 								About
 							</Link>
 						</li>

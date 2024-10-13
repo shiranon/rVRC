@@ -13,7 +13,7 @@ export const TopRankingCard = ({
 }) => {
 	return (
 		<Card className="bg-light-beige">
-			<CardContent className="grid grid-cols-2 gap-2 p-3">
+			<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-3">
 				{ranking &&
 					ranking.length > 0 &&
 					ranking.map((data) => (

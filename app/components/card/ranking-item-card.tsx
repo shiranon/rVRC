@@ -22,9 +22,9 @@ export const RankingItemCard = ({
 				<CardContent className="p-4">
 					<div className="relative block overflow-hidden aspect-square">
 						<div className="z-10 font-bold">
-							<RankingTag rank={item.rank} />
+							<RankingTag className="text-xl sm:text-3xl" rank={item.rank} />
 							<FavoriteTag
-								className={category === 'rank' ? 'pl-3' : 'p-1'}
+								className={`text-lg sm:text-xl ${category === 'rank' ? 'pl-3' : 'p-1'}`}
 								favorite_count={item.favorite_count}
 								{...(category === 'rank'
 									? { difference: item.difference }
@@ -42,17 +42,17 @@ export const RankingItemCard = ({
 			</Link>
 			<CardContent className="px-6 pt-0 pb-1">
 				<Link to={`/avatar/${item.id}`}>
-					<CardTitle className="leading-relaxed text-2xl">
+					<CardTitle className="leading-relaxed text-2xl sm:text-3xl sm:pt-2">
 						<div className="line-clamp-2 break-words">{item.item_name}</div>
 					</CardTitle>
-					<div className="text-right font-bold text-xl pt-2">
+					<div className="text-right font-bold text-xl sm:text-2xl pt-2">
 						￥{formatValue(item.item_price)}
 					</div>
 				</Link>
 			</CardContent>
 			<CardFooter className="pb-4 justify-between">
 				<div className="flex items-center gap-2">
-					<Avatar>
+					<Avatar className="size-10 sm:size-12">
 						<AvatarImage
 							src={buildShopImage(item.shop_image)}
 							loading="lazy"
@@ -60,7 +60,7 @@ export const RankingItemCard = ({
 						/>
 						<AvatarFallback />
 					</Avatar>
-					<div className="pl-1 text-sm">{item.shop_name}</div>
+					<div className="pl-1 text-sm sm:text-base">{item.shop_name}</div>
 				</div>
 				<div>{excludeOldDate(item.item_added)}</div>
 			</CardFooter>

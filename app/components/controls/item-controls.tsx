@@ -5,8 +5,10 @@ import { Button } from '../ui/button'
 
 export const ItemControls = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
-	const [currentItem, setCurrentItem] = useState<Item>('avatar')
-	const previousItem = useRef<string>('avatar')
+	const [currentItem, setCurrentItem] = useState<Item>(
+		() => (searchParams.get('item') as Item) || 'avatar',
+	)
+	const previousItem = useRef<string | null>(null)
 
 	const updateParams = useCallback(
 		(key: string, value: string) => {
@@ -23,11 +25,13 @@ export const ItemControls = () => {
 	}, [setSearchParams])
 
 	useEffect(() => {
-		const itemPram = searchParams.get('item') || 'avatar'
-		setCurrentItem(itemPram as Item)
-		if (itemPram !== previousItem.current) {
-			updateParams('item', itemPram)
-			previousItem.current = itemPram
+		const itemParam = searchParams.get('item') || 'avatar'
+		setCurrentItem(itemParam as Item)
+		if (previousItem.current === null) {
+			previousItem.current = itemParam
+		} else if (itemParam !== previousItem.current) {
+			updateParams('item', itemParam)
+			previousItem.current = itemParam
 		}
 	}, [searchParams, updateParams])
 

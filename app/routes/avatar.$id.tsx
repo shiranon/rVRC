@@ -53,7 +53,7 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 		? [
 				{
 					name: 'description',
-					content: `${data.avatar.name} / ${data.avatar.shop_name} / 価格:${data.avatar.price}円 / ♥${data.avatar.latest_favorite}`,
+					content: `${data.avatar.name} / ${data.avatar.shop_name} / 価格:${formatValue(data.avatar.price)}円 / ♥${data.avatar.latest_favorite}スキ / 対応アイテム数 ${formatValue(data.relationCloth.length)} 対応アイテムの検索はこちらから！`,
 				},
 				{
 					name: 'twitter:description',
@@ -139,117 +139,124 @@ export default function avatarPage() {
 	return (
 		<>
 			<div className="pt-2 px-4">
-				<div className="flex flex-col pt-10 px-6">
-					<img
-						className="rounded-md"
-						src={buildItemImage(avatar.image_url)}
-						loading="lazy"
-						alt={avatar.name}
-					/>
-					<div className="text-3xl pt-4 font-semibold tracking-tight leading-relaxed">
-						{avatar.name}
-					</div>
-					<div className="flex items-center justify-end text-xl font-bold">
-						<HeartIcon
-							className="w-4 h-4 mr-1"
-							pathProps={{ fill: '#111111' }}
+				<div className="flex justify-center">
+					<div className="flex flex-col max-w-[640px] pt-10 px-6">
+						<img
+							className="rounded-md"
+							src={buildItemImage(avatar.image_url)}
+							loading="lazy"
+							alt={avatar.name}
 						/>
-						<div>{formatValue(avatar.latest_favorite)}</div>
-					</div>
-					<div className="text-3xl font-semibold tracking-tight leading-relaxed text-right">
-						{`￥${formatValue(avatar.price)}`}
-					</div>
-					<div className="flex pt-3 items-center gap-2">
-						<Avatar>
-							<AvatarImage
-								src={buildShopImage(avatar.shop_image)}
-								loading="lazy"
-								alt={avatar.shop_name}
+						<div className="text-2xl sm:text-3xl pt-4 font-semibold tracking-tight leading-relaxed">
+							{avatar.name}
+						</div>
+						<div className="flex items-center justify-end text-xl font-bold">
+							<HeartIcon
+								className="size-4 sm:size-5 mr-1"
+								pathProps={{ fill: '#FF1111' }}
 							/>
-							<AvatarFallback />
-						</Avatar>
-						<div className="pl-1 text-sm">{avatar.shop_name}</div>
-					</div>
-					<div className="flex justify-center items-center space-x-2 py-4">
-						<Link
-							to={`https://booth.pm/ja/items/${avatar.booth_id}`}
-							target="_blank"
-							rel="noopener noreferrer"
-							className="w-[60%]"
-						>
-							<Button className="rounded-2xl text-lg w-full h-12 text-white font-bold border-[1px] bg-red-400  hover:bg-red-300">
-								BOOTHで購入する
-							</Button>
-						</Link>
-						<div className="flex items-center pl-2">
-							{isLoggedIn && (
-								<Popover open={isOpen} onOpenChange={setIsOpen}>
-									<PopoverTrigger className="px-2">
-										<FolderPlus className="size-10" />
-									</PopoverTrigger>
-									<PopoverContent className="p-0 space-y-1 z-[1000]">
-										{foldersData &&
-											foldersData.length > 0 &&
-											foldersData.map((folder) => (
-												<Form method="post" key={folder.id}>
+							<div className="text-base sm:text-lg">
+								{formatValue(avatar.latest_favorite)}
+							</div>
+						</div>
+						<div className="text-2xl sm:text-3xl font-semibold tracking-tight leading-relaxed text-right">
+							{`￥${formatValue(avatar.price)}`}
+						</div>
+						<div className="flex p-1 pl-3 sm:pt-3 items-center gap-2">
+							<Avatar className="size-10 sm:size-12">
+								<AvatarImage
+									src={buildShopImage(avatar.shop_image)}
+									loading="lazy"
+									alt={avatar.shop_name}
+								/>
+								<AvatarFallback />
+							</Avatar>
+							<div className="pl-1 text-sm sm:text-base">
+								{avatar.shop_name}
+							</div>
+						</div>
+						<div className="flex justify-center items-center space-x-2 py-4">
+							<Link
+								to={`https://booth.pm/ja/items/${avatar.booth_id}`}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="w-[60%]"
+							>
+								<Button className="rounded-2xl text-lg w-full h-12 text-white font-bold border-[1px] bg-red-400  hover:bg-red-300">
+									BOOTHで購入する
+								</Button>
+							</Link>
+							<div className="flex items-center pl-2">
+								{isLoggedIn && (
+									<Popover open={isOpen} onOpenChange={setIsOpen}>
+										<PopoverTrigger className="px-2">
+											<FolderPlus className="size-10" />
+										</PopoverTrigger>
+										<PopoverContent className="p-0 space-y-1 z-[1000]">
+											{foldersData &&
+												foldersData.length > 0 &&
+												foldersData.map((folder) => (
+													<Form method="post" key={folder.id}>
+														<div>
+															<input
+																type="hidden"
+																name="folderId"
+																value={folder.id}
+															/>
+															<Button
+																className="p-2 flex justify-start bg-white hover:bg-slate-200 w-full"
+																type="submit"
+																name="intent"
+																value="addFolder"
+																onClick={() => setIsOpen(false)}
+															>
+																<Folder />
+																<div className="pl-2">
+																	{truncateString(folder.name, 15)}
+																</div>
+															</Button>
+														</div>
+													</Form>
+												))}
+											{foldersData && foldersData.length < 10 && (
+												<CreateFolder actionPath={`/avatar/${id}`}>
 													<div>
-														<input
-															type="hidden"
-															name="folderId"
-															value={folder.id}
-														/>
-														<Button
-															className="p-2 flex justify-start bg-white hover:bg-slate-200 w-full"
-															type="submit"
-															name="intent"
-															value="addFolder"
-															onClick={() => setIsOpen(false)}
-														>
-															<Folder />
-															<div className="pl-2">
-																{truncateString(folder.name, 15)}
-															</div>
+														<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
+															<Plus />
+															<div>新規作成</div>
 														</Button>
 													</div>
-												</Form>
-											))}
-										{foldersData && foldersData.length < 10 && (
-											<CreateFolder actionPath={`/avatar/${id}`}>
-												<div>
-													<Button className="p-2 flex justify-start rounded-b-lg bg-white w-full hover:bg-slate-200">
-														<Plus />
-														<div>新規作成</div>
-													</Button>
-												</div>
-											</CreateFolder>
-										)}
-									</PopoverContent>
-								</Popover>
-							)}
-							<div className="size-8">
-								<Link
-									to={twitterShareUrl}
-									target="_blank"
-									rel="noopener noreferrer"
-									className="twitter-share-button"
-								>
-									<XIcon />
-								</Link>
+												</CreateFolder>
+											)}
+										</PopoverContent>
+									</Popover>
+								)}
+								<div className="size-8">
+									<Link
+										to={twitterShareUrl}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										<XIcon />
+									</Link>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div ref={relatedClothRef} className="text-2xl pt-4">
-					関連衣装
+				<div className="max-w-[640px] m-auto">
+					<div ref={relatedClothRef} className="text-2xl pt-4 pl-2">
+						関連衣装
+					</div>
+					<SearchControls />
 				</div>
-				<SearchControls />
 				<div className="py-4 text-lg">
 					対応衣装（{formatValue(totalClothCount.total_count)}件）
 				</div>
 				{relationCloth && relationCloth.length > 0 ? (
 					<>
 						<Card className="bg-light-beige mt-4">
-							<CardContent className="grid grid-cols-2 gap-2 p-2">
+							<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-1 sm:p-2">
 								{relationCloth.map((cloth) => (
 									<Card key={cloth.booth_id}>
 										<Link to={`/cloth/${cloth.id}`}>
@@ -260,7 +267,10 @@ export default function avatarPage() {
 							</CardContent>
 						</Card>
 						{totalClothCount && (
-							<Pagination totalItems={totalClothCount.total_count} />
+							<Pagination
+								totalItems={totalClothCount.total_count}
+								itemsPerPage={12}
+							/>
 						)}
 					</>
 				) : (

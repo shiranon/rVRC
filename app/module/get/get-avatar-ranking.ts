@@ -6,7 +6,7 @@ export const getAvatarRanking = async (
 	page: number,
 	supabase: SupabaseClient,
 	date: string,
-	limit = 4,
+	limit = 6,
 ): Promise<{ data: RankingType[] | null }> => {
 	const offset = (page - 1) * 10
 	try {
