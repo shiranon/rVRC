@@ -156,7 +156,7 @@ export default function Folder() {
 						{`アバター ${avatars.length}件`}
 					</div>
 					<Card className="mt-2 bg-transparent shadow-none border-none">
-						<CardContent className="grid grid-cols-2 gap-2 p-0">
+						<CardContent className="grid grid-cols-2 lg:grid-cols-3 gap-2 p-0">
 							{avatars.map((item) => (
 								<Card key={item.booth_id}>
 									<FolderItemCard item={item} id={folder.id} isEdit={isEdit} />
@@ -172,7 +172,7 @@ export default function Folder() {
 						{`衣装 ${cloths.length}件`}
 					</div>
 					<Card className="mt-2 bg-transparent shadow-none border-none">
-						<CardContent className="grid grid-cols-2 gap-2 p-0">
+						<CardContent className="grid grid-cols-2 lg:grid-cols-3 gap-2 p-0">
 							{cloths.map((item) => (
 								<Card key={item.booth_id}>
 									<FolderItemCard item={item} id={folder.id} isEdit={isEdit} />

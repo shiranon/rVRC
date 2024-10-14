@@ -70,14 +70,14 @@ export const meta: MetaFunction<typeof trendLoader> = ({ data }) => {
 		...imageElements,
 		{
 			property: 'og:url',
-			content: 'https://r-vrc.net/ranking',
+			content: 'https://r-vrc.net/trend',
 		},
 		{ property: 'og:type', content: 'article' },
 		{ property: 'og:site_name', content: 'rVRC' },
 		{ property: 'og:locale', content: ' ja_JP' },
 		{
 			rel: 'canonical',
-			href: 'https://r-vrc.net/ranking',
+			href: 'https://r-vrc.net/trend',
 		},
 		{ name: 'author', content: 'rVRC' },
 		{
@@ -114,7 +114,7 @@ export default function Ranking() {
 							<div className="pb-4 px-4 text-xl">{rankingDate}</div>
 							{trend.map((trend: RankingType) => (
 								<div key={trend.booth_id} className="mb-4">
-									<RankingItemCard item={trend} category="rank" type={item} />
+									<RankingItemCard item={trend} category="trend" type={item} />
 								</div>
 							))}
 						</div>

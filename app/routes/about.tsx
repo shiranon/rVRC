@@ -63,7 +63,7 @@ export const meta: MetaFunction = () => {
 		{ property: 'og:locale', content: ' ja_JP' },
 		{
 			rel: 'canonical',
-			href: 'https://r-vrc.net/',
+			href: 'https://r-vrc.net/about',
 		},
 		{ name: 'author', content: 'rVRC' },
 		{

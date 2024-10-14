@@ -36,6 +36,9 @@ const excludeOldDate = (timestamp: string): string => {
  * @returns {string } 完全な画像URL
  */
 const buildItemImage = (imageUrl: string | null) => {
+	if (imageUrl?.includes('thumbnail_placeholder')) {
+		return imageUrl
+	}
 	if (imageUrl != null) {
 		return `${URLS.ITEM_IMAGE}${imageUrl}${URLS.BASE_SIZE}`
 	}
@@ -48,6 +51,9 @@ const buildItemImage = (imageUrl: string | null) => {
  * @returns {string } 完全な画像URL
  */
 const buildSmallItemImage = (imageUrl: string | null) => {
+	if (imageUrl?.includes('thumbnail_placeholder')) {
+		return imageUrl
+	}
 	if (imageUrl != null) {
 		return `${URLS.TOP_IMAGE}${imageUrl}${URLS.BASE_SIZE}`
 	}
@@ -60,7 +66,7 @@ const buildSmallItemImage = (imageUrl: string | null) => {
  * @returns {string} 完全な画像URLまたはデフォルト画像
  */
 const buildShopImage = (imageUrl: string | null) => {
-	if (imageUrl != null) {
+	if (imageUrl !== '') {
 		return `${URLS.SHOP_IMAGE}${imageUrl}${URLS.BASE_SIZE}`
 	}
 	return avatar_holder
