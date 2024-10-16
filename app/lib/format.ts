@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import avatar_holder from '~/images/avatar.svg'
+import shop_holder from '~/images/shop_holder.webp'
 import { URLS } from '~/lib/constants/urls'
 
 /**
@@ -32,7 +32,7 @@ const excludeOldDate = (timestamp: string): string => {
 
 /**
  * アイテム画像のURLを構築
- * @param {string | null} imageUrl - 画像のパス
+ * @param {string } imageUrl - 画像のパス
  * @returns {string } 完全な画像URL
  */
 const buildItemImage = (imageUrl: string | null) => {
@@ -66,10 +66,10 @@ const buildSmallItemImage = (imageUrl: string | null) => {
  * @returns {string} 完全な画像URLまたはデフォルト画像
  */
 const buildShopImage = (imageUrl: string | null) => {
-	if (imageUrl !== '') {
+	if (imageUrl !== 'none') {
 		return `${URLS.SHOP_IMAGE}${imageUrl}${URLS.BASE_SIZE}`
 	}
-	return avatar_holder
+	return shop_holder
 }
 
 /**

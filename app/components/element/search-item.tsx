@@ -2,13 +2,13 @@ import { Link } from '@remix-run/react'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
 import { buildShopImage, buildSmallItemImage, formatValue } from '~/lib/format'
-import type { SearchType } from '~/types/items'
+import type { ItemType } from '~/types/items'
 import { FavoriteTag } from './favorite-tag'
 
 export const SearchItem = ({
 	data,
 	type,
-}: { data: SearchType; type: string }) => {
+}: { data: ItemType; type: string }) => {
 	return (
 		<Card>
 			<Link to={`/${type}/${data.id}`}>

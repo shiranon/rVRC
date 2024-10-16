@@ -1,14 +1,14 @@
 import { buildShopImage, buildSmallItemImage } from '~/lib/format'
-import type { ItemType } from '~/types/items'
+import type { IndexItemType } from '~/types/items'
 import { FavoriteTag } from '../element/favorite-tag'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { CardContent, CardFooter, CardTitle } from '../ui/card'
 
-interface FlexItemCardProp {
-	item: ItemType
+interface IndexItemCardProp {
+	item: IndexItemType
 }
 
-export const FlexItemCard = ({ item }: FlexItemCardProp) => {
+export const IndexItemCard = ({ item }: IndexItemCardProp) => {
 	return (
 		<>
 			<CardContent className="p-3 sm:p-4">
