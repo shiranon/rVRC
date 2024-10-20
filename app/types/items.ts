@@ -20,6 +20,7 @@ export type IndexItemType = {
 	item_price: number
 	item_image: string
 	latest_favorite: number
+	published: string
 	relation_count: number
 	shop_name: string
 	shop_id: string
@@ -61,6 +62,20 @@ export type SortBy =
 	| 'favorite_desc'
 	| 'create_desc'
 	| 'create_asc'
+	| 'relation_desc'
+	| 'relation_asc'
+	| undefined
+
+export type SortShopBy =
+	| 'create_asc'
+	| 'create_desc'
+	| 'name_asc'
+	| 'name_desc'
+	| 'avatar_count_desc'
+	| 'cloth_count_desc'
+	| 'item_publish_desc'
+	| 'avatar_favorite_desc'
+	| 'cloth_favorite_desc'
 	| undefined
 
 export type FavoriteFilter =

@@ -1,4 +1,8 @@
-import { buildShopImage, buildSmallItemImage } from '~/lib/format'
+import {
+	buildShopImage,
+	buildSmallItemImage,
+	formatDateWithHyphen,
+} from '~/lib/format'
 import type { IndexItemType } from '~/types/items'
 import { FavoriteTag } from '../element/favorite-tag'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
@@ -32,7 +36,7 @@ export const IndexItemCard = ({ item }: IndexItemCardProp) => {
 					￥{item.item_price}
 				</div>
 			</CardContent>
-			<CardFooter className="px-4 pb-4 justify-between">
+			<CardFooter className="px-4 pb-4 flex-col justify-start items-start">
 				<div className="flex items-center gap-2">
 					<Avatar className="size-8 sm:size-10">
 						<AvatarImage
@@ -43,6 +47,9 @@ export const IndexItemCard = ({ item }: IndexItemCardProp) => {
 						<AvatarFallback />
 					</Avatar>
 					<div className="pl-1 text-xs sm:text-sm">{item.shop_name}</div>
+				</div>
+				<div className="w-full pl-1 text-end text-xs sm:text-sm">
+					公開日 {formatDateWithHyphen(item.published)}
 				</div>
 			</CardFooter>
 		</>

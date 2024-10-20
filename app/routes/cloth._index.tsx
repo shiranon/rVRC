@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare'
-import { Link, json, redirect, useLoaderData } from '@remix-run/react'
+import { Link, json, useLoaderData } from '@remix-run/react'
 import { IndexItemCard } from '~/components/card/index-item-card'
 import { IndexControls } from '~/components/controls/index-controls'
 import { Pagination } from '~/components/element/pagination'
@@ -20,30 +20,21 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 	const page = Number.parseInt(url.searchParams.get('page') || '1', 10)
 	const limit = 12
 
-	// そのページに表示するアバターデータを取得
-	const { data: avatarsData, error: avatarsError } = await supabase.rpc(
-		'get_all_avatar_data',
-		{
-			sort_by: sort_by,
-			page_limit: limit,
-			page_offset: (page - 1) * limit,
-		},
-	)
+	// そのページに表示する衣装データを取得
+	const { data: clothsData } = await supabase.rpc('get_all_cloth_data', {
+		sort_by: sort_by,
+		page_limit: limit,
+		page_offset: (page - 1) * limit,
+	})
 
-	if (avatarsError) {
-		console.error('アバター一覧の取得時にエラー', avatarsError)
-		redirect('/')
-	}
-
-	// 公開アバターの総数を取得
-	const { count: avatarCount } = await supabase
-		.from('avatars')
+	// 衣装の検索結果の総数を取得
+	const { count: clothCount } = await supabase
+		.from('cloths')
 		.select('*', { count: 'exact', head: true })
-		.not('published_at', 'is', null)
 
 	return json({
-		avatars: avatarsData,
-		count: avatarCount ? avatarCount : 0,
+		cloths: clothsData,
+		count: clothCount ? clothCount : 0,
 	})
 }
 
@@ -67,17 +58,17 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 				{
 					name: 'description',
 					content:
-						'VRChat用アバターを一覧で表示しています。関連衣装数などの様々な条件でソートをする事が出来ます。',
+						'VRChat用衣装を一覧で表示しています。関連アバター数などの様々な条件でソートをする事が出来ます。',
 				},
 				{
 					name: 'twitter:description',
 					content:
-						'VRChat用アバターを一覧で表示しています。関連衣装数などの様々な条件でソートをする事が出来ます。',
+						'VRChat用衣装を一覧で表示しています。関連アバター数などの様々な条件でソートをする事が出来ます。',
 				},
 				{
 					property: 'og:description',
 					content:
-						'VRChat用アバターを一覧で表示しています。関連衣装数などの様々な条件でソートをする事が出来ます。',
+						'VRChat用衣装を一覧で表示しています。関連アバター数などの様々な条件でソートをする事が出来ます。',
 				},
 			]
 		: []
@@ -105,33 +96,33 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 		...imageElements,
 		{
 			property: 'og:url',
-			content: 'https://r-vrc.net/avatar',
+			content: 'https://r-vrc.net/cloth',
 		},
 		{ property: 'og:type', content: 'article' },
 		{ property: 'og:site_name', content: 'rVRC' },
 		{ property: 'og:locale', content: ' ja_JP' },
 		{
 			rel: 'canonical',
-			href: 'https://r-vrc.net/avatar',
+			href: 'https://r-vrc.net/cloth',
 		},
 		{ name: 'author', content: 'rVRC' },
 		{
 			name: 'keywords',
-			content: 'VRChat, ランキング, アバター, オススメ, 衣装, 3Dモデル',
+			content: 'VRChat, ランキング, 衣装, オススメ, アバター, 3Dモデル',
 		},
 	]
 }
 
 export default function Avatar() {
-	const { avatars, count } = useLoaderData<typeof loader>()
+	const { cloths, count } = useLoaderData<typeof loader>()
 
 	return (
 		<>
-			{avatars && avatars.length > 0 ? (
+			{cloths && cloths.length > 0 ? (
 				<div className="relative flex justify-center">
 					<div>
 						<div className="px-4 flex-1">
-							<h1 className="text-2xl font-bold p-4">アバターリスト</h1>
+							<h1 className="text-2xl font-bold p-4">衣装リスト</h1>
 							<div className="pb-4 px-4 text-xl">
 								総数 {formatValue(count)}件
 							</div>
@@ -139,10 +130,10 @@ export default function Avatar() {
 							<div className="mb-4">
 								<Card className="mt-2 bg-transparent shadow-none border-none">
 									<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-0">
-										{avatars.map((avatar) => (
-											<Link key={avatar.booth_id} to={`/avatar/${avatar.id}`}>
+										{cloths.map((cloth) => (
+											<Link key={cloth.booth_id} to={`/cloth/${cloth.id}`}>
 												<Card>
-													<IndexItemCard item={avatar} />
+													<IndexItemCard item={cloth} />
 												</Card>
 											</Link>
 										))}

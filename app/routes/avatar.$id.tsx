@@ -27,6 +27,8 @@ import {
 	buildItemImage,
 	buildShopImage,
 	buildSmallItemImage,
+	formatDateWithHyphen,
+	formatJapaneseDate,
 	formatValue,
 	truncateString,
 } from '~/lib/format'
@@ -174,6 +176,9 @@ export default function avatarPage() {
 							<div className="pl-1 text-sm sm:text-base">
 								{avatar.shop_name}
 							</div>
+						</div>
+						<div className="w-full pl-1 text-end text-xs sm:text-sm">
+							公開日 {formatDateWithHyphen(avatar.published)}
 						</div>
 						<div className="flex justify-center items-center space-x-2 py-4">
 							<Link

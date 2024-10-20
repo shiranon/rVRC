@@ -19,6 +19,7 @@ import {
 	MessageCircleMore,
 	Search,
 	ShirtIcon,
+	StoreIcon,
 } from 'lucide-react'
 
 export const HamburgerMenu = () => {
@@ -95,16 +96,6 @@ export const HamburgerMenu = () => {
 					</div>
 					<div className="hover:bg-beige">
 						<Link
-							to={'/folder'}
-							className="pl-3 py-2 flex items-center"
-							onClick={() => setIsOpen(false)}
-						>
-							<FolderSearch className="pr-2" />
-							<div>フォルダ</div>
-						</Link>
-					</div>
-					<div className="hover:bg-beige">
-						<Link
 							to={'/avatar'}
 							className="pl-3 py-2 flex items-center"
 							onClick={() => setIsOpen(false)}
@@ -115,12 +106,32 @@ export const HamburgerMenu = () => {
 					</div>
 					<div className="hover:bg-beige">
 						<Link
-							to={'/avatar'}
+							to={'/cloth'}
 							className="pl-3 py-2 flex items-center"
 							onClick={() => setIsOpen(false)}
 						>
 							<ShirtIcon className="pr-2" />
 							<div>衣装</div>
+						</Link>
+					</div>
+					<div className="hover:bg-beige">
+						<Link
+							to={'/shop'}
+							className="pl-3 py-2 flex items-center"
+							onClick={() => setIsOpen(false)}
+						>
+							<StoreIcon className="pr-2" />
+							<div>ショップ</div>
+						</Link>
+					</div>
+					<div className="hover:bg-beige">
+						<Link
+							to={'/folder'}
+							className="pl-3 py-2 flex items-center"
+							onClick={() => setIsOpen(false)}
+						>
+							<FolderSearch className="pr-2" />
+							<div>フォルダ</div>
 						</Link>
 					</div>
 					<div className="hover:bg-beige">

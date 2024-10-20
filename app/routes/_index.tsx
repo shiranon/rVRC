@@ -32,13 +32,11 @@ export const meta: MetaFunction<typeof indexLoader> = ({ data }) => {
 				},
 				{
 					name: 'twitter:description',
-					content:
-						'VRChat用アイテムのランキングサイト。Boothで販売中の人気アバター・衣装をスキ数で分析。前日比や過去のランキング表示、詳細検索、条件別ソート機能で理想のアイテムを簡単に発見。トレンド把握や新作チェックに最適。',
+					content: 'rVRCはVRChat用アイテムのランキングサイトです。',
 				},
 				{
 					property: 'og:description',
-					content:
-						'VRChat用アイテムのランキングサイト。Boothで販売中の人気アバター・衣装をスキ数で分析。前日比や過去のランキング表示、詳細検索、条件別ソート機能で理想のアイテムを簡単に発見。トレンド把握や新作チェックに最適。',
+					content: 'rVRCはVRChat用アイテムのランキングサイトです。',
 				},
 			]
 		: []

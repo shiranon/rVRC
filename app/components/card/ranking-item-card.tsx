@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
 import {
 	buildItemImage,
 	buildShopImage,
-	excludeOldDate,
+	formatDateWithHyphen,
 	formatValue,
 } from '~/lib/format'
 import type { RankingType } from '~/types/items'
@@ -62,7 +62,9 @@ export const RankingItemCard = ({
 					</Avatar>
 					<div className="pl-1 text-sm sm:text-base">{item.shop_name}</div>
 				</div>
-				<div>{excludeOldDate(item.item_added)}</div>
+				<div className="pl-1 text-sm sm:text-base">
+					公開日 {formatDateWithHyphen(item.item_added)}
+				</div>
 			</CardFooter>
 		</Card>
 	)
