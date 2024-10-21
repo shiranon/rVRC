@@ -63,7 +63,7 @@ export const RankingItemCard = ({
 					<div className="pl-1 text-sm sm:text-base">{item.shop_name}</div>
 				</div>
 				<div className="pl-1 text-sm sm:text-base">
-					公開日 {formatDateWithHyphen(item.item_added)}
+					公開日: {formatDateWithHyphen(item.item_added)}
 				</div>
 			</CardFooter>
 		</Card>

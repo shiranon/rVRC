@@ -49,7 +49,7 @@ export const IndexItemCard = ({ item }: IndexItemCardProp) => {
 					<div className="pl-1 text-xs sm:text-sm">{item.shop_name}</div>
 				</div>
 				<div className="w-full pl-1 text-end text-xs sm:text-sm">
-					公開日 {formatDateWithHyphen(item.published)}
+					公開日: {formatDateWithHyphen(item.published)}
 				</div>
 			</CardFooter>
 		</>

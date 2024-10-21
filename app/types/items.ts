@@ -27,6 +27,19 @@ export type IndexItemType = {
 	shop_image: string
 }
 
+export type SearchItemType = {
+	id: number
+	booth_id: number
+	item_name: string
+	item_price: number
+	item_image: string
+	latest_favorite: number
+	published: string
+	shop_name: string
+	shop_id: string
+	shop_image: string
+}
+
 export type ItemType = {
 	id: number
 	booth_id: number

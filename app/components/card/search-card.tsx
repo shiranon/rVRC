@@ -1,12 +1,12 @@
 import { Card, CardContent } from '~/components/ui/card'
-import type { ItemType } from '~/types/items'
+import type { SearchItemType } from '~/types/items'
 import { SearchItem } from '../element/search-item'
 
 export const SearchCard = ({
 	search,
 	item,
 }: {
-	search: ItemType[] | null
+	search: SearchItemType[] | null
 	item: string
 }) => {
 	return (

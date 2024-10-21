@@ -1,14 +1,19 @@
 import { Link } from '@remix-run/react'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
-import { buildShopImage, buildSmallItemImage, formatValue } from '~/lib/format'
-import type { ItemType } from '~/types/items'
+import {
+	buildShopImage,
+	buildSmallItemImage,
+	formatDateWithHyphen,
+	formatValue,
+} from '~/lib/format'
+import type { SearchItemType } from '~/types/items'
 import { FavoriteTag } from './favorite-tag'
 
 export const SearchItem = ({
 	data,
 	type,
-}: { data: ItemType; type: string }) => {
+}: { data: SearchItemType; type: string }) => {
 	return (
 		<Card>
 			<Link to={`/${type}/${data.id}`}>
@@ -39,7 +44,7 @@ export const SearchItem = ({
 					</div>
 				</CardContent>
 			</Link>
-			<CardFooter className="pb-4 justify-between">
+			<CardFooter className="px-4 pb-4 flex-col justify-start items-start">
 				<div className="flex items-center gap-2">
 					<Avatar className="size-8 sm:size-10">
 						<AvatarImage
@@ -50,6 +55,9 @@ export const SearchItem = ({
 						<AvatarFallback />
 					</Avatar>
 					<div className="pl-1 text-xs sm:text-sm">{data.shop_name}</div>
+				</div>
+				<div className="w-full pl-1 text-end text-xs sm:text-sm">
+					公開日: {formatDateWithHyphen(data.published)}
 				</div>
 			</CardFooter>
 		</Card>

@@ -6,6 +6,7 @@ import {
 } from '@remix-run/cloudflare'
 import { Link, useLoaderData } from '@remix-run/react'
 import type { PostgrestError } from '@supabase/supabase-js'
+import { ShopControls } from '~/components/controls/shop-controls'
 import { Pagination } from '~/components/element/pagination'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent } from '~/components/ui/card'
@@ -150,59 +151,79 @@ export default function Shop() {
 							<div className="pb-4 px-4 text-xl">
 								総数 {formatValue(count)}件
 							</div>
+							<ShopControls />
 							<div className="mb-4">
 								<Card className="mt-2 bg-transparent shadow-none border-none">
 									<CardContent className="grid grid-cols-1 gap-4 p-0">
 										{shops.map((shop) => (
-											<Link key={shop.shop_id} to={`/shop/${shop.shop_id}`}>
-												<Card key={shop.shop_id}>
-													<CardContent className="p-0 bg-white rounded-lg">
-														<div className="relative max-w-full flex flex-row justify-between">
+											<Card key={shop.shop_id}>
+												<CardContent className="p-0 bg-white rounded-lg">
+													<div className="relative">
+														<Link
+															className="flex justify-between"
+															to={`/shop/${shop.shop_id}`}
+														>
 															<div className="flex">
 																{Array.isArray(shop.popular_items) &&
 																	shop.popular_items.length > 0 && (
 																		<>
-																			<img
-																				src={buildSmallItemImage(
-																					shop.popular_items[0]
-																						.image_url as string,
-																				)}
-																				alt={
-																					shop.popular_items[0].name as string
-																				}
-																				className="size-48 xl:size-64 object-cover rounded-l-lg"
-																			/>
-																			{shop.popular_items.length > 1 && (
+																			<div className="flex-shrink-0 size-48 xl:size-64">
+																				<img
+																					src={buildSmallItemImage(
+																						shop.popular_items[0]
+																							.image_url as string,
+																					)}
+																					alt={
+																						shop.popular_items[0].name as string
+																					}
+																					className="w-full h-full rounded-lg object-cover"
+																				/>
+																			</div>
+																			{shop.popular_items.length > 1 ? (
 																				<div className="flex flex-col">
 																					{shop.popular_items
 																						.slice(1, 3)
 																						.map((item, index) => (
 																							<img
-																								key={item.name as string}
+																								key={
+																									`${item.name}-${index}` as string
+																								}
 																								src={buildSmallItemImage(
 																									item.image_url as string,
 																								)}
 																								alt={item.name as string}
-																								className="hidden sm:block sm:size-24 xl:size-32 object-cover"
+																								className="hidden rounded-lg sm:block sm:size-24 xl:size-[8rem] p-[3px] object-cover"
 																							/>
 																						))}
-																					{/* 3枚目の画像がない場合、空のdivで高さを調整 */}
 																					{shop.popular_items.length === 2 && (
-																						<div className="size-24" />
+																						<div className="hidden sm:block sm:size-24 xl:size-32" />
 																					)}
+																				</div>
+																			) : (
+																				<div className="flex flex-col">
+																					<div className="hidden sm:block sm:size-24 xl:size-32" />
+																					<div className="hidden sm:block sm:size-24 xl:size-32" />
 																				</div>
 																			)}
 																		</>
 																	)}
 															</div>
-															<div className="grow grid place-items-center">
-																<div className="p-3 w-full flex flex-col gap-1">
-																	<div className="text-sm text-gray-500">
-																		{shop.shop_id}
+															<div className="flex flex-1 items-center pl-3 sm:pl-6 xl:pl-10">
+																<div className="grid gap-1">
+																	<div className="line-clamp-3 break-words sm:text-lg xl:text-2xl font-bold">
+																		{shop.shop_name}
+																	</div>
+																	<div className="hidden xl:block pt-1 pl-2">
+																		<div className="text-gray-500">
+																			アバター数: {shop.avatar_count}個
+																		</div>
+																		<div className="text-gray-500">
+																			衣装数: {shop.cloth_count}個
+																		</div>
 																	</div>
 																</div>
 															</div>
-															<div className="p-2">
+															<div className="p-2 xl:hidden">
 																<div className="flex items-center">
 																	<img
 																		src={avatar_svg}
@@ -217,9 +238,16 @@ export default function Shop() {
 																		alt="cloth"
 																		className="size-5"
 																	/>
-																	<span>{shop.avatar_count}</span>
+																	<span>{shop.cloth_count}</span>
 																</div>
 															</div>
+															<div />
+														</Link>
+														<Link
+															to={`https://${shop.shop_id}.booth.pm`}
+															target="_blank"
+															rel="noopener noreferrer"
+														>
 															<div className="absolute flex items-center bottom-2 right-2">
 																<Avatar className="size-8">
 																	<AvatarImage
@@ -229,14 +257,14 @@ export default function Shop() {
 																	/>
 																	<AvatarFallback />
 																</Avatar>
-																<div className="pl-1 text-sm">
-																	{shop.shop_name}
+																<div className="ml-2 p-1 text-sm text-white font-bold bg-red-400">
+																	BOOTH
 																</div>
 															</div>
-														</div>
-													</CardContent>
-												</Card>
-											</Link>
+														</Link>
+													</div>
+												</CardContent>
+											</Card>
 										))}
 									</CardContent>
 								</Card>
