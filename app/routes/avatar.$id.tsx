@@ -10,7 +10,7 @@ import { Folder, FolderPlus, Plus } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { avatarPageLoader } from '~/.server/loaders'
 import { FlexItemCard } from '~/components/card/flex-item-card'
-import { SearchControls } from '~/components/controls/search-controls'
+import { RelationControls } from '~/components/controls/relation-controls'
 import { CreateFolder } from '~/components/element/create-folder'
 import { Pagination } from '~/components/element/pagination'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
@@ -151,7 +151,7 @@ export default function avatarPage() {
 						<div className="text-2xl sm:text-3xl pt-4 font-semibold tracking-tight leading-relaxed">
 							{avatar.item_name}
 						</div>
-						<div className="flex items-center justify-end text-xl font-bold">
+						<div className="flex pt-4 items-center justify-end text-xl font-bold">
 							<HeartIcon
 								className="size-4 sm:size-5 mr-1"
 								pathProps={{ fill: '#FF1111' }}
@@ -252,9 +252,9 @@ export default function avatarPage() {
 				</div>
 				<div className="max-w-[640px] m-auto">
 					<div ref={relatedClothRef} className="text-2xl pt-4 pl-2">
-						関連衣装
+						関連アイテム
 					</div>
-					<SearchControls />
+					<RelationControls />
 				</div>
 				<div className="py-4 text-lg">
 					対応衣装（{formatValue(totalClothCount.total_count)}件）
@@ -265,7 +265,7 @@ export default function avatarPage() {
 							<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-1 sm:p-2">
 								{relationCloth.map((cloth) => (
 									<Card key={cloth.booth_id}>
-										<FlexItemCard item={cloth} />
+										<FlexItemCard item={cloth} type={'cloth'} />
 									</Card>
 								))}
 							</CardContent>

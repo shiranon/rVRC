@@ -3,6 +3,7 @@ import {
 	buildShopImage,
 	buildSmallItemImage,
 	formatDateWithHyphen,
+	formatValue,
 } from '~/lib/format'
 import type { IndexItemType } from '~/types/items'
 import { FavoriteTag } from '../element/favorite-tag'
@@ -39,7 +40,7 @@ export const IndexItemCard = ({ item, type }: IndexItemCardProp) => {
 					</CardTitle>
 				</Link>
 				<div className="text-right font-bold text-base sm:text-lg">
-					￥{item.item_price}
+					￥{formatValue(item.item_price)}
 				</div>
 			</CardContent>
 			<CardFooter className="px-4 pb-4 flex-col justify-start items-start">

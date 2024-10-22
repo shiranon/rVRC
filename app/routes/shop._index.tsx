@@ -196,11 +196,11 @@ export default function Shop() {
 																							/>
 																						))}
 																					{shop.popular_items.length === 2 && (
-																						<div className="hidden bg-orange-100 sm:block sm:size-24 xl:size-32" />
+																						<div className="hidden bg-orange-100 bg-opacity-20 sm:block sm:size-24 xl:size-32" />
 																					)}
 																				</div>
 																			) : (
-																				<div className="flex flex-col bg-orange-100">
+																				<div className="flex flex-col bg-orange-100 bg-opacity-20">
 																					<div className="hidden sm:block sm:size-24 xl:size-32" />
 																					<div className="hidden sm:block sm:size-24 xl:size-32" />
 																				</div>

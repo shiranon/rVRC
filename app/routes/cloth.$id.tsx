@@ -130,7 +130,7 @@ export default function clothPage() {
 						<div className="text-2xl sm:text-3xl pt-4 font-semibold tracking-tight leading-relaxed">
 							{cloth.item_name}
 						</div>
-						<div className="flex items-center justify-end text-xl font-bold">
+						<div className="flex pt-4 items-center justify-end text-xl font-bold">
 							<HeartIcon
 								className="size-4 sm:size-5 mr-1"
 								pathProps={{ fill: '#FF1111' }}

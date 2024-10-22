@@ -54,7 +54,7 @@ export const avatarPageLoader = async ({
 	}
 
 	if (!avatarData.published) {
-		console.error('現在非公開のアバターです', avatarDataError)
+		console.error('現在非公開のアバターです')
 		return redirect('/')
 	}
 

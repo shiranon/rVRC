@@ -71,7 +71,9 @@ export const FolderItemCard = ({ item, id, isEdit }: FlexItemCardProp) => {
 					</CardTitle>
 					<div className="font-bold text-lg text-right">￥{item.price}</div>
 				</CardContent>
-				<CardFooter className="pb-4">
+			</ConditionalLink>
+			<CardFooter className="pb-4">
+				<Link to={`/shop/${item.shop_id}`}>
 					<div className="flex items-center gap-2">
 						<Avatar>
 							<AvatarImage
@@ -83,8 +85,8 @@ export const FolderItemCard = ({ item, id, isEdit }: FlexItemCardProp) => {
 						</Avatar>
 						<div className="pl-1 text-sm">{item.shop_name}</div>
 					</div>
-				</CardFooter>
-			</ConditionalLink>
+				</Link>
+			</CardFooter>
 		</>
 	)
 }

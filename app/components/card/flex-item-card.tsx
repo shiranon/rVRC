@@ -1,5 +1,5 @@
 import { Link } from '@remix-run/react'
-import { buildShopImage, buildSmallItemImage } from '~/lib/format'
+import { buildShopImage, buildSmallItemImage, formatValue } from '~/lib/format'
 import type { ItemType } from '~/types/items'
 import { FavoriteTag } from '../element/favorite-tag'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
@@ -32,7 +32,7 @@ export const FlexItemCard = ({ item, type }: FlexItemCardProp) => {
 						<div className="line-clamp-2 break-words">{item.item_name}</div>
 					</CardTitle>
 					<div className="text-right font-bold text-base sm:text-lg">
-						￥{item.item_price}
+						￥{formatValue(item.item_price)}
 					</div>
 				</CardContent>
 			</Link>
