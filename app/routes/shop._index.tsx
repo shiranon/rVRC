@@ -176,7 +176,7 @@ export default function Shop() {
 																					alt={
 																						shop.popular_items[0].name as string
 																					}
-																					className="w-full h-full rounded-lg object-cover"
+																					className="w-full h-full rounded-l-lg object-cover"
 																				/>
 																			</div>
 																			{shop.popular_items.length > 1 ? (
@@ -196,11 +196,11 @@ export default function Shop() {
 																							/>
 																						))}
 																					{shop.popular_items.length === 2 && (
-																						<div className="hidden sm:block sm:size-24 xl:size-32" />
+																						<div className="hidden bg-orange-100 sm:block sm:size-24 xl:size-32" />
 																					)}
 																				</div>
 																			) : (
-																				<div className="flex flex-col">
+																				<div className="flex flex-col bg-orange-100">
 																					<div className="hidden sm:block sm:size-24 xl:size-32" />
 																					<div className="hidden sm:block sm:size-24 xl:size-32" />
 																				</div>
@@ -249,7 +249,7 @@ export default function Shop() {
 															rel="noopener noreferrer"
 														>
 															<div className="absolute flex items-center bottom-2 right-2">
-																<Avatar className="size-8">
+																<Avatar className="size-8 xl:size-12">
 																	<AvatarImage
 																		src={buildShopImage(shop.shop_image)}
 																		loading="lazy"
@@ -257,7 +257,7 @@ export default function Shop() {
 																	/>
 																	<AvatarFallback />
 																</Avatar>
-																<div className="ml-2 p-1 text-sm text-white font-bold bg-red-400">
+																<div className="ml-2 p-1 text-sm xl:text-lg text-white font-bold bg-red-400">
 																	BOOTH
 																</div>
 															</div>

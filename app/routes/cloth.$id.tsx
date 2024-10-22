@@ -142,17 +142,21 @@ export default function clothPage() {
 						<div className="text-2xl sm:text-3xl font-semibold tracking-tight leading-relaxed text-right">
 							{`￥${formatValue(cloth.item_price)}`}
 						</div>
-						<div className="flex p-1 pl-3 sm:pt-3 items-center gap-2">
-							<Avatar className="size-10 sm:size-12">
-								<AvatarImage
-									src={buildShopImage(cloth.shop_image)}
-									loading="lazy"
-									alt={cloth.shop_name}
-								/>
-								<AvatarFallback />
-							</Avatar>
-							<div className="pl-1 text-sm sm:text-base">{cloth.shop_name}</div>
-						</div>
+						<Link to={`/shop/${cloth.shop_id}`}>
+							<div className="flex p-1 pl-3 sm:pt-3 items-center gap-2">
+								<Avatar className="size-10 sm:size-12">
+									<AvatarImage
+										src={buildShopImage(cloth.shop_image)}
+										loading="lazy"
+										alt={cloth.shop_name}
+									/>
+									<AvatarFallback />
+								</Avatar>
+								<div className="pl-1 text-sm sm:text-base">
+									{cloth.shop_name}
+								</div>
+							</div>
+						</Link>
 						<div className="flex justify-center items-center space-x-2 py-4">
 							<Link
 								to={`https://booth.pm/ja/items/${cloth.booth_id}`}
@@ -231,7 +235,7 @@ export default function clothPage() {
 									{relationAvatar.map((avatar) => (
 										<Card key={avatar.booth_id}>
 											<Link to={`/avatar/${avatar.id}`}>
-												<FlexItemCard item={avatar} />
+												<FlexItemCard item={avatar} type="avatar" />
 											</Link>
 										</Card>
 									))}

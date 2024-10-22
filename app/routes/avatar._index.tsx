@@ -140,11 +140,9 @@ export default function Avatar() {
 								<Card className="mt-2 bg-transparent shadow-none border-none">
 									<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-0">
 										{avatars.map((avatar) => (
-											<Link key={avatar.booth_id} to={`/avatar/${avatar.id}`}>
-												<Card>
-													<IndexItemCard item={avatar} />
-												</Card>
-											</Link>
+											<Card key={avatar.booth_id}>
+												<IndexItemCard item={avatar} type="avatar" />
+											</Card>
 										))}
 									</CardContent>
 								</Card>

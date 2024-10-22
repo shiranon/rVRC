@@ -163,19 +163,21 @@ export default function avatarPage() {
 						<div className="text-2xl sm:text-3xl font-semibold tracking-tight leading-relaxed text-right">
 							{`￥${formatValue(avatar.item_price)}`}
 						</div>
-						<div className="flex p-1 pl-3 sm:pt-3 items-center gap-2">
-							<Avatar className="size-10 sm:size-12">
-								<AvatarImage
-									src={buildShopImage(avatar.shop_image)}
-									loading="lazy"
-									alt={avatar.shop_name}
-								/>
-								<AvatarFallback />
-							</Avatar>
-							<div className="pl-1 text-sm sm:text-base">
-								{avatar.shop_name}
+						<Link to={`/shop/${avatar.shop_id}`}>
+							<div className="flex p-1 pl-3 sm:pt-3 items-center gap-2">
+								<Avatar className="size-10 sm:size-12">
+									<AvatarImage
+										src={buildShopImage(avatar.shop_image)}
+										loading="lazy"
+										alt={avatar.shop_name}
+									/>
+									<AvatarFallback />
+								</Avatar>
+								<div className="pl-1 text-sm sm:text-base">
+									{avatar.shop_name}
+								</div>
 							</div>
-						</div>
+						</Link>
 						<div className="w-full pl-1 text-end text-sm sm:text-base">
 							公開日 {formatDateWithHyphen(avatar.published)}
 						</div>
@@ -263,9 +265,7 @@ export default function avatarPage() {
 							<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-1 sm:p-2">
 								{relationCloth.map((cloth) => (
 									<Card key={cloth.booth_id}>
-										<Link to={`/cloth/${cloth.id}`}>
-											<FlexItemCard item={cloth} />
-										</Link>
+										<FlexItemCard item={cloth} />
 									</Card>
 								))}
 							</CardContent>

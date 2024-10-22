@@ -113,7 +113,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	]
 }
 
-export default function Avatar() {
+export default function Cloth() {
 	const { cloths, count } = useLoaderData<typeof loader>()
 
 	return (
@@ -131,11 +131,9 @@ export default function Avatar() {
 								<Card className="mt-2 bg-transparent shadow-none border-none">
 									<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-0">
 										{cloths.map((cloth) => (
-											<Link key={cloth.booth_id} to={`/cloth/${cloth.id}`}>
-												<Card>
-													<IndexItemCard item={cloth} />
-												</Card>
-											</Link>
+											<Card key={cloth.booth_id}>
+												<IndexItemCard item={cloth} type="cloth" />
+											</Card>
 										))}
 									</CardContent>
 								</Card>

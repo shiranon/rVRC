@@ -49,17 +49,19 @@ export const TopItem = ({
 				</CardContent>
 			</Link>
 			<CardFooter className="pb-4 justify-between">
-				<div className="flex items-center gap-2">
-					<Avatar className="size-8 sm:size-10">
-						<AvatarImage
-							src={buildShopImage(data.shop_image)}
-							loading="lazy"
-							alt={data.shop_name}
-						/>
-						<AvatarFallback />
-					</Avatar>
-					<div className="pl-1 text-xs sm:text-sm">{data.shop_name}</div>
-				</div>
+				<Link to={`/shop/${data.shop_id}`}>
+					<div className="flex items-center gap-2">
+						<Avatar className="size-8 sm:size-10">
+							<AvatarImage
+								src={buildShopImage(data.shop_image)}
+								loading="lazy"
+								alt={data.shop_name}
+							/>
+							<AvatarFallback />
+						</Avatar>
+						<div className="pl-1 text-xs sm:text-sm">{data.shop_name}</div>
+					</div>
+				</Link>
 			</CardFooter>
 		</Card>
 	)

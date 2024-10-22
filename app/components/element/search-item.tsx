@@ -45,17 +45,19 @@ export const SearchItem = ({
 				</CardContent>
 			</Link>
 			<CardFooter className="px-4 pb-4 flex-col justify-start items-start">
-				<div className="flex items-center gap-2">
-					<Avatar className="size-8 sm:size-10">
-						<AvatarImage
-							src={buildShopImage(data.shop_image)}
-							loading="lazy"
-							alt={data.shop_name}
-						/>
-						<AvatarFallback />
-					</Avatar>
-					<div className="pl-1 text-xs sm:text-sm">{data.shop_name}</div>
-				</div>
+				<Link to={`/shop/${data.shop_id}`}>
+					<div className="flex items-center gap-2">
+						<Avatar className="size-8 sm:size-10">
+							<AvatarImage
+								src={buildShopImage(data.shop_image)}
+								loading="lazy"
+								alt={data.shop_name}
+							/>
+							<AvatarFallback />
+						</Avatar>
+						<div className="pl-1 text-xs sm:text-sm">{data.shop_name}</div>
+					</div>
+				</Link>
 				<div className="w-full pl-1 text-end text-xs sm:text-sm">
 					公開日: {formatDateWithHyphen(data.published)}
 				</div>
