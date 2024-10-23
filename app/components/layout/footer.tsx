@@ -1,6 +1,6 @@
 import { Link } from '@remix-run/react'
 import logo from '~/images/rvrc-logo.svg'
-import { GithubIcon } from '../ui/icons'
+import { GithubIcon, XIcon } from '../ui/icons'
 
 export const Footer = () => {
 	return (
@@ -64,13 +64,13 @@ export const Footer = () => {
 				</nav>
 
 				<div className="flex gap-4">
-					{/* <Link
+					<Link
 						to={'https://x.com/rvrc_v'}
 						target="_blank"
 						rel="noopener noreferrer"
 					>
 						<XIcon className="size-8" />
-					</Link> */}
+					</Link>
 					<Link
 						to={'https://github.com/shiranon/rVRC'}
 						target="_blank"
