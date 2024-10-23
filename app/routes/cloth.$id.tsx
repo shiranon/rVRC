@@ -18,7 +18,6 @@ import { useActionToast } from '~/hooks/use-action-toast'
 import {
 	buildItemImage,
 	buildShopImage,
-	buildSmallItemImage,
 	formatValue,
 	truncateString,
 } from '~/lib/format'
@@ -28,43 +27,43 @@ export { clothPageLoader as loader } from '~/.server/loaders'
 
 export const meta: MetaFunction<typeof clothPageLoader> = ({ data }) => {
 	if (!data) return [{ title: 'Not found' }]
-	const titleElements = data.cloth.name
+	const titleElements = data.cloth.item_name
 		? [
-				{ title: `${data.cloth.name} - 衣装 rVRC` },
+				{ title: `${data.cloth.item_name} - 衣装 rVRC` },
 				{
 					name: 'twitter:title',
-					content: data.cloth.name,
+					content: data.cloth.item_name,
 				},
 				{
 					property: 'og:title',
-					content: data.cloth.name,
+					content: data.cloth.item_name,
 				},
 			]
 		: []
-	const descriptionElements = data.cloth.price
+	const descriptionElements = data.cloth.item_price
 		? [
 				{
 					name: 'description',
-					content: `${data.cloth.name} / ${data.cloth.shop_name} / 価格:${data.cloth.price}円 / ♥${data.cloth.latest_favorite}スキ / / 対応アイテム数 ${formatValue(data.relationAvatar.length)} 対応アバターの詳細はこちらから。`,
+					content: `${data.cloth.item_name} / ${data.cloth.shop_name} / 価格:${data.cloth.item_price}円 / ♥${data.cloth.latest_favorite}スキ / / 対応アイテム数 ${formatValue(data.relationAvatar.length)} 対応アバターの詳細はこちらから。`,
 				},
 				{
 					name: 'twitter:description',
-					content: `${data.cloth.shop_name} / 価格:${data.cloth.price}円 / ♥${data.cloth.latest_favorite}`,
+					content: `${data.cloth.shop_name} / 価格:${data.cloth.item_price}円 / ♥${data.cloth.latest_favorite}`,
 				},
 				{
 					property: 'og:description',
-					content: `${data.cloth.shop_name} / 価格:${data.cloth.price}円 / ♥${data.cloth.latest_favorite}`,
+					content: `${data.cloth.shop_name} / 価格:${data.cloth.item_price}円 / ♥${data.cloth.latest_favorite}`,
 				},
 			]
 		: []
 	const imageElements = [
 		{
 			name: 'twitter:image',
-			content: `${buildSmallItemImage(data.cloth.image_url)}`,
+			content: `${buildItemImage(data.cloth.item_image)}`,
 		},
 		{
 			property: 'og:image',
-			content: `${buildSmallItemImage(data.cloth.image_url)}`,
+			content: `${buildItemImage(data.cloth.item_image)}`,
 		},
 		{
 			name: 'twitter:card',
@@ -72,7 +71,7 @@ export const meta: MetaFunction<typeof clothPageLoader> = ({ data }) => {
 		},
 		{
 			property: 'og:image:alt',
-			content: data.cloth.name,
+			content: data.cloth.item_name,
 		},
 	]
 	return [
@@ -93,7 +92,7 @@ export const meta: MetaFunction<typeof clothPageLoader> = ({ data }) => {
 		{ name: 'author', content: 'rVRC' },
 		{
 			name: 'keywords',
-			content: `VRChat, 衣装, 3Dモデル, ランキング, ${data.cloth.name}, ${data.cloth.shop_name}, `,
+			content: `VRChat, 衣装, 3Dモデル, ランキング, ${data.cloth.item_name}, ${data.cloth.shop_name}, `,
 		},
 	]
 }
@@ -111,7 +110,7 @@ export default function clothPage() {
 	const hashtags = ['VRChat']
 	const encodedHashtags = encodeURIComponent(hashtags.join(','))
 
-	const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${cloth.name} ♥${formatValue(cloth.latest_favorite)}`)}&url=${encodeURIComponent(`https://r-vrc/cloth/${id}`)}&hashtags=${encodedHashtags}`
+	const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${cloth.item_name} ♥${formatValue(cloth.latest_favorite)}`)}&url=${encodeURIComponent(`https://r-vrc/cloth/${id}`)}&hashtags=${encodedHashtags}`
 
 	useActionToast()
 
@@ -123,36 +122,40 @@ export default function clothPage() {
 					<div className="flex flex-col max-w-[640px] pt-10 px-6">
 						<img
 							className="rounded-md"
-							src={buildItemImage(cloth.image_url)}
+							src={buildItemImage(cloth.item_image)}
 							loading="lazy"
-							alt={cloth.name}
+							alt={cloth.item_name}
 						/>
 						<div className="text-2xl sm:text-3xl pt-4 font-semibold tracking-tight leading-relaxed">
-							{cloth.name}
+							{cloth.item_name}
 						</div>
-						<div className="flex items-center justify-end text-xl font-bold">
+						<div className="flex pt-4 items-center justify-end text-xl font-bold">
 							<HeartIcon
 								className="size-4 sm:size-5 mr-1"
-								pathProps={{ fill: '#FF1111' }}
+								pathProps={{ fill: '#444444' }}
 							/>
 							<div className="text-base sm:text-lg">
 								{formatValue(cloth.latest_favorite)}
 							</div>
 						</div>
 						<div className="text-2xl sm:text-3xl font-semibold tracking-tight leading-relaxed text-right">
-							{`￥${formatValue(cloth.price)}`}
+							{`￥${formatValue(cloth.item_price)}`}
 						</div>
-						<div className="flex p-1 pl-3 sm:pt-3 items-center gap-2">
-							<Avatar className="size-10 sm:size-12">
-								<AvatarImage
-									src={buildShopImage(cloth.shop_image)}
-									loading="lazy"
-									alt={cloth.shop_name}
-								/>
-								<AvatarFallback />
-							</Avatar>
-							<div className="pl-1 text-sm sm:text-base">{cloth.shop_name}</div>
-						</div>
+						<Link to={`/shop/${cloth.shop_id}`}>
+							<div className="flex p-1 pl-3 sm:pt-3 items-center gap-2">
+								<Avatar className="size-10 sm:size-12">
+									<AvatarImage
+										src={buildShopImage(cloth.shop_image)}
+										loading="lazy"
+										alt={cloth.shop_name}
+									/>
+									<AvatarFallback />
+								</Avatar>
+								<div className="pl-1 text-sm sm:text-base">
+									{cloth.shop_name}
+								</div>
+							</div>
+						</Link>
 						<div className="flex justify-center items-center space-x-2 py-4">
 							<Link
 								to={`https://booth.pm/ja/items/${cloth.booth_id}`}
@@ -231,7 +234,7 @@ export default function clothPage() {
 									{relationAvatar.map((avatar) => (
 										<Card key={avatar.booth_id}>
 											<Link to={`/avatar/${avatar.id}`}>
-												<FlexItemCard item={avatar} />
+												<FlexItemCard item={avatar} type="avatar" />
 											</Link>
 										</Card>
 									))}

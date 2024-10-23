@@ -19,8 +19,6 @@ const sortOptions = [
 	{ value: 'price_desc', label: '価格が高い順' },
 	{ value: 'favorite_desc', label: 'スキ数が多い順' },
 	{ value: 'favorite_asc', label: 'スキ数が少ない順' },
-	{ value: 'relation_desc', label: '関連アイテムが多い順' },
-	{ value: 'relation_asc', label: '関連アイテムが少ない順' },
 	{ value: 'create_desc', label: '登録が新しい順' },
 	{ value: 'create_asc', label: '登録が古い順' },
 ]
@@ -35,7 +33,7 @@ const favoriteFilterOptions = [
 	{ value: '0_99', label: '0〜99' },
 ]
 
-export const SearchControls = () => {
+export const RelationControls = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const [currentSort, setCurrentSort] = useState<SortBy>(undefined)
 	const [inputValue, setInputValue] = useState<string>('')

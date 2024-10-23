@@ -12,13 +12,29 @@ export type RankingType = {
 	shop_id: string
 	shop_image: string
 }
-export type SearchType = {
+
+export type IndexItemType = {
 	id: number
 	booth_id: number
 	item_name: string
 	item_price: number
-	latest_favorite: number
 	item_image: string
+	latest_favorite: number
+	published: string
+	relation_count: number
+	shop_name: string
+	shop_id: string
+	shop_image: string
+}
+
+export type SearchItemType = {
+	id: number
+	booth_id: number
+	item_name: string
+	item_price: number
+	item_image: string
+	latest_favorite: number
+	published: string
 	shop_name: string
 	shop_id: string
 	shop_image: string
@@ -26,19 +42,19 @@ export type SearchType = {
 
 export type ItemType = {
 	id: number
-	item_name: string
-	price: number
-	latest_favorite: number
 	booth_id: number
-	image: string
+	item_name: string
+	item_price: number
+	item_image: string
+	latest_favorite: number
 	shop_name: string
 	shop_id: string
 	shop_image: string
 }
 
 export type FolderItem = {
-	item_type: string
 	id: number
+	item_type: string
 	item_name: string
 	price: number
 	booth_id: number
@@ -59,6 +75,20 @@ export type SortBy =
 	| 'favorite_desc'
 	| 'create_desc'
 	| 'create_asc'
+	| 'relation_desc'
+	| 'relation_asc'
+	| undefined
+
+export type SortShopBy =
+	| 'create_asc'
+	| 'create_desc'
+	| 'name_asc'
+	| 'name_desc'
+	| 'avatar_count_desc'
+	| 'cloth_count_desc'
+	| 'item_publish_desc'
+	| 'avatar_favorite_desc'
+	| 'cloth_favorite_desc'
 	| undefined
 
 export type FavoriteFilter =

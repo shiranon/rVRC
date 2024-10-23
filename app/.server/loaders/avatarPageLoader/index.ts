@@ -53,6 +53,11 @@ export const avatarPageLoader = async ({
 		return redirect('/')
 	}
 
+	if (!avatarData.published) {
+		console.error('現在非公開のアバターです')
+		return redirect('/')
+	}
+
 	// 関連衣装データの取得
 	const { data: relationClothData, error: relationClothError } =
 		await supabase.rpc('get_relation_cloth_data', {

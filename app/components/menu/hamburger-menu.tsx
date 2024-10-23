@@ -11,12 +11,15 @@ import {
 
 import { Link } from '@remix-run/react'
 import {
+	CircleUserIcon,
 	Crown,
 	Flame,
 	FolderSearch,
 	House,
 	MessageCircleMore,
 	Search,
+	ShirtIcon,
+	StoreIcon,
 } from 'lucide-react'
 
 export const HamburgerMenu = () => {
@@ -90,6 +93,36 @@ export const HamburgerMenu = () => {
 								<div>トレンド</div>
 							</Link>
 						</div>
+					</div>
+					<div className="hover:bg-beige">
+						<Link
+							to={'/avatar'}
+							className="pl-3 py-2 flex items-center"
+							onClick={() => setIsOpen(false)}
+						>
+							<CircleUserIcon className="pr-2" />
+							<div>アバター</div>
+						</Link>
+					</div>
+					<div className="hover:bg-beige">
+						<Link
+							to={'/cloth'}
+							className="pl-3 py-2 flex items-center"
+							onClick={() => setIsOpen(false)}
+						>
+							<ShirtIcon className="pr-2" />
+							<div>衣装</div>
+						</Link>
+					</div>
+					<div className="hover:bg-beige">
+						<Link
+							to={'/shop'}
+							className="pl-3 py-2 flex items-center"
+							onClick={() => setIsOpen(false)}
+						>
+							<StoreIcon className="pr-2" />
+							<div>ショップ</div>
+						</Link>
 					</div>
 					<div className="hover:bg-beige">
 						<Link

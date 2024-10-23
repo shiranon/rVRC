@@ -10,7 +10,7 @@ import { Folder, FolderPlus, Plus } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { avatarPageLoader } from '~/.server/loaders'
 import { FlexItemCard } from '~/components/card/flex-item-card'
-import { SearchControls } from '~/components/controls/search-controls'
+import { RelationControls } from '~/components/controls/relation-controls'
 import { CreateFolder } from '~/components/element/create-folder'
 import { Pagination } from '~/components/element/pagination'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
@@ -26,7 +26,7 @@ import { useActionToast } from '~/hooks/use-action-toast'
 import {
 	buildItemImage,
 	buildShopImage,
-	buildSmallItemImage,
+	formatDateWithHyphen,
 	formatValue,
 	truncateString,
 } from '~/lib/format'
@@ -36,43 +36,43 @@ export { avatarPageLoader as loader } from '~/.server/loaders'
 
 export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 	if (!data) return [{ title: 'Not found' }]
-	const titleElements = data.avatar.name
+	const titleElements = data.avatar.item_name
 		? [
-				{ title: `${data.avatar.name} - アバター rVRC` },
+				{ title: `${data.avatar.item_name} - アバター rVRC` },
 				{
 					name: 'twitter:title',
-					content: data.avatar.name,
+					content: data.avatar.item_name,
 				},
 				{
 					property: 'og:title',
-					content: data.avatar.name,
+					content: data.avatar.item_name,
 				},
 			]
 		: []
-	const descriptionElements = data.avatar.price
+	const descriptionElements = data.avatar.item_price
 		? [
 				{
 					name: 'description',
-					content: `${data.avatar.name} / ${data.avatar.shop_name} / 価格:${formatValue(data.avatar.price)}円 / ♥${data.avatar.latest_favorite}スキ / 対応アイテム数 ${formatValue(data.relationCloth.length)} 対応アイテムの検索はこちらから！`,
+					content: `${data.avatar.item_name} / ${data.avatar.shop_name} / 価格:${formatValue(data.avatar.item_price)}円 / ♥${data.avatar.latest_favorite}スキ / 対応アイテム数 ${formatValue(data.relationCloth.length)} 対応アイテムの検索はこちらから！`,
 				},
 				{
 					name: 'twitter:description',
-					content: `${data.avatar.shop_name} / 価格:${data.avatar.price}円 / ♥${data.avatar.latest_favorite}`,
+					content: `${data.avatar.shop_name} / 価格:${data.avatar.item_price}円 / ♥${data.avatar.latest_favorite}`,
 				},
 				{
 					property: 'og:description',
-					content: `${data.avatar.shop_name} / 価格:${data.avatar.price}円 / ♥${data.avatar.latest_favorite}`,
+					content: `${data.avatar.shop_name} / 価格:${data.avatar.item_price}円 / ♥${data.avatar.latest_favorite}`,
 				},
 			]
 		: []
 	const imageElements = [
 		{
 			name: 'twitter:image',
-			content: `${buildSmallItemImage(data.avatar.image_url)}`,
+			content: `${buildItemImage(data.avatar.item_image)}`,
 		},
 		{
 			property: 'og:image',
-			content: `${buildSmallItemImage(data.avatar.image_url)}`,
+			content: `${buildItemImage(data.avatar.item_image)}`,
 		},
 		{
 			name: 'twitter:card',
@@ -80,7 +80,7 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 		},
 		{
 			property: 'og:image:alt',
-			content: data.avatar.name,
+			content: data.avatar.item_name,
 		},
 	]
 	return [
@@ -101,7 +101,7 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 		{ name: 'author', content: 'rVRC' },
 		{
 			name: 'keywords',
-			content: `VRChat, アバター, 3Dモデル, ランキング, ${data.avatar.name}, ${data.avatar.shop_name}, `,
+			content: `VRChat, アバター, 3Dモデル, ランキング, ${data.avatar.item_name}, ${data.avatar.shop_name}, `,
 		},
 	]
 }
@@ -117,7 +117,7 @@ export default function avatarPage() {
 	const hashtags = ['VRChat']
 	const encodedHashtags = encodeURIComponent(hashtags.join(','))
 
-	const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${avatar.name} ♥${formatValue(avatar.latest_favorite)}`)}&url=${encodeURIComponent(`https://r-vrc/avatar/${id}`)}&hashtags=${encodedHashtags}`
+	const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${avatar.item_name} ♥${formatValue(avatar.latest_favorite)}`)}&url=${encodeURIComponent(`https://r-vrc/avatar/${id}`)}&hashtags=${encodedHashtags}`
 
 	const scrollToRelatedCloth = useCallback(() => {
 		if (relatedClothRef.current) {
@@ -143,37 +143,42 @@ export default function avatarPage() {
 					<div className="flex flex-col max-w-[640px] pt-10 px-6">
 						<img
 							className="rounded-md"
-							src={buildItemImage(avatar.image_url)}
+							src={buildItemImage(avatar.item_image)}
 							loading="lazy"
-							alt={avatar.name}
+							alt={avatar.item_name}
 						/>
 						<div className="text-2xl sm:text-3xl pt-4 font-semibold tracking-tight leading-relaxed">
-							{avatar.name}
+							{avatar.item_name}
 						</div>
-						<div className="flex items-center justify-end text-xl font-bold">
+						<div className="flex pt-4 items-center justify-end text-xl font-bold">
 							<HeartIcon
 								className="size-4 sm:size-5 mr-1"
-								pathProps={{ fill: '#FF1111' }}
+								pathProps={{ fill: '#444444' }}
 							/>
 							<div className="text-base sm:text-lg">
 								{formatValue(avatar.latest_favorite)}
 							</div>
 						</div>
 						<div className="text-2xl sm:text-3xl font-semibold tracking-tight leading-relaxed text-right">
-							{`￥${formatValue(avatar.price)}`}
+							{`￥${formatValue(avatar.item_price)}`}
 						</div>
-						<div className="flex p-1 pl-3 sm:pt-3 items-center gap-2">
-							<Avatar className="size-10 sm:size-12">
-								<AvatarImage
-									src={buildShopImage(avatar.shop_image)}
-									loading="lazy"
-									alt={avatar.shop_name}
-								/>
-								<AvatarFallback />
-							</Avatar>
-							<div className="pl-1 text-sm sm:text-base">
-								{avatar.shop_name}
+						<Link to={`/shop/${avatar.shop_id}`}>
+							<div className="flex p-1 pl-3 sm:pt-3 items-center gap-2">
+								<Avatar className="size-10 sm:size-12">
+									<AvatarImage
+										src={buildShopImage(avatar.shop_image)}
+										loading="lazy"
+										alt={avatar.shop_name}
+									/>
+									<AvatarFallback />
+								</Avatar>
+								<div className="pl-1 text-sm sm:text-base">
+									{avatar.shop_name}
+								</div>
 							</div>
+						</Link>
+						<div className="w-full pl-1 text-end text-sm sm:text-base">
+							公開日 {formatDateWithHyphen(avatar.published)}
 						</div>
 						<div className="flex justify-center items-center space-x-2 py-4">
 							<Link
@@ -246,9 +251,9 @@ export default function avatarPage() {
 				</div>
 				<div className="max-w-[640px] m-auto">
 					<div ref={relatedClothRef} className="text-2xl pt-4 pl-2">
-						関連衣装
+						関連アイテム
 					</div>
-					<SearchControls />
+					<RelationControls />
 				</div>
 				<div className="py-4 text-lg">
 					対応衣装（{formatValue(totalClothCount.total_count)}件）
@@ -259,9 +264,7 @@ export default function avatarPage() {
 							<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-1 sm:p-2">
 								{relationCloth.map((cloth) => (
 									<Card key={cloth.booth_id}>
-										<Link to={`/cloth/${cloth.id}`}>
-											<FlexItemCard item={cloth} />
-										</Link>
+										<FlexItemCard item={cloth} type={'cloth'} />
 									</Card>
 								))}
 							</CardContent>

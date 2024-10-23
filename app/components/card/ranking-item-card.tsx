@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
 import {
 	buildItemImage,
 	buildShopImage,
-	excludeOldDate,
+	formatDateWithHyphen,
 	formatValue,
 } from '~/lib/format'
 import type { RankingType } from '~/types/items'
@@ -51,18 +51,22 @@ export const RankingItemCard = ({
 				</Link>
 			</CardContent>
 			<CardFooter className="pb-4 justify-between">
-				<div className="flex items-center gap-2">
-					<Avatar className="size-10 sm:size-12">
-						<AvatarImage
-							src={buildShopImage(item.shop_image)}
-							loading="lazy"
-							alt={item.shop_name}
-						/>
-						<AvatarFallback />
-					</Avatar>
-					<div className="pl-1 text-sm sm:text-base">{item.shop_name}</div>
+				<Link to={`/shop/${item.shop_id}`}>
+					<div className="flex items-center gap-2">
+						<Avatar className="size-10 sm:size-12">
+							<AvatarImage
+								src={buildShopImage(item.shop_image)}
+								loading="lazy"
+								alt={item.shop_name}
+							/>
+							<AvatarFallback />
+						</Avatar>
+						<div className="pl-1 text-sm sm:text-base">{item.shop_name}</div>
+					</div>
+				</Link>
+				<div className="pl-1 text-sm sm:text-base">
+					公開日: {formatDateWithHyphen(item.item_added)}
 				</div>
-				<div>{excludeOldDate(item.item_added)}</div>
 			</CardFooter>
 		</Card>
 	)

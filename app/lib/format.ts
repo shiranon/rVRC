@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import avatar_holder from '~/images/avatar.svg'
+import shop_holder from '~/images/shop_holder.webp'
 import { URLS } from '~/lib/constants/urls'
 
 /**
@@ -32,7 +32,7 @@ const excludeOldDate = (timestamp: string): string => {
 
 /**
  * アイテム画像のURLを構築
- * @param {string | null} imageUrl - 画像のパス
+ * @param {string } imageUrl - 画像のパス
  * @returns {string } 完全な画像URL
  */
 const buildItemImage = (imageUrl: string | null) => {
@@ -66,10 +66,10 @@ const buildSmallItemImage = (imageUrl: string | null) => {
  * @returns {string} 完全な画像URLまたはデフォルト画像
  */
 const buildShopImage = (imageUrl: string | null) => {
-	if (imageUrl !== '') {
+	if (imageUrl !== 'none') {
 		return `${URLS.SHOP_IMAGE}${imageUrl}${URLS.BASE_SIZE}`
 	}
-	return avatar_holder
+	return shop_holder
 }
 
 /**
@@ -83,8 +83,8 @@ const formatValue = (number: number) => {
 
 /**
  * 指定した文字数まで切り詰める
- * @param input
- * @param maxLength
+ * @param {input} number
+ * @param {maxLength} number
  * @returns
  */
 const truncateString = (input: string, maxLength: number) => {
@@ -92,12 +92,28 @@ const truncateString = (input: string, maxLength: number) => {
 }
 
 /**
- * 日本の日時表記にフォーマットする
- * @param dateString
- * @returns
+ *
+ * それ以降の場合は'YYYY-MM-DD'形式の文字列を返す
+ * @param {timestamp} string - チェックするタイムスタンプ
+ * @returns {string} 'YYYY-MM-DD'形式の日付文字列
  */
-const formatJapaneseDate = (dateString: string | null): string => {
-	const date = dateString ? new Date(dateString) : new Date()
+const formatDateWithHyphen = (timestamp: string): string => {
+	const date = new Date(timestamp)
+	const year = date.getFullYear()
+	const month = date.getMonth() + 1
+	const day = date.getDate()
+	const formattedDate = `${year}-${zeroPad(month)}-${zeroPad(day)}`
+
+	return formattedDate
+}
+
+/**
+ * 日本の日時表記にフォーマットする
+ * @param {timestamp} string - フォーマットするタイムスタンプ
+ * @returns {string}   'YYYY年MM月DD日'形式の日付文字列
+ */
+const formatJapaneseDate = (timestamp: string | null): string => {
+	const date = timestamp ? new Date(timestamp) : new Date()
 	return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
 }
 
@@ -114,4 +130,5 @@ export {
 	buildSmallItemImage,
 	truncateString,
 	formatDateForParam,
+	formatDateWithHyphen,
 }

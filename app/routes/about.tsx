@@ -23,13 +23,11 @@ export const meta: MetaFunction = () => {
 		},
 		{
 			name: 'twitter:description',
-			content:
-				'VRChat用アイテムのランキングサイト「rVRC」の詳細説明ページ。BOOTHのスキ数を基にしたランキング・トレンド分析、詳細検索機能、フォルダ機能の使い方を解説。開発中の機能や今後の展望、サポート方法も紹介しています。',
+			content: 'rVRC - About',
 		},
 		{
 			property: 'og:description',
-			content:
-				'VRChat用アイテムのランキングサイト「rVRC」の詳細説明ページ。BOOTHのスキ数を基にしたランキング・トレンド分析、詳細検索機能、フォルダ機能の使い方を解説。開発中の機能や今後の展望、サポート方法も紹介しています。',
+			content: 'rVRC - About',
 		},
 	]
 	const imageElements = [

@@ -31,13 +31,18 @@ export const searchLoader = async ({
 
 	if (item === 'cloth') {
 		// 衣装の検索結果を取得
-		const { data: result } = await supabase.rpc('get_search_cloth_data', {
-			search_keyword: search_keyword,
-			sort_by: sort_by,
-			page_limit: limit,
-			page_offset: (page - 1) * limit,
-			favorite_filter: favorite_filter,
-		})
+		const { data: result, error } = await supabase.rpc(
+			'get_search_cloth_data',
+			{
+				search_keyword: search_keyword,
+				sort_by: sort_by,
+				page_limit: limit,
+				page_offset: (page - 1) * limit,
+				favorite_filter: favorite_filter,
+			},
+		)
+
+		console.log(error)
 
 		// 衣装の検索結果の総数を取得
 		const { data: count } = await supabase.rpc('get_search_cloth_total', {

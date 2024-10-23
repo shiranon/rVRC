@@ -36,6 +36,11 @@ export const clothPageLoader = async ({
 		return redirect('/')
 	}
 
+	if (!clothData.published) {
+		console.error('現在非公開のアバターです')
+		return redirect('/')
+	}
+
 	if (clothDataError) {
 		console.error('衣装データの取得時にエラー', clothDataError)
 		return redirect('/')
