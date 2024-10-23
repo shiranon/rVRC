@@ -18,7 +18,6 @@ import { useActionToast } from '~/hooks/use-action-toast'
 import {
 	buildItemImage,
 	buildShopImage,
-	buildSmallItemImage,
 	formatValue,
 	truncateString,
 } from '~/lib/format'
@@ -60,11 +59,11 @@ export const meta: MetaFunction<typeof clothPageLoader> = ({ data }) => {
 	const imageElements = [
 		{
 			name: 'twitter:image',
-			content: `${buildSmallItemImage(data.cloth.item_image)}`,
+			content: `${buildItemImage(data.cloth.item_image)}`,
 		},
 		{
 			property: 'og:image',
-			content: `${buildSmallItemImage(data.cloth.item_image)}`,
+			content: `${buildItemImage(data.cloth.item_image)}`,
 		},
 		{
 			name: 'twitter:card',

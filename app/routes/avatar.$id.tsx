@@ -26,7 +26,6 @@ import { useActionToast } from '~/hooks/use-action-toast'
 import {
 	buildItemImage,
 	buildShopImage,
-	buildSmallItemImage,
 	formatDateWithHyphen,
 	formatValue,
 	truncateString,
@@ -69,11 +68,11 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 	const imageElements = [
 		{
 			name: 'twitter:image',
-			content: `${buildSmallItemImage(data.avatar.item_image)}`,
+			content: `${buildItemImage(data.avatar.item_image)}`,
 		},
 		{
 			property: 'og:image',
-			content: `${buildSmallItemImage(data.avatar.item_image)}`,
+			content: `${buildItemImage(data.avatar.item_image)}`,
 		},
 		{
 			name: 'twitter:card',
