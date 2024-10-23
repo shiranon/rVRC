@@ -57,7 +57,7 @@ export const meta: MetaFunction<typeof trendLoader> = ({ data }) => {
 		},
 		{
 			name: 'twitter:card',
-			content: 'summary',
+			content: 'summary_large_image',
 		},
 		{
 			property: 'og:image:alt',

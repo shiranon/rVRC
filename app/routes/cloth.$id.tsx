@@ -40,22 +40,20 @@ export const meta: MetaFunction<typeof clothPageLoader> = ({ data }) => {
 				},
 			]
 		: []
-	const descriptionElements = data.cloth.item_price
-		? [
-				{
-					name: 'description',
-					content: `${data.cloth.item_name} / ${data.cloth.shop_name} / 価格:${data.cloth.item_price}円 / ♥${data.cloth.latest_favorite}スキ / / 対応アイテム数 ${formatValue(data.relationAvatar.length)} 対応アバターの詳細はこちらから。`,
-				},
-				{
-					name: 'twitter:description',
-					content: `${data.cloth.shop_name} / 価格:${data.cloth.item_price}円 / ♥${data.cloth.latest_favorite}`,
-				},
-				{
-					property: 'og:description',
-					content: `${data.cloth.shop_name} / 価格:${data.cloth.item_price}円 / ♥${data.cloth.latest_favorite}`,
-				},
-			]
-		: []
+	const descriptionElements = [
+		{
+			name: 'description',
+			content: `${data.cloth.item_name} / ${data.cloth.shop_name} / 価格:${formatValue(data.cloth.item_price)}円 / ♥${data.cloth.latest_favorite ? data.cloth.latest_favorite : 0}スキ /  対応アイテム数 ${formatValue(data.relationAvatar.length)} 対応アバターの詳細はこちらから。`,
+		},
+		{
+			name: 'twitter:description',
+			content: `${data.cloth.shop_name} / 価格:${formatValue(data.cloth.item_price)}円 / ♥${data.cloth.latest_favorite ? data.cloth.latest_favorite : 0}`,
+		},
+		{
+			property: 'og:description',
+			content: `${data.cloth.shop_name} / 価格:${formatValue(data.cloth.item_price)}円 / ♥${data.cloth.latest_favorite ? data.cloth.latest_favorite : 0}`,
+		},
+	]
 	const imageElements = [
 		{
 			name: 'twitter:image',
@@ -228,7 +226,9 @@ export default function clothPage() {
 				<div className="pb-4">
 					{relationAvatar && relationAvatar.length > 0 ? (
 						<>
-							<div className="text-2xl pt-2 pl-2">関連アバター</div>
+							<div className="text-2xl pt-2 pl-2">
+								関連アバター（${relationAvatar.length}件）
+							</div>
 							<Card className="bg-light-beige mt-4">
 								<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-1 sm:p-2">
 									{relationAvatar.map((avatar) => (

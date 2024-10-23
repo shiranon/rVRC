@@ -49,22 +49,20 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 				},
 			]
 		: []
-	const descriptionElements = data.avatar.item_price
-		? [
-				{
-					name: 'description',
-					content: `${data.avatar.item_name} / ${data.avatar.shop_name} / 価格:${formatValue(data.avatar.item_price)}円 / ♥${data.avatar.latest_favorite}スキ / 対応アイテム数 ${formatValue(data.relationCloth.length)} 対応アイテムの検索はこちらから！`,
-				},
-				{
-					name: 'twitter:description',
-					content: `${data.avatar.shop_name} / 価格:${data.avatar.item_price}円 / ♥${data.avatar.latest_favorite}`,
-				},
-				{
-					property: 'og:description',
-					content: `${data.avatar.shop_name} / 価格:${data.avatar.item_price}円 / ♥${data.avatar.latest_favorite}`,
-				},
-			]
-		: []
+	const descriptionElements = [
+		{
+			name: 'description',
+			content: `${data.avatar.item_name} / ${data.avatar.shop_name} / 価格:${formatValue(data.avatar.item_price)}円 / ♥${data.avatar.latest_favorite ? data.avatar.latest_favorite : 0}スキ / 対応アイテム数 ${formatValue(data.relationCloth.length)} 対応アイテムの検索はこちらから！`,
+		},
+		{
+			name: 'twitter:description',
+			content: `${data.avatar.shop_name} / 価格:${formatValue(data.avatar.item_price)}円 / ♥${data.avatar.latest_favorite ? data.avatar.latest_favorite : 0}`,
+		},
+		{
+			property: 'og:description',
+			content: `${data.avatar.shop_name} / 価格:${formatValue(data.avatar.item_price)}円 / ♥${data.avatar.latest_favorite ? data.avatar.latest_favorite : 0}`,
+		},
+	]
 	const imageElements = [
 		{
 			name: 'twitter:image',

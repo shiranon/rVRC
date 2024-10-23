@@ -78,6 +78,9 @@ const buildShopImage = (imageUrl: string | null) => {
  * @returns {string} フォーマットされた数値文字列
  */
 const formatValue = (number: number) => {
+	if (!number) {
+		return 0
+	}
 	return new Intl.NumberFormat().format(number)
 }
 
