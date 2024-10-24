@@ -91,6 +91,17 @@ export type SortShopBy =
 	| 'cloth_favorite_desc'
 	| undefined
 
+export type SortShopItemBy =
+	| 'price_asc'
+	| 'price_desc'
+	| 'name_asc'
+	| 'name_desc'
+	| 'favorite_asc'
+	| 'favorite_desc'
+	| 'published_asc'
+	| 'published_desc'
+	| undefined
+
 export type FavoriteFilter =
 	| 'all'
 	| '0_99'

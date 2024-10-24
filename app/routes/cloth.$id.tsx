@@ -227,15 +227,13 @@ export default function clothPage() {
 					{relationAvatar && relationAvatar.length > 0 ? (
 						<>
 							<div className="text-2xl pt-2 pl-2">
-								関連アバター（${relationAvatar.length}件）
+								関連アバター（{relationAvatar.length}件）
 							</div>
 							<Card className="bg-light-beige mt-4">
 								<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-1 sm:p-2">
 									{relationAvatar.map((avatar) => (
 										<Card key={avatar.booth_id}>
-											<Link to={`/avatar/${avatar.id}`}>
-												<FlexItemCard item={avatar} type="avatar" />
-											</Link>
+											<FlexItemCard item={avatar} type="avatar" />
 										</Card>
 									))}
 								</CardContent>

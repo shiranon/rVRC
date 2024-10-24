@@ -1,6 +1,6 @@
 import { useSearchParams } from '@remix-run/react'
 import { useCallback, useEffect, useState } from 'react'
-import type { SortBy } from '~/types/items'
+import type { SortBy, SortShopBy } from '~/types/items'
 import { Button } from '../ui/button'
 import {
 	Select,
@@ -25,7 +25,7 @@ const sortOptions = [
 
 export const ShopControls = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
-	const [currentSort, setCurrentSort] = useState<SortBy>(undefined)
+	const [currentSort, setCurrentSort] = useState<SortShopBy>(undefined)
 
 	const updateParams = useCallback(
 		(key: string, value: string) => {
@@ -42,7 +42,7 @@ export const ShopControls = () => {
 	}, [setSearchParams, searchParams])
 
 	useEffect(() => {
-		const sortParam = searchParams.get('sort') as SortBy
+		const sortParam = searchParams.get('sort') as SortShopBy
 		if (sortParam !== currentSort) {
 			setCurrentSort(sortParam || undefined)
 		}

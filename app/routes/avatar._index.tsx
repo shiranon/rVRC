@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare'
-import { Link, json, redirect, useLoaderData } from '@remix-run/react'
+import { json, redirect, useLoaderData } from '@remix-run/react'
 import { IndexItemCard } from '~/components/card/index-item-card'
 import { IndexControls } from '~/components/controls/index-controls'
 import { Pagination } from '~/components/element/pagination'
@@ -51,14 +51,14 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	if (!data) return [{ title: 'Not found' }]
 	const titleElements = data
 		? [
-				{ title: 'ランキング - rVRC' },
+				{ title: 'アバター - rVRC' },
 				{
 					name: 'twitter:title',
-					content: 'rVRC - ランキング',
+					content: 'rVRC - アバター',
 				},
 				{
 					property: 'og:title',
-					content: 'rVRC - ランキング',
+					content: 'rVRC - アバター',
 				},
 			]
 		: []
