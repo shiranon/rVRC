@@ -1,8 +1,10 @@
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare'
 import { Link, json, redirect, useLoaderData } from '@remix-run/react'
+import { useState } from 'react'
+import { ShopFilterControls } from '~/components/controls/shop-filter-controls'
 import { FavoriteTag } from '~/components/element/favorite-tag'
+import { Pagination } from '~/components/element/pagination'
 import { Card, CardContent, CardFooter, CardTitle } from '~/components/ui/card'
-import { Separator } from '~/components/ui/separator'
 import {
 	buildShopImage,
 	buildSmallItemImage,
@@ -11,6 +13,7 @@ import {
 } from '~/lib/format'
 import { loadEnvironment } from '~/lib/utils.server'
 import { createClient } from '~/module/supabase/create-client.server'
+import type { SortShopItemBy } from '~/types/items'
 
 export const loader = async ({
 	request,
@@ -23,6 +26,9 @@ export const loader = async ({
 	// URLパラメータからフィルター条件を取得
 	const url = new URL(request.url)
 	const page = Number.parseInt(url.searchParams.get('page') || '1', 10)
+
+	const sort_by_param = url.searchParams.get('sort') || ''
+	const sort_by: SortShopItemBy = (sort_by_param as SortShopItemBy) || undefined
 	const item = url.searchParams.get('item') || 'all'
 	const limit = 12
 
@@ -43,8 +49,6 @@ export const loader = async ({
 		return redirect('/')
 	}
 
-	console.log(id)
-
 	const { data: items, error: itemsError } = await supabase.rpc(
 		'get_shop_items',
 		{
@@ -52,6 +56,7 @@ export const loader = async ({
 			filter_item_type: item,
 			page_offset: (page - 1) * limit,
 			page_limit: limit,
+			shop_sort: sort_by,
 		},
 	)
 
@@ -60,24 +65,31 @@ export const loader = async ({
 		return redirect('/')
 	}
 
-	// 販売しているアバターと衣装の件数を取得
 	const { count: avatarCount } = await supabase
 		.from('shop_avatar')
-		.select('*', { count: 'exact', head: true })
+		.select(
+			`
+    *,
+    avatars (
+      published_at
+    )
+  `,
+			{ count: 'exact' },
+		)
 		.eq('shop_id', id)
+		.not('avatars.published_at', 'is', null)
 
 	const { count: clothCount } = await supabase
 		.from('shop_cloth')
 		.select('*', { count: 'exact', head: true })
 		.eq('shop_id', id)
 
-	console.log(clothCount)
-
 	return json({
 		shop: shopData,
 		items,
-		avatarCount,
-		clothCount,
+
+		avatarCount: avatarCount ? avatarCount : 0,
+		clothCount: clothCount ? clothCount : 0,
 	})
 }
 
@@ -149,9 +161,12 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	]
 }
 
-export default function Folder() {
+type Item = 'all' | 'avatar' | 'cloth'
+
+export default function Shop() {
 	const { shop, items, avatarCount, clothCount } =
 		useLoaderData<typeof loader>()
+	const [currentItem, setCurrentItem] = useState<Item>('all')
 	return (
 		<>
 			<div className="w-full p-6 mx-auto">
@@ -167,20 +182,24 @@ export default function Folder() {
 							<div className="text-xl font-bold">{shop.name}</div>
 						</div>
 					</div>
-					<Link
-						to={`https://${shop.shop_id}.booth.pm`}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<div className="mx-3 m-6 p-1 h-7 text-sm xl:h-9 xl:text-lg text-white font-bold bg-red-400">
-							BOOTH
-						</div>
-					</Link>
+					<div className="mx-3 m-6 h-7 xl:h-9 text-white font-bold bg-red-400">
+						<Link
+							to={`https://${shop.shop_id}.booth.pm`}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<div className="p-1 text-sm xl:text-lg">BOOTH</div>
+						</Link>
+					</div>
 				</div>
-				<div className="flex justify-center mt-4 bg-light-beige">
-					<Separator className="bg-slate-400" />
+				<div className="pt-6">
+					<ShopFilterControls
+						clothCount={clothCount}
+						avatarCount={avatarCount}
+						onItemChange={setCurrentItem}
+					/>
 				</div>
-				<div className="pt-4">
+				<div className="">
 					<div className="grid gap-2 pt-4">
 						<Card className="mt-2 bg-transparent shadow-none border-none">
 							<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-0">
@@ -226,6 +245,23 @@ export default function Folder() {
 								))}
 							</CardContent>
 						</Card>
+						{(() => {
+							const totalItems =
+								currentItem === 'all'
+									? (avatarCount || 0) + (clothCount || 0)
+									: currentItem === 'avatar'
+										? avatarCount || 0
+										: clothCount || 0
+
+							if (totalItems === 0) {
+								return (
+									<div className="text-center py-8 text-gray-500">
+										表示できるアイテムがありません
+									</div>
+								)
+							}
+							return <Pagination totalItems={totalItems} itemsPerPage={12} />
+						})()}
 					</div>
 				</div>
 			</div>
