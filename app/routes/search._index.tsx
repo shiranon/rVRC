@@ -2,9 +2,12 @@ import type { MetaFunction } from '@remix-run/cloudflare'
 import { useLoaderData } from '@remix-run/react'
 import type { searchLoader } from '~/.server/loaders'
 import { SearchCard } from '~/components/card/search-card'
+import { DateFilterControls } from '~/components/controls/date-filter-controls'
 import { ItemControls } from '~/components/controls/item-controls'
 import { SearchControls } from '~/components/controls/search-controls'
+import { SideFilterControls } from '~/components/controls/side-filter-controls'
 import { Pagination } from '~/components/element/pagination'
+import { useWindowSize } from '~/hooks/use-window-size'
 import { formatValue } from '~/lib/format'
 
 export { searchLoader as loader } from '~/.server/loaders'
@@ -82,14 +85,26 @@ export const meta: MetaFunction<typeof searchLoader> = ({ data }) => {
 
 export default function Search() {
 	const { result, count, item } = useLoaderData<typeof searchLoader>()
+	const [width] = useWindowSize()
 	return (
 		<div className="w-full pb-2 px-4">
+			{width > 1540 && (
+				<div
+					className="fixed bottom-28"
+					style={{ left: `calc(54% + ${width / 4}px + 20px)` }}
+				>
+					<SideFilterControls />
+				</div>
+			)}
 			<ItemControls />
 			<SearchControls />
 			<div className="py-4 text-xl">検索結果（{formatValue(count)}件）</div>
 			{result && result.length > 0 && (
 				<>
 					<SearchCard search={result} item={item} />
+					<div className="flex pt-6 items-center justify-center sticky bottom-6 z-50">
+						{width < 1540 && <DateFilterControls />}
+					</div>
 					<Pagination totalItems={count} itemsPerPage={12} />
 				</>
 			)}

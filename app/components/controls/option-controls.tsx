@@ -57,7 +57,9 @@ export const OptionControls = ({ type }: Props) => {
 				</DialogTrigger>
 				<DialogContent className="rounded-md">
 					<DialogHeader>
-						<DialogTitle>過去の{type}を見る</DialogTitle>
+						<DialogTitle>
+							過去の{type === 'ranking' ? 'ランキング' : 'トレンド'}を見る
+						</DialogTitle>
 					</DialogHeader>
 					<DialogDescription className="sr-only">
 						日付を選択してください。

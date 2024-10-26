@@ -8,7 +8,7 @@ interface Props {
 	type: string
 }
 
-export function SideControls({ type }: Props) {
+export const SideControls = ({ type }: Props) => {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const [shouldUpdateParams, setShouldUpdateParams] = useState(false)
 
