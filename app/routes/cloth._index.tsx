@@ -98,7 +98,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 			property: 'og:url',
 			content: 'https://r-vrc.net/cloth',
 		},
-		{ property: 'og:type', content: 'article' },
+		{ property: 'og:type', content: 'website' },
 		{ property: 'og:site_name', content: 'rVRC' },
 		{ property: 'og:locale', content: ' ja_JP' },
 		{

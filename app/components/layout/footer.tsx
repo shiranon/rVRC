@@ -30,18 +30,18 @@ export const Footer = () => {
 						</li>
 						<li>
 							<Link
-								to={'/search'}
-								className="text-xs sm:text-sm text-slate-600 hover:underline"
-							>
-								検索
-							</Link>
-						</li>
-						<li>
-							<Link
 								to={'/trend'}
 								className="text-xs sm:text-sm text-slate-600 hover:underline"
 							>
 								トレンド
+							</Link>
+						</li>
+						<li>
+							<Link
+								to={'/search'}
+								className="text-xs sm:text-sm text-slate-600 hover:underline"
+							>
+								検索
 							</Link>
 						</li>
 						<li>
@@ -58,6 +58,14 @@ export const Footer = () => {
 								className="text-xs sm:text-sm text-slate-600 hover:underline"
 							>
 								About
+							</Link>
+						</li>
+						<li>
+							<Link
+								to={'/policy'}
+								className="text-xs sm:text-sm text-slate-600 hover:underline"
+							>
+								Policy
 							</Link>
 						</li>
 					</ul>
@@ -80,8 +88,11 @@ export const Footer = () => {
 					</Link>
 				</div>
 			</div>
-			<div className="text-center text-sm pt-4 text-slate-700">
-				Copyright © 2024 rVRC
+			<div className="text-center text-sm pt-4 space-y-2">
+				<p className="text-slate-700">Copyright © 2024 rVRC</p>
+				<p className="text-slate-600 text-xs">
+					掲載している商品情報、画像等の権利は全て各権利者に帰属します。
+				</p>
 			</div>
 		</footer>
 	)

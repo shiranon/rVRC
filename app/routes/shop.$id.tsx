@@ -148,14 +148,14 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 		...imageElements,
 		{
 			property: 'og:url',
-			content: 'https://r-vrc.net/shop',
+			content: `https://r-vrc.net/shop/${data.shop.shop_id}`,
 		},
-		{ property: 'og:type', content: 'website' },
+		{ property: 'og:type', content: 'article' },
 		{ property: 'og:site_name', content: 'rVRC' },
 		{ property: 'og:locale', content: ' ja_JP' },
 		{
 			rel: 'canonical',
-			href: 'https://r-vrc.net/shop',
+			href: `https://r-vrc.net/shop/${data.shop.shop_id}`,
 		},
 		{ name: 'author', content: 'rVRC' },
 	]

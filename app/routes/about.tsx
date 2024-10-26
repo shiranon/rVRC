@@ -54,9 +54,9 @@ export const meta: MetaFunction = () => {
 		...imageElements,
 		{
 			property: 'og:url',
-			content: 'https://r-vrc.net/',
+			content: 'https://r-vrc.net/about',
 		},
-		{ property: 'og:type', content: 'article' },
+		{ property: 'og:type', content: 'website' },
 		{ property: 'og:site_name', content: 'rVRC' },
 		{ property: 'og:locale', content: ' ja_JP' },
 		{
@@ -157,9 +157,7 @@ export default function About() {
 			<div className="p-4 ">
 				<ul className="list-disc list-inside space-y-2">
 					<li>ダークモード</li>
-					<li>ショップ詳細ページ</li>
 					<li>プロフィール画像変更機能</li>
-					<li>アイテムの公開日での絞り込み機能</li>
 					<li>公開フォルダのお気に入り登録機能</li>
 				</ul>
 			</div>

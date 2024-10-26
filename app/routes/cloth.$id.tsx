@@ -80,7 +80,7 @@ export const meta: MetaFunction<typeof clothPageLoader> = ({ data }) => {
 			property: 'og:url',
 			content: `https://r-vrc.net/avatar/${data.cloth.booth_id}`,
 		},
-		{ property: 'og:type', content: 'website' },
+		{ property: 'og:type', content: 'article' },
 		{ property: 'og:site_name', content: 'rVRC' },
 		{ property: 'og:locale', content: ' ja_JP' },
 		{

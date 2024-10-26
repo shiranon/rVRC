@@ -89,7 +89,7 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 			property: 'og:url',
 			content: `https://r-vrc.net/avatar/${data.avatar.booth_id}`,
 		},
-		{ property: 'og:type', content: 'website' },
+		{ property: 'og:type', content: 'article' },
 		{ property: 'og:site_name', content: 'rVRC' },
 		{ property: 'og:locale', content: ' ja_JP' },
 		{
