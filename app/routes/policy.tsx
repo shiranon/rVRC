@@ -61,10 +61,6 @@ export const meta: MetaFunction = () => {
 			href: 'https://r-vrc.net/policy',
 		},
 		{ name: 'author', content: 'rVRC' },
-		{
-			name: 'keywords',
-			content: 'rVRC , プライバシーポリシー',
-		},
 	]
 }
 

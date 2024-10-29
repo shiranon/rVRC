@@ -90,7 +90,7 @@ export const meta: MetaFunction<typeof clothPageLoader> = ({ data }) => {
 		{ name: 'author', content: 'rVRC' },
 		{
 			name: 'keywords',
-			content: `VRChat, 衣装, 3Dモデル, ランキング, ${data.cloth.item_name}, ${data.cloth.shop_name}, `,
+			content: `${data.cloth.item_name},${data.cloth.shop_name},VRChat,VRC,BOOTH,衣装,関連アバター,3Dモデル`,
 		},
 	]
 }

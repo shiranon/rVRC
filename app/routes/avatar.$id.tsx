@@ -99,7 +99,7 @@ export const meta: MetaFunction<typeof avatarPageLoader> = ({ data }) => {
 		{ name: 'author', content: 'rVRC' },
 		{
 			name: 'keywords',
-			content: `VRChat, アバター, 3Dモデル, ランキング, ${data.avatar.item_name}, ${data.avatar.shop_name}, `,
+			content: `${data.avatar.item_name},${data.avatar.shop_name},VRChat,VRC,BOOTH,アバター,関連衣装,3Dモデル,検索`,
 		},
 	]
 }

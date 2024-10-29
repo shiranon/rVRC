@@ -80,6 +80,10 @@ export const meta: MetaFunction<typeof searchLoader> = ({ data }) => {
 			href: 'https://r-vrc.net/search',
 		},
 		{ name: 'author', content: 'rVRC' },
+		{
+			name: 'keywords',
+			content: 'VRChat,VRC,BOOTH,検索,ランキング,アバター,衣装,おすすめ,3Dモデル,人気',
+		},
 	]
 }
 

@@ -64,10 +64,6 @@ export const meta: MetaFunction = () => {
 			href: 'https://r-vrc.net/about',
 		},
 		{ name: 'author', content: 'rVRC' },
-		{
-			name: 'keywords',
-			content: 'VRChat, ランキング, アバター, オススメ, 衣装, 3Dモデル',
-		},
 	]
 }
 

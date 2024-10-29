@@ -158,6 +158,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 			href: `https://r-vrc.net/shop/${data.shop.shop_id}`,
 		},
 		{ name: 'author', content: 'rVRC' },
+		{
+			name: 'keywords',
+			content: `${data.shop.name},VRChat,VRC,BOOTH,ショップ,ランキング,アバター,ショップ,衣装,3Dモデル`,
+		},
 	]
 }
 

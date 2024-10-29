@@ -83,7 +83,7 @@ export const meta: MetaFunction<typeof trendLoader> = ({ data }) => {
 		{
 			name: 'keywords',
 			content:
-				'VRChat, ランキング, トレンド, アバター, オススメ, 衣装, 3Dモデル',
+				'VRChat,BOOTH,VRC,ランキング,トレンド,アバター,衣装,おすすめ,3Dモデル',
 		},
 	]
 }
