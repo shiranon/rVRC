@@ -18,6 +18,7 @@ import { useActionToast } from '~/hooks/use-action-toast'
 import {
 	buildItemImage,
 	buildShopImage,
+	formatDateWithHyphen,
 	formatValue,
 	truncateString,
 } from '~/lib/format'
@@ -154,6 +155,9 @@ export default function clothPage() {
 								</div>
 							</div>
 						</Link>
+						<div className="w-full pl-1 text-end text-sm sm:text-base">
+							公開日 {formatDateWithHyphen(cloth.published)}
+						</div>
 						<div className="flex justify-center items-center space-x-2 py-4">
 							<Link
 								to={`https://booth.pm/ja/items/${cloth.booth_id}`}

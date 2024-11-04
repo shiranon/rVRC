@@ -76,7 +76,8 @@ export const meta: MetaFunction<typeof indexLoader> = ({ data }) => {
 		{ name: 'author', content: 'rVRC' },
 		{
 			name: 'keywords',
-			content: 'VRChat,VRC,BOOTH,ランキング,アバター,衣装,おすすめ,3Dモデル,人気,検索',
+			content:
+				'VRChat,VRC,BOOTH,ランキング,アバター,衣装,おすすめ,3Dモデル,人気,検索',
 		},
 	]
 }

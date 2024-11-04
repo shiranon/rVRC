@@ -117,7 +117,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 		{ name: 'author', content: 'rVRC' },
 		{
 			name: 'keywords',
-			content: 'VRChat,VRC,BOOTH,アバター,ランキング,おすすめ,3Dモデル,人気,検索',
+			content:
+				'VRChat,VRC,BOOTH,アバター,ランキング,おすすめ,3Dモデル,人気,検索',
 		},
 	]
 }
