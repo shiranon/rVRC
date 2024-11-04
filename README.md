@@ -41,11 +41,11 @@ Discordでログインをすれば気に入ったアイテムをフォルダ分�
     <tr>
       <td width="50%">
         <p>前日比で増加したスキ数が多い順でアイテムを表示しています。過去のランキングを見る事も出来ます。</p>
-        <img src="https://i.gyazo.com/2c7d8bd77742c2c7ea8b95bacd71a131.gif">
+        <img src="https://i.gyazo.com/29fd3574ba21cb2c595b29c7426964eb.gif">
       </td>
       <td>
         <p>7日以内にBOOTHで公開されたアイテムをスキ数順で表示しています。</p>
-        <img src="https://i.gyazo.com/9404e79da3b534014cb1befbf5c47464.gif">
+        <img src="https://i.gyazo.com/9d28360cd244db65145decfd98fa8e3f.gif">
       </td>
     </tr>
     <tr>
@@ -59,7 +59,7 @@ Discordでログインをすれば気に入ったアイテムをフォルダ分�
     <tr>
       <td>
         <p>ユーザーが公開設定したフォルダを表示しています。</p>
-        <img src="https://i.gyazo.com/a0aaff017b7240f269bd0c5cf4d31ed5.gif">
+        <img src="https://i.gyazo.com/33945e8221a1ef69ddd2c99147c245e3.gif">
       </td>
       <td>
         <p>スキ数や公開日でフィルタリングしたり、様々な条件でソートが出来ます。</p>
@@ -68,6 +68,7 @@ Discordでログインをすれば気に入ったアイテムをフォルダ分�
     </tr>
   </tbody>
 </table>
+<br>
 
 ## 使用技術
 
@@ -77,12 +78,15 @@ Discordでログインをすれば気に入ったアイテムをフォルダ分�
 - データベース: [Supabase](https://supabase.com/)
 - スタイリング: [TailwindCSS](https://tailwindcss.com/)
 - 開発環境 [Docker](https://www.docker.com/)
+<br>
 
 ## インフラ構成図
 <img src="https://i.gyazo.com/024bf61b3c2e849af629901c91802747.png">
+<br>
 
 ## ER図
 <img src="https://www.mermaidchart.com/raw/07177631-a5eb-4ee4-bacb-8e1d87d92ae2?theme=light&version=v0.1&format=svg">
+<br>
 
 ## 画面遷移図
 [figma](https://www.figma.com/design/Xx1tCNx0belvOAJ2cOM4pq/rVRC)
