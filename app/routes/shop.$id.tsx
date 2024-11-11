@@ -216,7 +216,7 @@ export default function Shop() {
 												</div>
 												<div className="block overflow-hidden aspect-square">
 													<img
-														className="rounded-md"
+														className="rounded-md w-full h-auto aspect-square object-contain"
 														src={buildSmallItemImage(item.item_image)}
 														loading="lazy"
 														alt={item.item_name}

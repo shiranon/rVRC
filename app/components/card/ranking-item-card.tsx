@@ -32,7 +32,7 @@ export const RankingItemCard = ({
 							/>
 						</div>
 						<img
-							className="rounded-md"
+							className="rounded-md w-full h-auto aspect-square object-contain"
 							src={buildItemImage(item.item_image)}
 							loading="lazy"
 							alt={item.item_name}

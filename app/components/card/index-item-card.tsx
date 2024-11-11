@@ -25,7 +25,7 @@ export const IndexItemCard = ({ item, type }: IndexItemCardProp) => {
 							<FavoriteTag favorite_count={item.latest_favorite} />
 						</div>
 						<img
-							className="rounded-md"
+							className="rounded-md w-full h-auto aspect-square object-contain"
 							src={buildSmallItemImage(item.item_image)}
 							loading="lazy"
 							alt={item.item_name}

@@ -30,7 +30,7 @@ export const TopItem = ({
 							/>
 						</div>
 						<img
-							className="rounded-md pointer-events-none"
+							className="rounded-md w-full h-auto aspect-square object-contain pointer-events-none"
 							src={buildSmallItemImage(data.item_image)}
 							loading="lazy"
 							alt={data.item_name}
