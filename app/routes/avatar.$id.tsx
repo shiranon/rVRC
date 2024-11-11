@@ -140,7 +140,7 @@ export default function avatarPage() {
 				<div className="flex justify-center">
 					<div className="flex flex-col max-w-[640px] pt-10 px-6">
 						<img
-							className="rounded-md"
+							className="rounded-md w-full h-auto aspect-square object-contain"
 							src={buildItemImage(avatar.item_image)}
 							loading="lazy"
 							alt={avatar.item_name}
