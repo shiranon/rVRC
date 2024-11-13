@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import type { indexLoader } from '~/.server/loaders'
 import { TopRankingCard, TopTrendCard } from '~/components/card'
 import { ItemControls } from '~/components/controls/item-controls'
+import { TimeDebugger } from '~/components/debug/time-debug'
 import type { RankingType } from '~/types/items'
 
 export { indexLoader as loader } from '~/.server/loaders'
@@ -104,6 +105,7 @@ export default function Index() {
 
 	return (
 		<>
+			<TimeDebugger />
 			<ItemControls />
 			<h2 className="text-3xl py-4 pl-4">デイリーランキング</h2>
 			{ranking && ranking.length > 0 && (
