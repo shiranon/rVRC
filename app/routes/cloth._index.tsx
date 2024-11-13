@@ -1,5 +1,6 @@
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare'
 import { json, useLoaderData } from '@remix-run/react'
+import { Suspense } from 'react'
 import { IndexItemCard } from '~/components/card/index-item-card'
 import { IndexControls } from '~/components/controls/index-controls'
 import { Pagination } from '~/components/element/pagination'
@@ -117,7 +118,7 @@ export default function Cloth() {
 	const { cloths, count } = useLoaderData<typeof loader>()
 
 	return (
-		<>
+		<Suspense fallback={<div>Loading...</div>}>
 			{cloths && cloths.length > 0 ? (
 				<div className="relative flex justify-center">
 					<div>
@@ -145,6 +146,6 @@ export default function Cloth() {
 			) : (
 				<div className="text-xl pt-8">指定のデータは存在しません</div>
 			)}
-		</>
+		</Suspense>
 	)
 }
