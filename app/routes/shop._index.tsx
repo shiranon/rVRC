@@ -7,7 +7,7 @@ import {
 import { Link, useLoaderData } from '@remix-run/react'
 import type { PostgrestError } from '@supabase/supabase-js'
 import { ShopControls } from '~/components/controls/shop-controls'
-import { Pagination } from '~/components/element/pagination'
+import { PaginationAnchor } from '~/components/element/pagination-anchor'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent } from '~/components/ui/card'
 import avatar_svg from '~/images/avatar.svg'
@@ -63,6 +63,7 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 	return json({
 		shops: shopsData,
 		count: shopCount ? shopCount : 0,
+		sort: sort_by ? sort_by : '',
 	})
 }
 
@@ -141,7 +142,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 }
 
 export default function Shop() {
-	const { shops, count } = useLoaderData<typeof loader>()
+	const { shops, count, sort } = useLoaderData<typeof loader>()
 	return (
 		<>
 			{shops && shops.length > 0 ? (
@@ -152,7 +153,7 @@ export default function Shop() {
 							<div className="pb-4 px-4 text-xl">
 								総数 {formatValue(count)}件
 							</div>
-							<ShopControls />
+							<ShopControls initialSort={sort} />
 							<div className="mb-4">
 								<Card className="mt-2 bg-transparent shadow-none border-none">
 									<CardContent className="grid grid-cols-1 gap-4 p-0">
@@ -271,7 +272,7 @@ export default function Shop() {
 								</Card>
 							</div>
 						</div>
-						<Pagination totalItems={count} itemsPerPage={12} />
+						<PaginationAnchor totalItems={count} itemsPerPage={12} />
 					</div>
 				</div>
 			) : (

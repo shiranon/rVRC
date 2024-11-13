@@ -24,7 +24,11 @@ const sortOptions = [
 	{ value: 'create_asc', label: '登録が古い順' },
 ]
 
-export const IndexControls = () => {
+type Props = {
+	initialSort?: string
+}
+
+export const IndexControls = ({ initialSort }: Props) => {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const [currentSort, setCurrentSort] = useState<SortBy>(undefined)
 
@@ -53,7 +57,7 @@ export const IndexControls = () => {
 		<>
 			<div className="w-full max-w-[640px] grid p-2 grid-cols-[70%_30%] gap-y-1">
 				<Select
-					value={currentSort === undefined ? '' : currentSort}
+					value={initialSort || ''}
 					onValueChange={(value) => {
 						updateParams('sort', value)
 					}}

@@ -34,7 +34,7 @@ export const IndexItemCard = ({ item, type }: IndexItemCardProp) => {
 				</CardContent>
 			</Link>
 			<CardContent className="px-2 sm:px-4 pt-0 pb-1">
-				<Link to={`/avatar/${item.id}`}>
+				<Link to={`/${type}/${item.id}`}>
 					<CardTitle className="leading-relaxed text-base sm:text-lg h-[4rem]">
 						<div className="line-clamp-2 break-words">{item.item_name}</div>
 					</CardTitle>

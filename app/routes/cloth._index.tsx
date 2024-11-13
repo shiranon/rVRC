@@ -2,7 +2,7 @@ import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare'
 import { json, useLoaderData } from '@remix-run/react'
 import { IndexItemCard } from '~/components/card/index-item-card'
 import { IndexControls } from '~/components/controls/index-controls'
-import { Pagination } from '~/components/element/pagination'
+import { PaginationAnchor } from '~/components/element/pagination-anchor'
 import { Card, CardContent } from '~/components/ui/card'
 import { formatValue } from '~/lib/format'
 import { loadEnvironment } from '~/lib/utils.server'
@@ -35,6 +35,7 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 	return json({
 		cloths: clothsData,
 		count: clothCount ? clothCount : 0,
+		sort: sort_by ? sort_by : '',
 	})
 }
 
@@ -114,7 +115,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 }
 
 export default function Cloth() {
-	const { cloths, count } = useLoaderData<typeof loader>()
+	const { cloths, count, sort } = useLoaderData<typeof loader>()
 
 	return (
 		<>
@@ -126,7 +127,7 @@ export default function Cloth() {
 							<div className="pb-4 px-4 text-xl">
 								総数 {formatValue(count)}件
 							</div>
-							<IndexControls />
+							<IndexControls initialSort={sort} />
 							<div className="mb-4">
 								<Card className="mt-2 bg-transparent shadow-none border-none">
 									<CardContent className="grid grid-cols-2 xl:grid-cols-3 gap-2 p-0">
@@ -139,7 +140,7 @@ export default function Cloth() {
 								</Card>
 							</div>
 						</div>
-						<Pagination totalItems={count} itemsPerPage={12} />
+						<PaginationAnchor totalItems={count} itemsPerPage={12} />
 					</div>
 				</div>
 			) : (

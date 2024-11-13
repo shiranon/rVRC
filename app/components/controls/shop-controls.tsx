@@ -1,6 +1,6 @@
 import { useSearchParams } from '@remix-run/react'
 import { useCallback, useEffect, useState } from 'react'
-import type { SortBy, SortShopBy } from '~/types/items'
+import type { SortShopBy } from '~/types/items'
 import { Button } from '../ui/button'
 import {
 	Select,
@@ -23,7 +23,11 @@ const sortOptions = [
 	{ value: 'create_asc', label: '登録が古い順' },
 ]
 
-export const ShopControls = () => {
+type Props = {
+	initialSort?: string
+}
+
+export const ShopControls = ({ initialSort }: Props) => {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const [currentSort, setCurrentSort] = useState<SortShopBy>(undefined)
 
@@ -52,7 +56,7 @@ export const ShopControls = () => {
 		<>
 			<div className="w-full max-w-[640px] grid p-2 grid-cols-[70%_30%] gap-y-1">
 				<Select
-					value={currentSort === undefined ? '' : currentSort}
+					value={initialSort || ''}
 					onValueChange={(value) => {
 						updateParams('sort', value)
 					}}
