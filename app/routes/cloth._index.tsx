@@ -31,6 +31,7 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 	const { count: clothCount } = await supabase
 		.from('cloths')
 		.select('*', { count: 'exact', head: true })
+		.not('published_at', 'is', null)
 
 	return json({
 		cloths: clothsData,
