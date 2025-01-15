@@ -109,7 +109,7 @@ export default function clothPage() {
 	const hashtags = ['VRChat']
 	const encodedHashtags = encodeURIComponent(hashtags.join(','))
 
-	const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${cloth.item_name} ♥${formatValue(cloth.latest_favorite)}`)}&url=${encodeURIComponent(`https://r-vrc/cloth/${id}`)}&hashtags=${encodedHashtags}`
+	const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${cloth.item_name} ♥${formatValue(cloth.latest_favorite)}`)}&url=${encodeURIComponent(`https://r-vrc.net/cloth/${id}`)}&hashtags=${encodedHashtags}`
 
 	useActionToast()
 

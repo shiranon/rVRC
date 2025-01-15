@@ -115,7 +115,7 @@ export default function avatarPage() {
 	const hashtags = ['VRChat']
 	const encodedHashtags = encodeURIComponent(hashtags.join(','))
 
-	const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${avatar.item_name} ♥${formatValue(avatar.latest_favorite)}`)}&url=${encodeURIComponent(`https://r-vrc/avatar/${id}`)}&hashtags=${encodedHashtags}`
+	const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${avatar.item_name} ♥${formatValue(avatar.latest_favorite)}`)}&url=${encodeURIComponent(`https://r-vrc.net/avatar/${id}`)}&hashtags=${encodedHashtags}`
 
 	const scrollToRelatedCloth = useCallback(() => {
 		if (relatedClothRef.current) {
