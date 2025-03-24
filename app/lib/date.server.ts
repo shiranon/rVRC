@@ -1,8 +1,13 @@
 /**
- * 現在の日付を取得
- * @returns {Date} 現在の日付
+ * 現在の日付を取得（日本時間）
+ * @returns {Date} 現在の日付（日本時間）
  */
-const getToday = () => new Date()
+const getToday = () => {
+  const now = new Date()
+  // UTC時間に日本時間との差（+9時間）を足す
+  const japanTime = new Date(now.getTime() + 9 * 60 * 60 * 1000)
+  return japanTime
+}
 
 /**
  * 昨日の日付を取得
@@ -14,12 +19,26 @@ const getYesterday = () => {
 	return yesterday
 }
 
-// 開発環境用の日付設定
-const devDefaultDate = new Date(import.meta.env.VITE_LOCAL_DATE)
 const getDevYesterday = () => {
-	const devYesterday = new Date(devDefaultDate)
-	devYesterday.setDate(devYesterday.getDate() - 1)
-	return devYesterday
+  const devYesterday = new Date(getDevDefaultDate())
+  devYesterday.setDate(devYesterday.getDate() - 1)
+  return devYesterday
+}
+
+// 開発環境用の日付設定
+const getDevDefaultDate = () => {
+  try {
+    if (import.meta.env.VITE_LOCAL_DATE) {
+      const devDate = new Date(import.meta.env.VITE_LOCAL_DATE)
+      if (!Number.isNaN(devDate.getTime())) {
+        return devDate;
+      }
+    }
+    // 環境変数がない or 無効な場合は現在の日本時間を返す
+    return getToday()
+  } catch (e) {
+    return getToday()
+  }
 }
 
 /**
@@ -49,15 +68,16 @@ const getFormattedDate = (date: Date) => {
  * @returns {string} YYYY-MM-DD形式の日付文字列
  */
 const getTodayDate = () => {
-	const date = import.meta.env.PROD
-		? isBeforeRankingUpdate()
-			? getYesterday()
-			: getToday()
-		: isBeforeRankingUpdate()
-			? getDevYesterday()
-			: devDefaultDate
-	return getFormattedDate(date)
+  const date = import.meta.env.PROD
+    ? isBeforeRankingUpdate()
+      ? getYesterday()
+      : getToday()
+    : isBeforeRankingUpdate()
+      ? getDevYesterday()
+      : getDevDefaultDate();
+  return getFormattedDate(date);
 }
+
 
 /**
  * WIP: 月間ランキング用
@@ -76,4 +96,5 @@ const formatMonth = (date: string): string => {
 	return format_month
 }
 
-export { getTodayDate, isBeforeRankingUpdate, formatMonth }
+export { formatMonth, getTodayDate, isBeforeRankingUpdate }
+
