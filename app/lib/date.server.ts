@@ -49,13 +49,10 @@ const getFormattedDate = (date: Date) => {
  * @returns {string} YYYY-MM-DD形式の日付文字列
  */
 const getTodayDate = () => {
-  // 常に1日前のデータを表示するよう変更
-  const date = import.meta.env.PROD
-    ? getYesterday()
-    : getDevYesterday()
-  return getFormattedDate(date)
+	// 常に1日前のデータを表示するよう変更
+	const date = import.meta.env.PROD ? getYesterday() : getDevYesterday()
+	return getFormattedDate(date)
 }
-
 
 /**
  * WIP: 月間ランキング用
@@ -75,4 +72,3 @@ const formatMonth = (date: string): string => {
 }
 
 export { formatMonth, getTodayDate, isBeforeRankingUpdate }
-

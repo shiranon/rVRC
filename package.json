@@ -31,9 +31,10 @@
 		"@radix-ui/react-separator": "^1.1.0",
 		"@radix-ui/react-slot": "^1.1.0",
 		"@radix-ui/react-toast": "^1.2.1",
-		"@remix-run/cloudflare": "2.12.0",
-		"@remix-run/cloudflare-pages": "2.12.0",
-		"@remix-run/react": "2.12.0",
+		"@remix-run/cloudflare": "^2.16.5",
+		"@remix-run/cloudflare-pages": "^2.16.5",
+		"@remix-run/react": "^2.16.5",
+		"@remix-run/server-runtime": "^2.16.5",
 		"@supabase/ssr": "^0.5.1",
 		"@supabase/supabase-js": "^2.45.2",
 		"class-variance-authority": "^0.7.0",
@@ -49,10 +50,11 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.8.3",
-		"@cloudflare/workers-types": "^4.20240925.0",
+		"@cloudflare/workers-types": "^4.20240512.0",
 		"@commitlint/cli": "^19.4.0",
 		"@commitlint/config-conventional": "^19.2.2",
-		"@remix-run/dev": "2.12.0",
+		"@remix-run/dev": "^2.16.5",
+		"@types/node": "^22.15.3",
 		"@types/react": "^18.2.20",
 		"@types/react-dom": "^18.2.7",
 		"autoprefixer": "^10.4.19",
@@ -62,10 +64,10 @@
 		"remix-development-tools": "^4.7.1",
 		"tailwindcss": "^3.4.10",
 		"typescript": "^5.1.6",
-		"vite": "^5.4.8",
+		"vite": "^6.0.0",
 		"vite-tsconfig-paths": "^4.2.1",
-		"vitest": "^2.0.5",
-		"wrangler": "3.78.10"
+		"vitest": "^3.1.2",
+		"wrangler": "4.13.2"
 	},
 	"overrides": {
 		"cookie": "0.7.2"
